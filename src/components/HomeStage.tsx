@@ -23,7 +23,7 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
   return (
     <section
       id="home"
-      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden select-none pt-14 pb-20"
+      className="relative w-full h-screen min-h-[660px] max-h-[950px] flex items-center justify-center overflow-hidden select-none"
     >
       {/* 1. Top Right Telemetry Status Pill matching yl0.me */}
       <motion.div
@@ -39,9 +39,9 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
       </motion.div>
 
       {/* Centered Stage Cockpit HUD (Wider container shifted left, balanced layout) */}
-      <div className="relative w-full max-w-[1240px] xl:max-w-[1300px] h-[720px] sm:h-[760px] mx-auto flex items-center justify-center px-4 sm:px-6">
+      <div className="relative w-full max-w-[1240px] xl:max-w-[1300px] h-[680px] sm:h-[720px] lg:h-[740px] mx-auto flex items-center justify-center px-4 sm:px-6">
         {/* 2. Unified Left Profile Identity Entity (Polaroid with Coffee + Monospace Terminal Bio) */}
-        <div className="absolute left-0 sm:left-2 lg:left-4 bottom-4 sm:bottom-6 lg:bottom-8 z-20 flex flex-col items-start max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] select-none pointer-events-auto">
+        <div className="absolute left-3 sm:left-6 lg:left-8 bottom-2 sm:bottom-4 lg:bottom-5 z-20 flex flex-col items-start max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] select-none pointer-events-auto">
           {/* Polaroid Card with Washi Tape and Steaming Coffee Cup */}
           <PolaroidWithCoffee
             soundEnabled={soundEnabled}
@@ -56,8 +56,8 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
           />
         </div>
 
-        {/* 3. Center Assembly: Expressive Character Bot Face + Floating Die-Cut Tech Tokens Orbit */}
-        <div className="relative flex items-center justify-center w-[440px] h-[380px] my-auto pointer-events-none">
+        {/* 3. Center Assembly: Expressive Character Bot Face + Floating Die-Cut Tech Tokens Orbit (Shifted up & strictly centered) */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[58%] sm:-translate-y-[62%] flex items-center justify-center w-[440px] h-[380px] pointer-events-none z-10">
           {/* Floating Spatial Die-Cut Tech Tokens Orbit */}
           <TechTokensOrbit soundEnabled={soundEnabled} />
 
@@ -75,16 +75,18 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
         />
       </div>
 
-      {/* 5. Animated Scroll Down Indicator matching yl0.me */}
-      <motion.button
-        onClick={handleScrollToProjects}
-        animate={{ y: [0, 5, 0] }}
-        transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
-        className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#09090B] text-white dark:bg-[#F1F3F8] dark:text-[#12151B] text-[11px] font-mono shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer border border-white/10 dark:border-black/10"
-      >
-        <span>Scroll to explore</span>
-        <ChevronDown size={13} className="animate-bounce" />
-      </motion.button>
+      {/* 5. Animated Scroll Down Indicator matching yl0.me (Guaranteed horizontal center alignment) */}
+      <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20">
+        <motion.button
+          onClick={handleScrollToProjects}
+          animate={{ y: [0, 4, 0] }}
+          transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
+          className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#09090B] text-white dark:bg-[#F1F3F8] dark:text-[#12151B] text-[11px] font-mono shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer border border-white/10 dark:border-black/10"
+        >
+          <span>Scroll to explore</span>
+          <ChevronDown size={13} className="animate-bounce" />
+        </motion.button>
+      </div>
     </section>
   )
 }
