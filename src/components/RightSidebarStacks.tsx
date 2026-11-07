@@ -23,30 +23,30 @@ interface RightSidebarStacksProps {
 // 4 Career Milestone Stamps matching the reference accordion layout
 const experienceStamps = [
   {
-    id: 'xoxoday',
+    id: 'xoxoday-partner',
     company: 'Xoxoday',
-    role: 'Senior Mobile',
-    period: '2021 - Now',
+    role: 'Lead Mobile',
+    period: "Jul'19 - Now",
     icon: Briefcase,
-    gradient: 'from-cyan-500 to-indigo-600',
+    gradient: 'from-purple-500 to-indigo-600',
     iconColor: 'text-white'
   },
   {
-    id: 'compass',
-    company: 'Compass iOS',
-    role: 'Lead Architect',
-    period: '2022 - 2024',
+    id: 'giift-compass',
+    company: 'Giift Compass',
+    role: 'Mobile Arch',
+    period: '2021 - 2024',
     icon: Compass,
-    gradient: 'from-blue-500 to-cyan-500',
+    gradient: 'from-cyan-500 to-blue-600',
     iconColor: 'text-white'
   },
   {
-    id: 'empuls',
-    company: 'Empuls Client',
-    role: 'Mobile Lead',
-    period: '2021 - 2023',
+    id: 'compass-native',
+    company: 'Compass iOS',
+    role: 'iOS Systems',
+    period: '2019 - 2021',
     icon: Zap,
-    gradient: 'from-purple-500 to-pink-500',
+    gradient: 'from-blue-500 to-indigo-500',
     iconColor: 'text-white'
   },
   {

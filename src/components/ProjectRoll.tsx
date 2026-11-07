@@ -8,7 +8,6 @@ import {
   Cpu,
   CheckCircle2,
   Sparkles,
-  ArrowLeft,
   Star
 } from 'lucide-react'
 import { playSound } from '../utils/audio'
@@ -371,11 +370,6 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
     setActiveModalProject(project)
   }
 
-  const handleBack = () => {
-    playSound('click', soundEnabled)
-    document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
     <section
       id="projects"
@@ -393,19 +387,11 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
           </div>
         </div>
 
-        {/* Subtitle & Back Button */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+        {/* Subtitle */}
+        <div className="mb-6">
           <p className="text-xs sm:text-sm font-mono text-[#5A6272] dark:text-[#C5CBD8] max-w-xl leading-relaxed">
             Libraries, systems and mobile architecture I have built, mostly in Swift, SwiftUI &amp; React Native. Scroll sideways to explore them.
           </p>
-
-          <button
-            onClick={handleBack}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FBFBF9] dark:bg-[#181D26] border border-slate-200 dark:border-white/15 text-xs font-mono text-[#151922] dark:text-[#ECEFF5] shadow-sm hover:bg-slate-100 dark:hover:bg-[#202632] transition-colors cursor-pointer"
-          >
-            <ArrowLeft size={13} className="text-[#7C3AED] dark:text-[#A78BFA]" />
-            <span>Back</span>
-          </button>
         </div>
 
         {/* Horizontal Card Roll Conveyor (Matching yl0.me Image 2) */}
