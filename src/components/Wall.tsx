@@ -87,9 +87,9 @@ const Wall = ({
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 w-full py-10 border-t border-slate-200/80 dark:border-white/10 text-center font-mono text-[11px] sm:text-xs text-[#5A6272] dark:text-[#8E96A6]">
+      <footer className="relative z-10 w-full py-10 border-t border-slate-200/90 dark:border-white/10 text-center font-mono text-[11px] sm:text-xs text-[#0F172A] dark:text-[#E2E8F0] font-medium">
         <p>Engineered by Vinod Kumar Singh • Senior Mobile &amp; iOS Systems Architect</p>
-        <p className="mt-1.5 opacity-75">IIT Kanpur '19 • Built with React, Tailwind &amp; Framer Motion</p>
+        <p className="mt-1.5 opacity-80">IIT Kanpur '19 • Built with React, Tailwind &amp; Framer Motion</p>
       </footer>
 
       {/* Blueprint CAD Overlay */}

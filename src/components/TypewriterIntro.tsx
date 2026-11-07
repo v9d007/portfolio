@@ -37,8 +37,8 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
 
   return (
     <div className={className}>
-      {/* Monospace Developer Intro Text matching yl0.me typography exactly */}
-      <div className="text-[13px] sm:text-[13.5px] lg:text-[14px] leading-[1.85] sm:leading-[1.95] font-mono text-[#3A404C] dark:text-[#C5CBD8]">
+      {/* Monospace Developer Intro Text with bold high contrast */}
+      <div className="text-[13px] sm:text-[13.5px] lg:text-[14px] leading-[1.85] sm:leading-[1.95] font-mono text-[#09090B] dark:text-[#E2E8F0]">
         <div className="whitespace-pre-wrap">
           {currentText.split('\n\n').map((para, pIdx) => {
             const parts = para.split(
@@ -51,7 +51,7 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
                     return (
                       <span
                         key={idx}
-                        className="font-extrabold text-[#7C3AED] dark:text-[#A78BFA] transition-colors"
+                        className="font-extrabold text-[#6D28D9] dark:text-[#A78BFA] transition-colors"
                       >
                         Vinod Kumar Singh
                       </span>
@@ -59,7 +59,7 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
                   }
                   if (part === "IIT Kanpur (EE '19)") {
                     return (
-                      <span key={idx} className="font-semibold text-[#151922] dark:text-[#ECEFF5]">
+                      <span key={idx} className="font-extrabold text-[#000000] dark:text-[#FFFFFF]">
                         IIT Kanpur (EE '19)
                       </span>
                     )

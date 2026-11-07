@@ -377,19 +377,19 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
     >
       <div>
         {/* Top Header Row (Exact match to yl0.me Image 2) */}
-        <div className="flex items-center justify-between font-mono text-xs sm:text-sm border-b border-slate-200/80 dark:border-white/10 pb-3 mb-3">
+        <div className="flex items-center justify-between font-mono text-xs sm:text-sm border-b border-slate-300 dark:border-white/10 pb-3 mb-3">
           <div className="flex items-center gap-2">
-            <span className="text-[#7C3AED] dark:text-[#A78BFA] font-extrabold">[P]</span>
-            <span className="text-[#7C3AED] dark:text-[#A78BFA] font-extrabold tracking-wide">Projects</span>
+            <span className="text-[#6D28D9] dark:text-[#A78BFA] font-extrabold">[P]</span>
+            <span className="text-[#6D28D9] dark:text-[#A78BFA] font-extrabold tracking-wide">Projects</span>
           </div>
-          <div className="text-[#5A6272] dark:text-[#8E96A6] tracking-wider font-semibold">
+          <div className="text-[#0F172A] dark:text-[#E2E8F0] tracking-wider font-bold">
             01 — {String(projects.length).padStart(2, '0')}
           </div>
         </div>
 
         {/* Subtitle */}
         <div className="mb-6">
-          <p className="text-xs sm:text-sm font-mono text-[#5A6272] dark:text-[#C5CBD8] max-w-xl leading-relaxed">
+          <p className="text-xs sm:text-sm font-mono text-[#0F172A] dark:text-[#E2E8F0] max-w-xl leading-relaxed font-semibold">
             Libraries, systems and mobile architecture I have built, mostly in Swift, SwiftUI &amp; React Native. Scroll sideways to explore them.
           </p>
         </div>
@@ -402,14 +402,14 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
                 key={project.id}
                 whileHover={{ y: -8, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
                 onClick={() => handleCardClick(project)}
-                className="relative w-64 sm:w-72 rounded-2xl bg-[#FBFBF9] text-[#151922] border border-slate-200/90 shadow-xl hover:shadow-2xl transition-all cursor-pointer p-4 flex flex-col justify-between"
+                className="relative w-64 sm:w-72 rounded-2xl bg-[#FBFBF9] text-[#09090B] border border-slate-300/90 shadow-xl hover:shadow-2xl transition-all cursor-pointer p-4 flex flex-col justify-between"
                 style={{
                   boxShadow:
-                    '0 0 0 1px rgba(21,25,34,.06), 0 4px 14px -3px rgba(0,0,0,0.18)'
+                    '0 0 0 1px rgba(21,25,34,.08), 0 4px 14px -3px rgba(0,0,0,0.18)'
                 }}
               >
                 {/* Number in top-left */}
-                <span className="text-[11px] font-mono text-slate-400 font-bold mb-2 block">
+                <span className="text-[11px] font-mono text-slate-600 dark:text-slate-400 font-bold mb-2 block">
                   {project.num}
                 </span>
 
@@ -419,17 +419,17 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
                 </div>
 
                 {/* Bottom Caption Row */}
-                <div className="border-t border-slate-200/80 pt-3 mt-3 flex items-end justify-between font-mono">
+                <div className="border-t border-slate-200/90 pt-3 mt-3 flex items-end justify-between font-mono">
                   <div>
-                    <h4 className="text-xs sm:text-sm font-bold text-[#151922] leading-tight">
+                    <h4 className="text-xs sm:text-sm font-bold text-[#09090B] leading-tight">
                       {project.title}
                     </h4>
-                    <p className="text-[10px] text-slate-500 truncate max-w-[150px] mt-0.5 font-medium">
+                    <p className="text-[10px] text-slate-700 truncate max-w-[150px] mt-0.5 font-semibold">
                       {project.subtitle}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-1 text-[10px] text-slate-500 font-semibold">
+                  <div className="flex items-center gap-1 text-[10px] text-slate-700 font-bold">
                     <Star size={11} className="text-amber-500 fill-amber-500" />
                     <span>{project.stars || 'Core'}</span>
                   </div>

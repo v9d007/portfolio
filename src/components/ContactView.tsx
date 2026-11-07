@@ -45,19 +45,19 @@ const ContactView = ({ soundEnabled }: ContactViewProps) => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-50px' }}
         transition={{ duration: 0.6 }}
-        className="p-6 sm:p-8 rounded-3xl bg-[#FBFBF9] dark:bg-[#181D26] border border-slate-200/90 dark:border-white/10 shadow-xl text-[#151922] dark:text-[#ECEFF5]"
+        className="p-7 sm:p-9 rounded-3xl bg-white dark:bg-[#161B22] border-2 border-slate-200/90 dark:border-white/10 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.08),0_18px_36px_-6px_rgba(0,0,0,0.06)] text-[#09090B] dark:text-[#F8FAFC]"
       >
         {/* Terminal Header */}
-        <div className="flex items-center justify-between border-b border-slate-200/80 dark:border-white/10 pb-3 mb-6">
+        <div className="flex items-center justify-between border-b border-slate-200/90 dark:border-white/10 pb-3.5 mb-6">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80" />
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
-            <span className="ml-1 text-xs font-mono text-[#5A6272] dark:text-[#8E96A6] font-semibold">
+            <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
+            <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
+            <span className="ml-2 text-xs font-mono text-[#0F172A] dark:text-[#CBD5E1] font-bold">
               contact.sh // vinod@v9d
             </span>
           </div>
-          <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-semibold">
+          <span className="text-[10px] font-mono bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full flex items-center gap-1.5 font-bold">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping" />
             AVAILABLE FOR HIRE
           </span>
@@ -65,25 +65,25 @@ const ContactView = ({ soundEnabled }: ContactViewProps) => {
 
         {/* Intro */}
         <div className="mb-6">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#151922] dark:text-[#ECEFF5] mb-2 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#09090B] dark:text-[#F8FAFC] mb-2 tracking-tight">
             Let's Build Together
           </h2>
-          <p className="text-xs sm:text-sm text-[#5A6272] dark:text-[#C5CBD8] leading-relaxed font-mono">
+          <p className="text-xs sm:text-sm text-[#1E293B] dark:text-[#E2E8F0] leading-relaxed font-mono font-medium">
             Looking for a Senior Mobile &amp; iOS Systems Engineer who crafts 60 FPS architectures with Swift 6 and React Native? Send a transmission below.
           </p>
         </div>
 
         {/* One-Click Copy Email Card */}
-        <div className="p-3.5 rounded-2xl bg-white dark:bg-[#12151B] border border-slate-200/80 dark:border-white/10 flex items-center justify-between gap-3 mb-6">
-          <div className="flex items-center gap-2.5 overflow-hidden">
-            <div className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/60 text-[#7C3AED] dark:text-[#A78BFA] shrink-0 border border-purple-200/60 dark:border-purple-800/40">
-              <Mail size={16} />
+        <div className="p-4 rounded-2xl bg-[#F8FAFC] dark:bg-[#0D1117] border border-slate-300/80 dark:border-white/15 flex items-center justify-between gap-3 mb-6">
+          <div className="flex items-center gap-3 overflow-hidden">
+            <div className="p-2.5 rounded-xl bg-gradient-to-tr from-[#6D28D9] to-[#8B5CF6] text-white shrink-0 shadow-md shadow-purple-500/20">
+              <Mail size={18} />
             </div>
             <div className="truncate">
-              <p className="text-[9px] font-mono text-[#5A6272] dark:text-[#8E96A6] uppercase tracking-wider font-semibold">
+              <p className="text-[10px] font-mono text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider font-bold">
                 Direct Transmission
               </p>
-              <p className="text-xs sm:text-sm font-mono font-bold text-[#151922] dark:text-[#ECEFF5] truncate">
+              <p className="text-xs sm:text-sm font-mono font-extrabold text-[#09090B] dark:text-[#F8FAFC] truncate">
                 {email}
               </p>
             </div>
@@ -91,7 +91,7 @@ const ContactView = ({ soundEnabled }: ContactViewProps) => {
 
           <button
             onClick={handleCopyEmail}
-            className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-[#09090B] text-white dark:bg-[#F1F3F8] dark:text-[#12151B] text-xs font-mono font-semibold transition-all hover:scale-105 active:scale-95 shrink-0 shadow-sm cursor-pointer"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#09090B] text-white hover:bg-[#1E1E24] dark:bg-[#F8FAFC] dark:text-[#09090B] dark:hover:bg-white text-xs font-mono font-bold transition-all hover:scale-105 active:scale-95 shrink-0 shadow-md cursor-pointer border border-white/10 dark:border-black/10"
           >
             {copied ? (
               <>
@@ -110,7 +110,7 @@ const ContactView = ({ soundEnabled }: ContactViewProps) => {
         {/* Message Dispatch Box */}
         <form onSubmit={handleSendMessage} className="space-y-4">
           <div>
-            <label className="block text-[11px] font-mono text-[#5A6272] dark:text-[#8E96A6] uppercase tracking-wider mb-1.5 font-semibold">
+            <label className="block text-xs font-mono text-[#09090B] dark:text-[#E2E8F0] uppercase tracking-wider mb-2 font-bold">
               // Message Buffer
             </label>
             <textarea
@@ -118,23 +118,23 @@ const ContactView = ({ soundEnabled }: ContactViewProps) => {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Hi Vinod, let's connect regarding an iOS architecture role / consulting project..."
-              className="w-full p-3 rounded-2xl bg-white dark:bg-[#12151B] border border-slate-200 dark:border-white/10 text-xs sm:text-sm font-mono text-[#151922] dark:text-[#ECEFF5] placeholder:text-slate-400 dark:placeholder:text-slate-600 focus:outline-none focus:border-[#7C3AED] dark:focus:border-[#A78BFA] transition-colors resize-none"
+              className="w-full p-3.5 rounded-2xl bg-[#F8FAFC] dark:bg-[#0D1117] border-2 border-slate-200 dark:border-white/15 text-xs sm:text-sm font-mono text-[#09090B] dark:text-[#F8FAFC] placeholder:text-[#64748B] dark:placeholder:text-[#94A3B8] focus:outline-none focus:border-[#6D28D9] dark:focus:border-[#A78BFA] transition-colors resize-none leading-relaxed"
             />
           </div>
 
           <button
             type="submit"
             disabled={sentStatus || !message.trim()}
-            className="w-full py-2.5 px-4 rounded-xl bg-[#7C3AED] hover:bg-[#6D28D9] text-white font-mono text-xs font-semibold flex items-center justify-center gap-2 shadow-lg shadow-purple-600/25 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer"
+            className="w-full py-3 px-4 rounded-xl bg-[#09090B] hover:bg-[#1E1E24] text-white dark:bg-[#F8FAFC] dark:text-[#09090B] dark:hover:bg-white font-mono text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xl shadow-black/15 transition-all hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 cursor-pointer border border-white/10 dark:border-black/10"
           >
             {sentStatus ? (
               <>
-                <Sparkles size={14} className="animate-spin" />
+                <Sparkles size={14} className="animate-spin text-purple-400" />
                 <span>Transmission Queued in Mail Client...</span>
               </>
             ) : (
               <>
-                <Send size={13} />
+                <Send size={13} className="text-[#A78BFA] dark:text-[#6D28D9]" />
                 <span>Transmit Transmission</span>
               </>
             )}
@@ -142,24 +142,24 @@ const ContactView = ({ soundEnabled }: ContactViewProps) => {
         </form>
 
         {/* Social Links Footer */}
-        <div className="mt-6 pt-4 border-t border-slate-200/80 dark:border-white/10 flex items-center justify-between text-xs font-mono text-[#5A6272] dark:text-[#8E96A6]">
+        <div className="mt-6 pt-4 border-t border-slate-200/90 dark:border-white/10 flex items-center justify-between text-xs font-mono text-[#1E293B] dark:text-[#CBD5E1] font-semibold">
           <span>Coordinates: Bengaluru, IN (IST)</span>
           <div className="flex items-center gap-3">
             <a
               href="https://github.com/v9d007"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-[#7C3AED] dark:hover:text-[#A78BFA] transition-colors"
+              className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 text-[#09090B] dark:text-[#F8FAFC] hover:text-[#6D28D9] dark:hover:text-[#A78BFA] transition-colors"
             >
-              <Github size={15} />
+              <Github size={16} />
             </a>
             <a
               href="https://linkedin.com"
               target="_blank"
               rel="noreferrer"
-              className="hover:text-[#7C3AED] dark:hover:text-[#A78BFA] transition-colors"
+              className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-white/10 text-[#09090B] dark:text-[#F8FAFC] hover:text-[#6D28D9] dark:hover:text-[#A78BFA] transition-colors"
             >
-              <Linkedin size={15} />
+              <Linkedin size={16} />
             </a>
           </div>
         </div>
