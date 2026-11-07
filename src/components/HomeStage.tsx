@@ -41,18 +41,18 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
       {/* Centered Stage Cockpit HUD (Wider container shifted left, balanced layout) */}
       <div className="relative w-full max-w-[1240px] xl:max-w-[1300px] h-[720px] sm:h-[760px] mx-auto flex items-center justify-center px-4 sm:px-6">
         {/* 2. Unified Left Profile Identity Entity (Polaroid with Coffee + Monospace Terminal Bio) */}
-        <div className="absolute left-0 sm:left-2 lg:left-4 top-2 sm:top-4 z-20 flex flex-col items-start max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] select-none pointer-events-auto">
+        <div className="absolute left-0 sm:left-2 lg:left-4 bottom-4 sm:bottom-6 lg:bottom-8 z-20 flex flex-col items-start max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] select-none pointer-events-auto">
           {/* Polaroid Card with Washi Tape and Steaming Coffee Cup */}
           <PolaroidWithCoffee
             soundEnabled={soundEnabled}
-            className="origin-top-left ml-1 sm:ml-2"
+            className="origin-bottom-left ml-1 sm:ml-2"
           />
 
           {/* Continuous Typewriter Bio & Say hi Action */}
           <TypewriterIntro
             onNavigate={onNavigate}
             soundEnabled={soundEnabled}
-            className="w-full mt-4 sm:mt-5 select-none pointer-events-auto"
+            className="w-full mt-3 sm:mt-4 select-none pointer-events-auto"
           />
         </div>
 
