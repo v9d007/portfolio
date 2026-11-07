@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Wall from './components/Wall'
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [isBlueprint, setIsBlueprint] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(true)
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
@@ -25,11 +25,16 @@ function App() {
 
     const timer = setTimeout(() => {
       setIsLoading(false)
-      const scroll = new URLSearchParams(window.location.search).get('scroll')
-      if (scroll) {
-        document.getElementById(scroll)?.scrollIntoView()
+      const scrollY = new URLSearchParams(window.location.search).get('scrollY')
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY, 10))
+      } else {
+        const scroll = new URLSearchParams(window.location.search).get('scroll')
+        if (scroll) {
+          document.getElementById(scroll)?.scrollIntoView()
+        }
       }
-    }, 500)
+    }, 100)
 
     return () => clearTimeout(timer)
   }, [theme])

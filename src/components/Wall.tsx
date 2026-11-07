@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Notch, { type NavTab } from './Notch'
 import HomeStage from './HomeStage'
 import ProjectRoll from './ProjectRoll'
@@ -25,6 +25,14 @@ const Wall = ({
   setTheme
 }: WallProps) => {
   const [activeTab, setActiveTab] = useState<NavTab>('home')
+
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '')
+    if (hash) {
+      setActiveTab(hash as NavTab)
+      document.getElementById(hash)?.scrollIntoView()
+    }
+  }, [])
 
   const handleNavigate = (tab: NavTab) => {
     setActiveTab(tab)
