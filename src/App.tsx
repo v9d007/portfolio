@@ -25,6 +25,10 @@ function App() {
 
     const timer = setTimeout(() => {
       setIsLoading(false)
+      const scroll = new URLSearchParams(window.location.search).get('scroll')
+      if (scroll) {
+        document.getElementById(scroll)?.scrollIntoView()
+      }
     }, 500)
 
     return () => clearTimeout(timer)

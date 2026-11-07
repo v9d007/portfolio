@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { PostageStampBorder } from './PostageStampBorder'
-import { Briefcase, Smartphone, Layers, GraduationCap } from 'lucide-react'
 import { playSound } from '../utils/audio'
+import { GraduationCap, Smartphone, Layers } from 'lucide-react'
 
 interface ExperienceViewProps {
   soundEnabled: boolean
@@ -15,7 +15,7 @@ interface ExperienceItem {
   period: string
   role: string
   type: string
-  icon: 'partner' | 'compass' | 'native' | 'iitk'
+  logoType: 'xoxoday' | 'giift' | 'compass' | 'iitk'
   bullets: string[]
 }
 
@@ -23,11 +23,11 @@ const experiences: ExperienceItem[] = [
   {
     id: 'xoxoday-partner',
     num: '01',
-    company: 'Xoxoday (Channel Partner)',
-    period: "Jul'19 - Present",
-    role: 'Lead / Senior Mobile Engineer',
-    type: 'React Native (TypeScript) & Apollo GraphQL',
-    icon: 'partner',
+    company: 'Xoxoday',
+    period: '2023 - Present',
+    role: 'Lead Mobile Engineer',
+    type: 'React Native & Apollo GraphQL',
+    logoType: 'xoxoday',
     bullets: [
       'Architected an end-to-end partner platform using React Native (TypeScript) with a custom Apollo GraphQL wrapper layer, reducing redundant network payloads by 35% and shielding backend endpoints.',
       'Delivered an intuitive Store Locator and live navigation feature using Geolocation APIs, battery-optimized background GPS polling, and native deep linking, driving a 25% increase in partner store redemptions.',
@@ -41,9 +41,9 @@ const experiences: ExperienceItem[] = [
     num: '02',
     company: 'Giift Compass',
     period: '2021 - 2024',
-    role: 'Senior Mobile Engineer & Architect',
-    type: 'Expo DevClient (CNG) & B2B2C Platform',
-    icon: 'compass',
+    role: 'Senior Mobile Architect',
+    type: 'Expo DevClient (CNG) • B2B2C',
+    logoType: 'giift',
     bullets: [
       'Spearheaded greenfield architecture and 0 → 1 development of Giift Compass, an enterprise B2B2C rewards platform using React Native (TypeScript) and Expo DevClient (Continuous Native Generation).',
       'Automated mobile CI/CD release pipelines using EAS Build, EAS Submit, and GitHub Actions; governed store compliance, code-signing, and publishing across Apple App Store and Google Play Console, slashing deployment turnaround to under 30 minutes.',
@@ -55,11 +55,11 @@ const experiences: ExperienceItem[] = [
   {
     id: 'compass-native',
     num: '03',
-    company: 'Compass (Native iOS)',
+    company: 'Compass iOS',
     period: '2019 - 2021',
     role: 'Senior iOS Systems Engineer',
-    type: 'UIKit, Auto Layout & Swift Concurrency',
-    icon: 'native',
+    type: 'UIKit, Auto Layout & 60 FPS',
+    logoType: 'compass',
     bullets: [
       'Engineered scalable, interactive native iOS interfaces using UIKit, Auto Layout, and SwiftUI interop, adhering strictly to Apple Human Interface Guidelines (HIG).',
       'Implemented fluid custom vector animations and visual transitions using UIBezierPath and native Swift Core Animation frameworks, ensuring smooth 60 FPS rendering.',
@@ -74,7 +74,7 @@ const experiences: ExperienceItem[] = [
     period: '2015 - 2019',
     role: 'B.Tech in Electrical Engineering',
     type: 'Alma Mater, Kanpur',
-    icon: 'iitk',
+    logoType: 'iitk',
     bullets: [
       'Graduated with strong foundations in Computer Systems, Discrete Mathematics, and Algorithmic Complexity.',
       'Deep coursework in Advanced Data Structures, Algorithms, Computer Architecture, and Digital Signal Processing.',
@@ -93,16 +93,41 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
     setActiveIndex(idx)
   }
 
-  const renderIcon = (type: ExperienceItem['icon']) => {
+  // Render vibrant, full-bleed circular brand badges matching yl0.me
+  const renderLogo = (type: ExperienceItem['logoType']) => {
     switch (type) {
-      case 'partner':
-        return <Briefcase className="text-[#7C3AED]" size={28} />
+      case 'xoxoday':
+        return (
+          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#FF512F] via-[#DD2476] to-[#7C3AED] p-0.5 flex items-center justify-center shadow-md">
+            <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#FF512F] to-[#DD2476] flex items-center justify-center text-white">
+              <span className="font-extrabold text-2xl font-mono tracking-tighter">X</span>
+            </div>
+          </div>
+        )
+      case 'giift':
+        return (
+          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#00F2FE] via-[#4FACFE] to-[#0072FF] p-0.5 flex items-center justify-center shadow-md">
+            <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#00F2FE] to-[#0072FF] flex items-center justify-center text-white">
+              <Smartphone size={26} className="text-white drop-shadow-sm" />
+            </div>
+          </div>
+        )
       case 'compass':
-        return <Smartphone className="text-cyan-600 dark:text-cyan-400" size={28} />
-      case 'native':
-        return <Layers className="text-indigo-600 dark:text-indigo-400" size={28} />
+        return (
+          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#667EEA] via-[#764BA2] to-[#4338CA] p-0.5 flex items-center justify-center shadow-md">
+            <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#667EEA] to-[#764BA2] flex items-center justify-center text-white">
+              <Layers size={26} className="text-white drop-shadow-sm" />
+            </div>
+          </div>
+        )
       case 'iitk':
-        return <GraduationCap className="text-amber-500" size={28} />
+        return (
+          <div className="w-16 h-16 rounded-full bg-gradient-to-tr from-[#1E3A8A] via-[#2563EB] to-[#D97706] p-0.5 flex items-center justify-center shadow-md">
+            <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#1E3A8A] to-[#D97706] flex items-center justify-center text-white">
+              <GraduationCap size={28} className="text-white drop-shadow-sm" />
+            </div>
+          </div>
+        )
     }
   }
 
@@ -123,62 +148,68 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
           </div>
         </div>
 
-        {/* Subtitle (Clean row without back button) */}
-        <div className="mb-6">
+        {/* Subtitle */}
+        <div className="mb-8">
           <p className="text-xs sm:text-sm font-mono text-[#5A6272] dark:text-[#C5CBD8] max-w-2xl leading-relaxed">
-            Career platforms and high-scale production systems I have built. Scroll sideways or click any card to inspect full technical milestones.
+            Places I have worked and what I built there. Scroll sideways or click to browse.
           </p>
         </div>
 
-        {/* Horizontal Stamp Roll Carousel - Larger Cards & Thin Razor-Sharp Postage Edge */}
+        {/* Horizontal Stamp Roll Carousel - Authentic Philatelic Stamps matching yl0.me exactly */}
         <div className="w-full overflow-x-auto no-scrollbar py-6">
-          <div className="flex items-stretch gap-6 sm:gap-7 min-w-max mx-auto px-4 justify-start sm:justify-center">
+          <div className="flex items-stretch gap-6 sm:gap-8 min-w-max mx-auto px-4 justify-start sm:justify-center">
             {experiences.map((exp, idx) => {
               const isActive = idx === activeIndex
               return (
                 <motion.div
                   key={exp.id}
-                  whileHover={{ y: -8, transition: { type: 'spring', stiffness: 320, damping: 18 } }}
+                  whileHover={{ y: -8, transition: { type: 'spring', stiffness: 350, damping: 18 } }}
                   onClick={() => handleSelect(idx)}
-                  className={`relative w-72 sm:w-80 h-[370px] sm:h-[400px] rounded p-7 sm:p-8 cursor-pointer flex flex-col justify-between text-[#151922] transition-all bg-[#FDFDFB] ${
-                    isActive
-                      ? 'scale-[1.03] shadow-xl'
-                      : 'opacity-90 hover:opacity-100 shadow-md'
-                  }`}
+                  className="relative w-[260px] sm:w-[275px] h-[345px] sm:h-[365px] cursor-pointer flex flex-col justify-between text-[#151922] transition-transform select-none"
                   style={{
-                    boxShadow: isActive
-                      ? '0 1px 2px rgba(0,0,0,0.04), 0 16px 32px -8px rgba(0,0,0,0.14)'
-                      : '0 1px 2px rgba(0,0,0,0.03), 0 8px 18px -4px rgba(0,0,0,0.08)'
+                    filter: isActive
+                      ? 'drop-shadow(0 2px 5px rgba(124,58,237,0.18)) drop-shadow(0 14px 24px rgba(0,0,0,0.18))'
+                      : 'drop-shadow(0 1px 3px rgba(21,25,34,0.10)) drop-shadow(0 8px 16px rgba(0,0,0,0.08))'
                   }}
                 >
-                  {/* Authentic Postage Stamp Scalloped Edge with Hairline Non-Scaling Stroke */}
+                  {/* Authentic Philatelic Scalloped Stamp Paper (Dense 18x24 scallops from yl0.me) */}
                   <PostageStampBorder
                     isActive={isActive}
                     fillColor="#FDFDFB"
-                    strokeColor={isActive ? '#7C3AED' : 'rgba(21, 25, 34, 0.12)'}
-                    strokeWidth={isActive ? 1.0 : 0.55}
+                    strokeColor={isActive ? '#7C3AED' : 'rgba(21, 25, 34, 0.20)'}
+                    strokeWidth={isActive ? 0.75 : 0.45}
                   />
 
-                  {/* Stamp Contents */}
-                  <div className="relative z-10 flex flex-col items-center text-center mt-1">
-                    {/* Stamp Circular Icon Badge */}
-                    <div className="w-16 h-16 rounded-full bg-slate-100/90 p-2.5 flex items-center justify-center shadow-inner mb-5 border border-slate-200/80">
-                      {renderIcon(exp.icon)}
-                    </div>
+                  {/* Inner Dashed Border Frame matching philatelic stamp design in yl0.me */}
+                  <div
+                    className={`absolute inset-[15px] sm:inset-[17px] border border-dashed rounded-[1px] pointer-events-none transition-colors duration-300 ${
+                      isActive
+                        ? 'border-[#7C3AED] dark:border-[#7C3AED]'
+                        : 'border-slate-300 dark:border-slate-400'
+                    }`}
+                  />
 
-                    <h3 className="text-lg sm:text-xl font-bold text-[#151922] leading-snug tracking-tight mb-1.5">
+                  {/* Top: Brand Circular Logo Badge */}
+                  <div className="relative z-10 pt-7 flex flex-col items-center">
+                    {renderLogo(exp.logoType)}
+                  </div>
+
+                  {/* Middle: Company Name & Period */}
+                  <div className="relative z-10 px-4 text-center -mt-1">
+                    <h3 className="text-base sm:text-lg font-bold text-[#151922] font-mono tracking-tight leading-snug">
                       {exp.company}
                     </h3>
-                    <p className="text-xs sm:text-sm font-mono text-slate-500 font-medium">
+                    <p className="text-xs sm:text-[13px] font-mono text-slate-500 font-medium mt-1">
                       {exp.period}
                     </p>
                   </div>
 
-                  <div className="relative z-10 text-center border-t border-slate-200/90 pt-4">
-                    <p className="text-sm font-bold text-[#151922] leading-snug">
+                  {/* Bottom: Role & Employment Type */}
+                  <div className="relative z-10 pb-6 px-4 text-center">
+                    <p className="text-xs sm:text-[13px] font-bold text-[#2A2F3A] font-mono leading-tight">
                       {exp.role}
                     </p>
-                    <p className="text-[11px] font-mono text-slate-500 mt-1 font-medium">
+                    <p className="text-[11px] font-mono text-slate-400 mt-1 font-medium">
                       {exp.type}
                     </p>
                   </div>
