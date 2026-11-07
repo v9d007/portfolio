@@ -227,13 +227,13 @@ const projects: ProjectData[] = [
     architectureDetails: {
       overview:
         'C++ and Swift implementations of segment trees, fenwick trees, max-flow min-cut algorithms, dynamic programming optimizations, and lock-free concurrency primitives.',
-      patterns: ['C++', 'Swift Algorithms', 'Data Structures', 'IIT Kanpur AIR 110'],
+      patterns: ['C++', 'Swift Algorithms', 'Data Structures', 'IIT Kanpur Core'],
       highlights: [
-        'JEE Advanced All India Rank 110 out of 200,000+ candidates',
+        'Rigorous algorithmic problem solving and competitive systems programming',
         'IIT Kanpur Electrical Engineering graduate (2015-2019)',
         'Extensive algorithmic problem-solving across LeetCode & Codeforces'
       ],
-      metrics: 'AIR 110 • O(1) Cache-Conscious Optimization'
+      metrics: 'O(1) Cache-Conscious Optimization • Scalable Primitives'
     },
     tags: ['Algorithms', 'C++', 'Swift', 'IIT Kanpur', 'Data Structures'],
     githubUrl: 'https://github.com/v9d007',

@@ -43,7 +43,7 @@ const Hero = ({ soundEnabled }: HeroProps) => {
 
   const stats = [
     { label: 'Experience', value: '5+ Years', sub: 'Mobile & iOS Engineering' },
-    { label: 'JEE Advanced', value: 'AIR 110', sub: 'IIT Kanpur Alumnus' },
+    { label: 'Education', value: 'IIT Kanpur', sub: 'B.Tech EE Alumnus' },
     { label: 'Production Apps', value: '8+ Apps', sub: 'App Store & Google Play' },
     { label: 'Core Stack', value: 'Swift & RN', sub: 'Clean Architecture' },
   ]

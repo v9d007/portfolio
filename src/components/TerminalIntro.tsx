@@ -42,7 +42,7 @@ const TerminalIntro = ({ onNavigate, soundEnabled }: TerminalIntroProps) => {
           </p>
           <p className="text-gray-300">
             Senior Mobile &amp; iOS Systems Engineer. Graduate of{' '}
-            <span className="text-amber-300 font-semibold">IIT Kanpur</span> (JEE Adv AIR 110).
+            <span className="text-amber-300 font-semibold">IIT Kanpur</span> (EE '19).
           </p>
           <p className="text-gray-400">
             Specializing in Swift 6 strict concurrency, fluid 60 FPS architectures, and high-scale enterprise mobile apps at{' '}

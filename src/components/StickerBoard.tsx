@@ -48,7 +48,7 @@ const StickerBoard = ({ soundEnabled }: StickerBoardProps) => {
     {
       id: 'iit-kanpur',
       title: 'IIT Kanpur',
-      sub: 'JEE Adv AIR 110',
+      sub: 'B.Tech EE \'19',
       icon: GraduationCap,
       color: 'from-amber-500/25 via-yellow-500/20 to-orange-500/20 text-amber-300 border-amber-500/40',
       tapeColor: 'bg-amber-400/25',

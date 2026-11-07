@@ -33,7 +33,7 @@ const TechTokensOrbit = ({ soundEnabled }: TechTokensOrbitProps) => {
     { id: 'swift', label: 'Swift 6', spec: 'Strict Concurrency', Icon: SwiftIcon, angle: -90, radius: 210, glow: 'hover:shadow-orange-500/30 border-orange-500/30' },
     { id: 'swiftui', label: 'SwiftUI', spec: 'iOS 18+ Declarative', Icon: SwiftUIIcon, angle: -55, radius: 215, glow: 'hover:shadow-blue-500/30 border-blue-500/30' },
     { id: 'apple', label: 'iOS Core', spec: 'StoreKit & CoreData', Icon: AppleIcon, angle: -20, radius: 210, glow: 'hover:shadow-slate-500/30 border-slate-500/30' },
-    { id: 'iitk', label: 'IIT Kanpur', spec: 'AIR 110 • EE \'19', Icon: IITKIcon, angle: 15, radius: 220, glow: 'hover:shadow-amber-500/30 border-amber-500/30' },
+    { id: 'iitk', label: 'IIT Kanpur', spec: 'B.Tech EE \'19', Icon: IITKIcon, angle: 15, radius: 220, glow: 'hover:shadow-amber-500/30 border-amber-500/30' },
     { id: 'python', label: 'Python', spec: 'Systems & Data', Icon: PythonIcon, angle: 50, radius: 210, glow: 'hover:shadow-yellow-500/30 border-yellow-500/30' },
     { id: 'cpp', label: 'C++', spec: 'Low Latency DSA', Icon: CppIcon, angle: 85, radius: 215, glow: 'hover:shadow-cyan-500/30 border-cyan-500/30' },
     { id: 'typescript', label: 'TypeScript', spec: 'Strict Types', Icon: TypeScriptIcon, angle: 120, radius: 210, glow: 'hover:shadow-blue-500/30 border-blue-500/30' },

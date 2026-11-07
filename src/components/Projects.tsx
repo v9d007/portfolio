@@ -256,7 +256,7 @@ const Projects = () => {
       description:
         'Algorithmic problem solutions across dynamic programming, trees, graphs, arrays, and two-pointer patterns. Engineered with clean, idiomatic TypeScript and JavaScript, backed by an IIT Kanpur engineering foundation.',
       deepDive:
-        'A comprehensive repository of algorithmic challenges solved with a focus on optimal asymptotic bounds, memory trade-offs, and clean modular code. Demonstrates core computer science fundamentals from IIT Kanpur Electrical Engineering and JEE Advanced AIR 110.',
+        'A comprehensive repository of algorithmic challenges solved with a focus on optimal asymptotic bounds, memory trade-offs, and clean modular code. Demonstrates core computer science fundamentals from IIT Kanpur Electrical Engineering.',
       category: 'algorithms',
       tag: 'Algorithms & Data Structures',
       technologies: ['Algorithms', 'Data Structures', 'TypeScript', 'JavaScript', 'Problem Solving'],

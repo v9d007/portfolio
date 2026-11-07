@@ -114,7 +114,7 @@ const DeveloperPass = ({ soundEnabled }: DeveloperPassProps) => {
           </p>
           <div className="flex items-center gap-1 text-[9px] font-mono text-amber-600 dark:text-amber-400 pt-0.5">
             <Award size={10} />
-            <span>IIT Kanpur • AIR 110</span>
+            <span>IIT Kanpur • B.Tech EE '19</span>
           </div>
         </div>
 

@@ -125,7 +125,7 @@ export const IITKIcon = () => (
       fontWeight="bold"
       fontFamily="monospace"
     >
-      AIR 110
+      EE '19
     </text>
   </svg>
 )

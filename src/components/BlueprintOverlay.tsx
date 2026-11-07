@@ -79,7 +79,7 @@ const BlueprintOverlay = ({ isBlueprint }: BlueprintOverlayProps) => {
         <div className="space-y-0.5 text-gray-300">
           <div>ENGINEER: VINOD KUMAR SINGH</div>
           <div>DISCIPLINE: SENIOR MOBILE ARCHITECT</div>
-          <div>ALMA MATER: IIT KANPUR (AIR 110)</div>
+          <div>ALMA MATER: IIT KANPUR (B.TECH EE '19)</div>
           <div>SPEC: SWIFT 6 // CONCURRENCY // 60 FPS</div>
           <div className="text-emerald-400 font-bold mt-1">STATUS: RELEASE TO PRODUCTION</div>
         </div>

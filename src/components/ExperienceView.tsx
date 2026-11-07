@@ -36,7 +36,7 @@ const experiences = [
     description:
       'Grounded in rigorous algorithmic fundamentals, digital signal processing, systems architecture, and competitive programming.',
     achievements: [
-      'Secured All India Rank (AIR) 110 in JEE Advanced out of 200,000+ nationwide aspirants (top 0.05% percentile).',
+      'Graduated with strong foundations in Computer Systems, Discrete Mathematics, and Algorithmic Complexity.',
       'Strong coursework: Advanced Data Structures, Algorithms, Computer Systems, Microprocessors.',
       'Active participant in algorithmic programming contests and competitive problem solving.'
     ],

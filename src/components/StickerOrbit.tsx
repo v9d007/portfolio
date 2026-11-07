@@ -60,7 +60,7 @@ const StickerOrbit = ({ soundEnabled }: StickerOrbitProps) => {
     {
       id: 'iit-kanpur',
       title: 'IIT Kanpur',
-      subtitle: 'JEE Adv AIR 110',
+      subtitle: 'EE \'19 Alumnus',
       icon: GraduationCap,
       bg: 'bg-amber-500/15 backdrop-blur-md',
       border: 'border-amber-500/40',

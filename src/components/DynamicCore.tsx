@@ -20,7 +20,7 @@ const DynamicCore = ({ soundEnabled, onStatusChange }: DynamicCoreProps) => {
     { title: 'SWIFT 6 CONCURRENCY', sub: 'Zero Data Races • 60 FPS', tag: 'STABLE' },
     { title: 'ENTERPRISE SCALE', sub: '10M+ Events @ Xoxoday', tag: 'ACTIVE' },
     { title: 'SYSTEM: AWAKENING', sub: 'Solo Leveling Engine', tag: 'SYNC' },
-    { title: 'IIT KANPUR EE \'19', sub: 'JEE Adv All India Rank 110', tag: 'HONOR' }
+    { title: 'IIT KANPUR EE \'19', sub: 'Electrical Engineering Alumnus', tag: 'ALUMNI' }
   ]
 
   // Track cursor position anywhere across the viewport

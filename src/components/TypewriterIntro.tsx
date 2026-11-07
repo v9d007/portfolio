@@ -12,7 +12,7 @@ interface TypewriterIntroProps {
 const TypewriterIntro = ({ onNavigate, soundEnabled }: TypewriterIntroProps) => {
   const fullText = `Hey there, I'm Vinod Kumar Singh!
 
-Senior Mobile & iOS Systems Engineer. Alumnus of IIT Kanpur (JEE Adv AIR 110).
+Senior Mobile & iOS Systems Engineer. Alumnus of IIT Kanpur.
 
 Specializing in Swift 6 strict concurrency, fluid 60 FPS architectures, and distributed mobile systems at Xoxoday (Giift).
 
@@ -54,8 +54,8 @@ Crafting resilient, zero data-race applications for millions of users worldwide.
                     Senior Mobile &amp; iOS Systems Engineer. Alumnus of{' '}
                     <span className="font-semibold text-amber-600 dark:text-amber-400">
                       IIT Kanpur
-                    </span>{' '}
-                    (JEE Adv AIR 110).
+                    </span>
+                    .
                   </>
                 ) : paragraph.includes('Xoxoday (Giift)') ? (
                   <>

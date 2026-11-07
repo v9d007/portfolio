@@ -19,7 +19,6 @@ const About = () => {
   const codeSnippet = `// Mobile Systems Architect
 final class VinodKumarSingh: MobileEngineer {
     let education    = "IIT Kanpur (B.Tech, EE '19)"
-    let rank         = "JEE Advanced AIR 110"
     let coreStack    = ["Swift 6", "SwiftUI", "React Native", "SwiftData"]
     let architecture = ["Clean Architecture", "MVVM", "Actor Isolation"]
     let location     = "Bangalore, India"
@@ -61,14 +60,14 @@ final class VinodKumarSingh: MobileEngineer {
 
   const achievements = [
     {
-      title: 'JEE Advanced All India SC Rank 110',
-      desc: 'Selected in top tier among 1.5 million candidates nationwide.',
-      highlight: 'AIR 110'
-    },
-    {
       title: 'IIT Kanpur Graduate (B.Tech EE)',
       desc: 'Deep analytical foundation in electrical engineering and computation.',
       highlight: 'IIT Kanpur'
+    },
+    {
+      title: 'Senior Mobile Systems Architect',
+      desc: 'Architecting 60 FPS offline-first apps serving millions of users.',
+      highlight: 'Senior iOS'
     },
     {
       title: 'Dakshana Scholar & Super-30 Alumnus',
@@ -151,7 +150,6 @@ final class VinodKumarSingh: MobileEngineer {
                   <span className="text-purple-400">final class </span>
                   <span className="text-indigo-300 font-semibold">VinodKumarSingh</span>: <span className="text-cyan-300">MobileEngineer</span> &#123;{'\n'}
                   {'  '}<span className="text-purple-400">let </span><span className="text-indigo-200">education</span>    = <span className="text-emerald-300">"IIT Kanpur (B.Tech, EE '19)"</span>{'\n'}
-                  {'  '}<span className="text-purple-400">let </span><span className="text-indigo-200">rank</span>         = <span className="text-emerald-300">"JEE Advanced AIR 110"</span>{'\n'}
                   {'  '}<span className="text-purple-400">let </span><span className="text-indigo-200">coreStack</span>    = [<span className="text-emerald-300">"Swift 6"</span>, <span className="text-emerald-300">"SwiftUI"</span>, <span className="text-emerald-300">"React Native"</span>, <span className="text-emerald-300">"SwiftData"</span>]{'\n'}
                   {'  '}<span className="text-purple-400">let </span><span className="text-indigo-200">architecture</span> = [<span className="text-emerald-300">"Clean Architecture"</span>, <span className="text-emerald-300">"MVVM"</span>, <span className="text-emerald-300">"Actor Isolation"</span>]{'\n'}
                   {'  '}<span className="text-purple-400">let </span><span className="text-indigo-200">location</span>     = <span className="text-emerald-300">"Bangalore, India"</span>{'\n'}

@@ -55,7 +55,7 @@ const skillCategories = [
     icon: Code2,
     color: 'text-amber-400 border-amber-500/40 bg-amber-500/10',
     skills: [
-      { name: 'Advanced DSA', level: 'AIR 110', desc: 'Graph theory, segment trees, dynamic programming' },
+      { name: 'Advanced DSA', level: 'Expert', desc: 'Graph theory, segment trees, dynamic programming' },
       { name: 'C++ Systems', level: 'Proficient', desc: 'Low-latency algorithms, memory management' },
       { name: 'IIT Kanpur Graduate', level: 'B.Tech EE', desc: 'Rigorous engineering & systems background' },
       { name: 'TypeScript & Next.js', level: 'Advanced', desc: 'Full-stack tooling & web dashboards' },
