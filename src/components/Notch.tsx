@@ -26,20 +26,20 @@ const Notch = ({
   soundEnabled,
   setSoundEnabled
 }: NotchProps) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   const tabs: { id: NavTab; label: string }[] = [
-    { id: 'home', label: 'home' },
-    { id: 'projects', label: 'projects' },
-    { id: 'experience', label: 'experience' },
-    { id: 'skills', label: 'skills' },
-    { id: 'contact', label: 'contact' }
+    { id: 'home', label: 'Home' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'contact', label: 'Contact' }
   ]
 
   const handleTabClick = (tab: NavTab) => {
     playSound('click', soundEnabled)
     setActiveTab(tab)
-    setMobileMenuOpen(false)
+    setMenuOpen(false)
   }
 
   const handleBlueprintToggle = () => {
@@ -61,130 +61,78 @@ const Notch = ({
   }
 
   return (
-    <header className="fixed top-0 left-1/2 -translate-x-1/2 z-50">
+    <header className="fixed top-0 left-1/2 -translate-x-1/2 z-50 select-none">
+      {/* Sleek Minimalist Notch Pill (Matching yl0.me) */}
       <motion.nav
-        initial={{ y: -50, opacity: 0 }}
+        initial={{ y: -40, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: 'spring', damping: 20, stiffness: 220 }}
-        className={`relative flex items-center gap-1 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 rounded-b-2xl border-x border-b shadow-2xl transition-all duration-300 ${
+        className={`flex items-center gap-2 sm:gap-3 px-3.5 py-1.5 rounded-b-xl border-x border-b shadow-xl transition-all duration-300 ${
           isBlueprint
-            ? 'bg-[#031c38]/95 border-[#00f0ff]/50 shadow-[#00f0ff]/20 text-[#00f0ff]'
-            : 'bg-[#090a10]/90 backdrop-blur-xl border-white/10 shadow-black/60 text-white'
+            ? 'bg-[#031c38]/95 border-[#00f0ff]/50 text-[#00f0ff] shadow-[#00f0ff]/20'
+            : 'bg-[#09090b] border-black/40 text-white shadow-black/40'
         }`}
       >
-        {/* Notch Status Dot */}
-        <div className="hidden sm:flex items-center gap-1.5 mr-1 pl-1">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_#34d399] animate-pulse"></span>
-          <span className="text-[10px] font-mono tracking-wider opacity-70">V9D</span>
-        </div>
+        {/* 1. Blueprint CAD Mode Button */}
+        <button
+          onClick={handleBlueprintToggle}
+          title={isBlueprint ? 'Exit CAD Blueprint' : 'Enter CAD Blueprint'}
+          className={`p-1 rounded-md transition-colors ${
+            isBlueprint
+              ? 'text-[#00f0ff] shadow-[0_0_10px_#00f0ff]'
+              : 'text-gray-400 hover:text-white'
+          }`}
+        >
+          <Compass size={15} className={isBlueprint ? 'animate-spin' : ''} />
+        </button>
 
-        {/* Desktop Tabs */}
-        <div className="hidden md:flex items-center gap-1">
-          {tabs.map((tab) => {
-            const isActive = activeTab === tab.id
-            return (
-              <button
-                key={tab.id}
-                onClick={() => handleTabClick(tab.id)}
-                onMouseEnter={() => playSound('hover', soundEnabled)}
-                className={`relative px-3 py-1 text-xs font-mono tracking-wide rounded-lg transition-colors capitalize ${
-                  isActive
-                    ? 'text-white font-semibold'
-                    : 'text-gray-400 hover:text-gray-200'
-                }`}
-              >
-                {isActive && (
-                  <motion.div
-                    layoutId="activeTabBadge"
-                    className={`absolute inset-0 rounded-lg -z-10 ${
-                      isBlueprint
-                        ? 'bg-[#00f0ff]/20 border border-[#00f0ff]/60'
-                        : 'bg-white/10 border border-white/15'
-                    }`}
-                    transition={{ type: 'spring', bounce: 0.2, duration: 0.4 }}
-                  />
-                )}
-                {tab.label}
-              </button>
-            )
-          })}
-        </div>
+        {/* 2. Menu Navigation Toggle Button (==) */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          title="Toggle Navigation Menu"
+          className="p-1 rounded-md text-gray-300 hover:text-white transition-colors flex items-center justify-center"
+        >
+          {menuOpen ? <X size={15} /> : <Menu size={15} />}
+        </button>
 
-        {/* Mobile active indicator text */}
-        <div className="md:hidden flex items-center">
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono uppercase bg-white/5 rounded-lg border border-white/10"
-          >
-            <span>{activeTab}</span>
-            {mobileMenuOpen ? <X size={12} /> : <Menu size={12} />}
-          </button>
-        </div>
+        {/* 3. Theme Toggle Button */}
+        <button
+          onClick={handleThemeToggle}
+          title="Toggle Theme"
+          className="p-1 rounded-md text-gray-400 hover:text-white transition-colors"
+        >
+          {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
+        </button>
 
-        {/* Divider */}
-        <div className="w-[1px] h-4 bg-white/15 mx-1"></div>
-
-        {/* Functional Control Buttons */}
-        <div className="flex items-center gap-1">
-          {/* Blueprint Mode Toggle */}
-          <button
-            onClick={handleBlueprintToggle}
-            title={isBlueprint ? 'Exit Blueprint CAD' : 'Enter Blueprint CAD Mode'}
-            className={`p-1.5 rounded-lg text-xs transition-all relative group ${
-              isBlueprint
-                ? 'bg-[#00f0ff] text-black shadow-[0_0_12px_#00f0ff]'
-                : 'text-gray-400 hover:text-white hover:bg-white/10'
-            }`}
-          >
-            <Compass size={14} className={isBlueprint ? 'animate-spin' : ''} />
-            <span className="sr-only">Blueprint Mode</span>
-            {/* Tooltip */}
-            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded bg-black/90 text-[10px] font-mono text-cyan-300 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap border border-cyan-500/30">
-              CAD Blueprint
-            </span>
-          </button>
-
-          {/* Theme Toggle */}
-          <button
-            onClick={handleThemeToggle}
-            title="Toggle Dark / Light Theme"
-            className="p-1.5 rounded-lg text-xs text-gray-400 hover:text-white hover:bg-white/10 transition-colors"
-          >
-            {theme === 'dark' ? <Sun size={14} /> : <Moon size={14} />}
-          </button>
-
-          {/* Sound Toggle */}
-          <button
-            onClick={handleSoundToggle}
-            title={soundEnabled ? 'Mute Sound' : 'Enable Tactile Sound'}
-            className={`p-1.5 rounded-lg text-xs transition-colors ${
-              soundEnabled
-                ? 'text-cyan-400 hover:bg-cyan-500/10'
-                : 'text-gray-500 hover:text-gray-300 hover:bg-white/10'
-            }`}
-          >
-            {soundEnabled ? <Volume2 size={14} /> : <VolumeX size={14} />}
-          </button>
-        </div>
+        {/* 4. Sound Toggle Button */}
+        <button
+          onClick={handleSoundToggle}
+          title={soundEnabled ? 'Mute Sounds' : 'Enable Tactile Sounds'}
+          className={`p-1 rounded-md transition-colors ${
+            soundEnabled ? 'text-cyan-400' : 'text-gray-500 hover:text-gray-300'
+          }`}
+        >
+          {soundEnabled ? <Volume2 size={15} /> : <VolumeX size={15} />}
+        </button>
       </motion.nav>
 
-      {/* Mobile Drawer Menu */}
+      {/* Floating Dropdown Navigation Pill */}
       <AnimatePresence>
-        {mobileMenuOpen && (
+        {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            className="md:hidden mt-2 p-2 rounded-2xl bg-[#090a10]/95 backdrop-blur-xl border border-white/15 shadow-2xl flex flex-col gap-1 w-48 mx-auto"
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 4, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            className="mt-1 p-2 rounded-2xl bg-[#09090b]/95 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-col gap-1 w-44 mx-auto"
           >
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => handleTabClick(tab.id)}
-                className={`w-full text-left px-3 py-1.5 text-xs font-mono rounded-lg capitalize ${
+                className={`w-full text-left px-3 py-1.5 text-xs font-mono rounded-lg transition-colors capitalize ${
                   activeTab === tab.id
-                    ? 'bg-indigo-600/30 text-indigo-300 font-semibold border border-indigo-500/30'
-                    : 'text-gray-300 hover:bg-white/5'
+                    ? 'bg-white/15 text-white font-bold'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
                 }`}
               >
                 {tab.label}
