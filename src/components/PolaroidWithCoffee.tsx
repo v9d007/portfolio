@@ -1,102 +1,72 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { playSound } from '../utils/audio'
 import { WashiTape } from './WashiTape'
+import { CoffeeGuy } from './CoffeeGuy'
 import { X, ArrowRight } from 'lucide-react'
 
 interface PolaroidWithCoffeeProps {
-  soundEnabled: boolean
   className?: string
+  soundEnabled?: boolean
 }
 
-const PolaroidWithCoffee = ({ soundEnabled, className = '' }: PolaroidWithCoffeeProps) => {
+const PolaroidWithCoffee = ({ className = '' }: PolaroidWithCoffeeProps) => {
   const [isCupOpen, setIsCupOpen] = useState(false)
 
-  const handleCupClick = () => {
-    playSound('pop', soundEnabled)
-    setIsCupOpen(!isCupOpen)
-  }
-
   return (
-    <div className={`relative flex flex-col items-center select-none ${className}`}>
-      {/* 1. Authentic Paper White Polaroid Card */}
+    <div className={`relative flex items-end gap-4 sm:gap-5 select-none ${className}`}>
+      {/* 1. Authentic Paper White Polaroid Card matching yl0.me */}
       <motion.figure
         initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
         animate={{ opacity: 1, scale: 1, rotate: -3.4 }}
         whileHover={{
-          scale: 1.04,
+          scale: 1.05,
           rotate: -1.5,
           y: -3,
           transition: { type: 'spring', stiffness: 350, damping: 18 }
         }}
-        onClick={() => playSound('pop', soundEnabled)}
         className="relative cursor-pointer group"
+        onClick={() => setIsCupOpen(!isCupOpen)}
       >
-        {/* Washi Tape Strip Left */}
+        {/* Left Washi Tape Strip */}
         <div
-          className="absolute -top-3.5 -left-4 w-12 sm:w-14 h-4 z-20 pointer-events-none"
+          className="absolute -top-3 -left-3.5 w-11 sm:w-12 h-3.5 z-20 pointer-events-none"
           style={{ transform: 'rotate(-38.6deg)' }}
         >
           <WashiTape />
         </div>
 
-        {/* Washi Tape Strip Right */}
+        {/* Right Washi Tape Strip */}
         <div
-          className="absolute -top-3.5 -right-4 w-12 sm:w-14 h-4 z-20 pointer-events-none"
+          className="absolute -top-3 -right-3.5 w-11 sm:w-12 h-3.5 z-20 pointer-events-none"
           style={{ transform: 'rotate(45.4deg)' }}
         >
           <WashiTape />
         </div>
 
-        {/* Physical Paper White Frame (remains #FBFBF9 in both light & dark mode for wall contrast) */}
+        {/* Polaroid Paper White Body (86px - 92px width matching yl0.me) */}
         <div
-          className="relative rounded-[3px] bg-[#FBFBF9] text-[#151922] p-2 pb-3.5 sm:pb-4 w-28 sm:w-32 transition-shadow"
+          className="relative rounded-[2px] bg-[#FBFBF9] p-[6px] pb-3.5 sm:pb-4 w-[86px] sm:w-[94px] transition-shadow"
           style={{
             boxShadow:
-              '0 0 0 1px rgba(21,25,34,.06), 0 1px 2px rgba(21,25,34,.12), 0 8px 12px -5px rgba(21,25,34,.3), 0 16px 24px -14px rgba(21,25,34,.35)'
+              '0 0 0 1px rgba(21,25,34,.05), 0 1px 1px rgba(21,25,34,.12), 0 8px 10px -5px rgba(21,25,34,.3), 0 16px 22px -14px rgba(21,25,34,.3)'
           }}
         >
-          {/* Photo Window */}
-          <div className="relative aspect-square w-full rounded-[2px] overflow-hidden bg-[#ECEEF2] shadow-inner flex items-center justify-center">
-            <img
-              src="./avatar.png"
-              alt="Vinod Kumar Singh"
-              draggable={false}
-              className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-              onError={(e) => {
-                const target = e.currentTarget as HTMLImageElement
-                target.src =
-                  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
-              }}
-            />
-            {/* Subtle photographic reflection sheen */}
-            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none" />
-          </div>
-
-          {/* Polaroid Handwritten Caption */}
-          <div className="mt-2 text-center">
-            <p
-              className="text-xs sm:text-[13px] font-bold text-[#151922] leading-tight"
-              style={{ fontFamily: "'Caveat', cursive, sans-serif" }}
-            >
-              Vinod Kumar Singh
-            </p>
-            <p className="text-[8px] sm:text-[8.5px] font-mono text-[#5A6272] tracking-wider font-semibold mt-0.5">
-              IIT Kanpur • EE '19
-            </p>
+          {/* Photo Window (.ph) containing the Authentic Coffee Guy illustration */}
+          <div className="relative aspect-[1/1.02] w-full rounded-[1px] overflow-hidden bg-[#ECEEF2] text-[#151922] flex items-center justify-center p-1">
+            <CoffeeGuy className="w-[88%] h-auto" />
           </div>
         </div>
       </motion.figure>
 
-      {/* 2. Steaming Coffee Cup below the card (exact match to yl0.me) */}
-      <div className="relative mt-2.5 sm:mt-3 flex flex-col items-center">
+      {/* 2. Steaming Coffee Cup sitting on desk beside Polaroid (.cup) */}
+      <div className="relative pb-1 flex flex-col items-center">
         <button
-          onClick={handleCupClick}
+          onClick={() => setIsCupOpen(!isCupOpen)}
           aria-label="Buy me a cappuccino"
           type="button"
           className="group relative cursor-pointer outline-none transition-transform hover:scale-110 active:scale-95"
         >
-          <svg viewBox="0 0 46 58" className="w-8 sm:w-9 h-10 sm:h-11 overflow-visible" aria-hidden="true">
+          <svg viewBox="0 0 46 58" className="w-8 h-9 overflow-visible" aria-hidden="true">
             {/* Animated Rising Steam */}
             <g className="stroke-[#94A3B8] dark:stroke-[#64748B] fill-none stroke-[1.8] stroke-linecap-round">
               <motion.path
@@ -160,30 +130,29 @@ const PolaroidWithCoffee = ({ soundEnabled, className = '' }: PolaroidWithCoffee
               initial={{ opacity: 0, y: 6, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 4, scale: 0.95 }}
-              className="absolute left-1/2 -translate-x-1/2 top-12 z-50 w-56 p-2.5 rounded-xl bg-[#09090B] text-white dark:bg-[#F1F3F8] dark:text-[#12151B] shadow-2xl border border-white/10 dark:border-black/10 font-mono text-center"
+              className="absolute left-1/2 -translate-x-1/2 top-11 z-50 w-52 p-2.5 rounded-xl bg-[#09090B] text-white dark:bg-[#F1F3F8] dark:text-[#12151B] shadow-2xl border border-white/10 dark:border-black/10 font-mono text-center"
             >
               <div className="flex items-center justify-between pb-1.5 border-b border-white/10 dark:border-black/10 mb-2">
                 <span className="text-[10px] font-bold text-amber-400 dark:text-amber-600">
-                  COFFEE FUEL
+                  COFFEE
                 </span>
                 <button
                   onClick={() => setIsCupOpen(false)}
-                  className="p-0.5 rounded hover:bg-white/10 dark:hover:bg-black/10 text-slate-400 hover:text-white dark:text-slate-600 dark:hover:text-black"
+                  className="p-0.5 rounded hover:bg-white/10 dark:hover:bg-black/10 text-slate-400 hover:text-white dark:text-slate-600 dark:hover:text-black cursor-pointer"
                 >
                   <X size={12} />
                 </button>
               </div>
 
-              <p className="text-[11px] leading-tight mb-2.5 text-slate-300 dark:text-slate-700">
-                Wanna sponsor a cappuccino for late-night Swift builds?
+              <p className="text-[11px] leading-tight mb-2 text-slate-300 dark:text-slate-700">
+                Wanna buy me a cappuccino?
               </p>
 
               <a
                 href="https://buymeacoffee.com"
                 target="_blank"
                 rel="noreferrer"
-                onClick={() => playSound('chime', soundEnabled)}
-                className="w-full inline-flex items-center justify-center gap-1.5 py-1 px-3 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-[11px] font-semibold transition-all shadow-sm"
+                className="w-full inline-flex items-center justify-center gap-1.5 py-1 px-3 rounded-lg bg-[#7C3AED] hover:bg-[#6D28D9] text-white text-[11px] font-semibold transition-all shadow-sm cursor-pointer"
               >
                 <span>Continue</span>
                 <ArrowRight size={11} />

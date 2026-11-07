@@ -6,7 +6,6 @@ import PolaroidWithCoffee from './PolaroidWithCoffee'
 import TypewriterIntro from './TypewriterIntro'
 import RightSidebarStacks from './RightSidebarStacks'
 import { ChevronDown } from 'lucide-react'
-import { playSound } from '../utils/audio'
 import type { NavTab } from './Notch'
 
 interface HomeStageProps {
@@ -18,7 +17,6 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
   const [botStatus, setBotStatus] = useState<string>('observing')
 
   const handleScrollToProjects = () => {
-    playSound('click', soundEnabled)
     document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
   }
 
@@ -44,26 +42,17 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
       <div className="relative w-full max-w-[1240px] xl:max-w-[1300px] h-[720px] sm:h-[760px] mx-auto flex items-center justify-center px-4 sm:px-6">
         {/* 2. Unified Left Profile Identity Entity (Polaroid with Coffee + Monospace Terminal Bio) */}
         <div className="absolute left-0 sm:left-2 lg:left-4 top-2 sm:top-4 z-20 flex flex-col items-start max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] select-none pointer-events-auto">
-          {/* Polaroid Card with Washi Tape and Coffee Cup */}
+          {/* Polaroid Card with Washi Tape and Steaming Coffee Cup */}
           <PolaroidWithCoffee
             soundEnabled={soundEnabled}
-            className="flex flex-col items-start select-none scale-95 sm:scale-100 origin-top-left ml-2 sm:ml-4"
+            className="origin-top-left ml-1 sm:ml-2"
           />
 
-          {/* Micro Telemetry Connector / Station Rail */}
-          <div className="my-2.5 sm:my-3 flex items-center gap-2 pl-1 font-mono text-[9px] text-[#5A6272] dark:text-[#8E96A6]">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#7C3AED] dark:bg-[#A78BFA] animate-pulse" />
-            <span className="tracking-wider uppercase font-semibold text-[#151922] dark:text-[#ECEFF5]">
-              ARCHITECT BIO // TERMINAL
-            </span>
-            <div className="h-[1px] w-8 sm:w-12 bg-slate-200 dark:bg-white/15" />
-          </div>
-
-          {/* Continuous Typewriter Bio & Quick Actions */}
+          {/* Continuous Typewriter Bio & Say hi Action */}
           <TypewriterIntro
             onNavigate={onNavigate}
             soundEnabled={soundEnabled}
-            className="w-full select-none pointer-events-auto"
+            className="w-full mt-4 sm:mt-5 select-none pointer-events-auto"
           />
         </div>
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sun, Moon, Volume2, VolumeX, Menu } from 'lucide-react'
+import { Sun, Moon, Menu } from 'lucide-react'
 import { playSound } from '../utils/audio'
 
 export type NavTab = 'home' | 'projects' | 'experience' | 'skills' | 'contact'
@@ -23,8 +23,7 @@ const Notch = ({
   setIsBlueprint,
   theme,
   setTheme,
-  soundEnabled,
-  setSoundEnabled
+  soundEnabled
 }: NotchProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
@@ -84,12 +83,6 @@ const Notch = ({
     try {
       localStorage.setItem('theme', nextTheme)
     } catch (e) {}
-  }
-
-  const handleSoundToggle = () => {
-    const nextSound = !soundEnabled
-    setSoundEnabled(nextSound)
-    if (nextSound) playSound('click', true)
   }
 
   return (
@@ -196,7 +189,6 @@ const Notch = ({
           {/* Theme Switch (Sun / Moon) */}
           <button
             onClick={handleThemeToggle}
-            onMouseEnter={() => playSound('hover', soundEnabled)}
             className={`p-1.5 rounded-lg transition-colors ${
               theme === 'dark'
                 ? 'hover:bg-black/10 text-slate-800'
@@ -209,25 +201,6 @@ const Notch = ({
               <Moon size={13} className="text-[#7C3AED]" />
             ) : (
               <Sun size={13} className="text-amber-400" />
-            )}
-          </button>
-
-          {/* Sound Toggle */}
-          <button
-            onClick={handleSoundToggle}
-            onMouseEnter={() => playSound('hover', soundEnabled)}
-            className={`p-1.5 rounded-lg transition-colors ${
-              theme === 'dark'
-                ? 'hover:bg-black/10 text-slate-700'
-                : 'hover:bg-white/10 text-slate-300'
-            }`}
-            title={soundEnabled ? 'Disable Audio' : 'Enable Audio'}
-            aria-label="Toggle sound"
-          >
-            {soundEnabled ? (
-              <Volume2 size={13} className="text-emerald-500" />
-            ) : (
-              <VolumeX size={13} className="opacity-50" />
             )}
           </button>
         </div>

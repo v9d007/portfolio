@@ -1,33 +1,27 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { ArrowRight, Mail } from 'lucide-react'
-import { playSound } from '../utils/audio'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Mail } from 'lucide-react'
 import type { NavTab } from './Notch'
 
 interface TypewriterIntroProps {
   onNavigate: (tab: NavTab) => void
-  soundEnabled: boolean
+  soundEnabled?: boolean
   className?: string
 }
 
 const TypewriterIntro = ({
   onNavigate,
-  soundEnabled,
   className = 'w-full select-none pointer-events-auto'
 }: TypewriterIntroProps) => {
   const fullText = `Hey there, I'm Vinod Kumar Singh!
 
-Senior Mobile & iOS Systems Architect • Alumnus of IIT Kanpur (EE '19).
+Senior Mobile & iOS Systems Architect • Alumnus of IIT Kanpur (EE '19). Passionate about crafting fluid 60 FPS mobile systems and zero data-race concurrency.
 
-5+ years architecting high-scale native iOS and cross-platform mobile systems.
-
-Specializing in Swift 6 strict concurrency, fluid 60 FPS architectures, and CoreData offline-first sync engines powering 10M+ events at Xoxoday (Giift).
-
-Crafting resilient, zero data-race applications for millions of users worldwide.`
+Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). Focused on Swift 6 and distributed mobile resilience.`
 
   const [displayedLength, setDisplayedLength] = useState(0)
 
-  // Fluid typewriter progression
+  // Fluid continuous typewriter progression
   useEffect(() => {
     if (displayedLength < fullText.length) {
       const timer = setTimeout(() => {
@@ -48,7 +42,7 @@ Crafting resilient, zero data-race applications for millions of users worldwide.
         <div className="whitespace-pre-wrap">
           {currentText.split('\n\n').map((para, pIdx) => {
             const parts = para.split(
-              /(Vinod Kumar Singh|IIT Kanpur \(EE '19\)|5\+ years|Swift 6|60 FPS|Xoxoday \(Giift\)|zero data-race)/g
+              /(Vinod Kumar Singh|IIT Kanpur \(EE '19\)|Swift 6|60 FPS|Xoxoday \(Giift\)|zero data-race)/g
             )
             return (
               <p key={pIdx} className="mb-2 sm:mb-2.5">
@@ -67,13 +61,6 @@ Crafting resilient, zero data-race applications for millions of users worldwide.
                     return (
                       <span key={idx} className="font-semibold text-[#151922] dark:text-[#ECEFF5]">
                         IIT Kanpur (EE '19)
-                      </span>
-                    )
-                  }
-                  if (part === '5+ years') {
-                    return (
-                      <span key={idx} className="font-semibold text-[#151922] dark:text-[#ECEFF5]">
-                        5+ years
                       </span>
                     )
                   }
@@ -115,42 +102,31 @@ Crafting resilient, zero data-race applications for millions of users worldwide.
             )
           })}
 
-          {/* Active Blinking Cursor */}
+          {/* Active Blinking Monospace Cursor */}
           <span className="inline-block w-1.5 h-3.5 bg-[#151922] dark:bg-[#ECEFF5] ml-0.5 animate-pulse align-middle" />
         </div>
       </div>
 
-      {/* Tactile CTA Pill Buttons matching yl0.me ("Say hi" & "Explore Projects") */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: isComplete ? 1 : 0.85, y: 0 }}
-        transition={{ delay: 0.4 }}
-        className="mt-3.5 sm:mt-4 flex items-center gap-2.5 flex-wrap"
-      >
-        <button
-          onClick={() => {
-            playSound('click', soundEnabled)
-            onNavigate('contact')
-          }}
-          onMouseEnter={() => playSound('hover', soundEnabled)}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#09090B] text-white hover:bg-[#1E1E24] dark:bg-[#F1F3F8] dark:text-[#12151B] dark:hover:bg-white text-xs font-mono font-semibold transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
-        >
-          <Mail size={13} className="text-[#A78BFA] dark:text-[#7C3AED]" />
-          <span>Say hi</span>
-        </button>
-
-        <button
-          onClick={() => {
-            playSound('click', soundEnabled)
-            onNavigate('projects')
-          }}
-          onMouseEnter={() => playSound('hover', soundEnabled)}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-[#181D26] text-[#151922] dark:text-[#ECEFF5] border border-slate-200 dark:border-white/10 hover:border-slate-300 dark:hover:border-white/20 text-xs font-mono font-medium transition-all hover:scale-105 active:scale-95 shadow-sm cursor-pointer"
-        >
-          <span>Explore 8 Projects</span>
-          <ArrowRight size={12} className="text-[#7C3AED] dark:text-[#A78BFA]" />
-        </button>
-      </motion.div>
+      {/* Tactile "Say hi" Pill Button matching yl0.me - ONLY rendered after typing completes */}
+      <AnimatePresence>
+        {isComplete && (
+          <motion.div
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 4 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+            className="mt-3.5 sm:mt-4 flex items-center"
+          >
+            <button
+              onClick={() => onNavigate('contact')}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#09090B] text-white hover:bg-[#1E1E24] dark:bg-[#F1F3F8] dark:text-[#12151B] dark:hover:bg-white text-xs font-mono font-medium transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer border border-white/10 dark:border-black/10"
+            >
+              <Mail size={13} className="text-[#A78BFA] dark:text-[#7C3AED]" />
+              <span>Say hi</span>
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
