@@ -193,10 +193,10 @@ const RightSidebarStacks = ({
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. PROJECTS FANNED RADIAL SPREAD STACK (Middle Right)                     */}
+      {/* 2. PROJECTS FANNED RADIAL SPREAD STACK (Middle Right) - Shifted right     */}
       {/* ========================================================================= */}
       <div
-        className="flex flex-col items-center sm:items-end cursor-pointer group my-auto"
+        className="flex flex-col items-center sm:items-end cursor-pointer group my-auto translate-x-4 sm:translate-x-6 lg:translate-x-8"
         onMouseEnter={() => {
           setIsProjHovered(true)
           playSound('hover', soundEnabled)

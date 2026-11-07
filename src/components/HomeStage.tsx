@@ -40,14 +40,13 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
 
       {/* Centered Stage Cockpit HUD (Wider container shifted left, balanced layout) */}
       <div className="relative w-full max-w-[1240px] xl:max-w-[1300px] h-[680px] sm:h-[720px] lg:h-[740px] mx-auto flex items-center justify-center px-4 sm:px-6">
-        {/* 2. Unified Left Profile Identity Entity matching yl0.me */}
-        <div className="absolute left-3 sm:left-6 lg:left-8 bottom-2 sm:bottom-4 lg:bottom-5 z-20 flex flex-col items-center max-w-[340px] sm:max-w-[370px] lg:max-w-[390px] select-none pointer-events-auto">
-          {/* Top: Polaroid Card + Steaming Coffee Cup directly under it, centered on same axis */}
-          <div className="w-full flex justify-center mb-5 sm:mb-7">
-            <PolaroidWithCoffee soundEnabled={soundEnabled} />
-          </div>
+        {/* 2. Independent Polaroid & Steaming Coffee Setup (Fixed, visible at once, shifted up) */}
+        <div className="absolute left-[clamp(28px,6vw,96px)] top-[clamp(36px,7vh,72px)] z-20 select-none pointer-events-auto">
+          <PolaroidWithCoffee soundEnabled={soundEnabled} />
+        </div>
 
-          {/* Bottom: Monospace Terminal Bio with Say hi Action */}
+        {/* 3. Monospace Terminal Bio (Shifted ~50pt left and ~30pt down) */}
+        <div className="absolute left-[clamp(14px,2.5vw,40px)] bottom-[clamp(12px,2.5vh,28px)] z-20 max-w-[315px] sm:max-w-[340px] lg:max-w-[365px] select-none pointer-events-auto">
           <TypewriterIntro
             onNavigate={onNavigate}
             soundEnabled={soundEnabled}
@@ -55,7 +54,7 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
           />
         </div>
 
-        {/* 3. Center Assembly: Expressive Character Bot Face + Floating Die-Cut Tech Tokens Orbit (Shifted up & strictly centered) */}
+        {/* 4. Center Assembly: Expressive Character Bot Face + Floating Die-Cut Tech Tokens Orbit (Shifted up & strictly centered) */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[58%] sm:-translate-y-[62%] flex items-center justify-center w-[440px] h-[380px] pointer-events-none z-10">
           {/* Floating Spatial Die-Cut Tech Tokens Orbit */}
           <TechTokensOrbit soundEnabled={soundEnabled} />
@@ -66,7 +65,7 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
           </div>
         </div>
 
-        {/* 4. Right Side Interactive Stacks (Experience Accordion, Projects Fan, Socials) */}
+        {/* 5. Right Side Interactive Stacks (Experience Accordion, Projects Fan, Socials) */}
         <RightSidebarStacks
           onNavigate={onNavigate}
           soundEnabled={soundEnabled}
