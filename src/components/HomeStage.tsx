@@ -5,6 +5,8 @@ import TechTokensOrbit from './TechTokensOrbit'
 import DeveloperPass from './DeveloperPass'
 import TypewriterIntro from './TypewriterIntro'
 import RightSidebarStacks from './RightSidebarStacks'
+import { ChevronDown } from 'lucide-react'
+import { playSound } from '../utils/audio'
 import type { NavTab } from './Notch'
 
 interface HomeStageProps {
@@ -15,8 +17,16 @@ interface HomeStageProps {
 const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
   const [coreStatus, setCoreStatus] = useState<string>('observing')
 
+  const handleScrollToProjects = () => {
+    playSound('click', soundEnabled)
+    document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <div className="relative w-full h-full flex items-center justify-center overflow-hidden select-none">
+    <section
+      id="home"
+      className="relative w-full min-h-screen flex items-center justify-center overflow-hidden select-none pt-16 pb-20"
+    >
       {/* 1. Top Right Telemetry Pill */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -34,7 +44,7 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
       <DeveloperPass soundEnabled={soundEnabled} />
 
       {/* 3. Center Assembly: Dynamic Island Core + Floating Tech Tokens */}
-      <div className="relative flex items-center justify-center w-full max-w-4xl h-full">
+      <div className="relative flex items-center justify-center w-full max-w-4xl h-full my-auto">
         {/* Floating Spatial Tech Tokens Orbit */}
         <TechTokensOrbit soundEnabled={soundEnabled} />
 
@@ -50,11 +60,17 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
       {/* 5. Right Side Interactive Stacks (Experience, Projects, Socials) */}
       <RightSidebarStacks onNavigate={onNavigate} soundEnabled={soundEnabled} />
 
-      {/* 6. Bottom Center Engineering Credit */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 text-center font-mono text-[9px] sm:text-[10px] text-slate-400 dark:text-slate-500 pointer-events-none">
-        <p>Vinod Kumar Singh // Senior Mobile Architect // IIT Kanpur '19</p>
-      </div>
-    </div>
+      {/* 6. Animated Scroll Down Indicator */}
+      <motion.button
+        onClick={handleScrollToProjects}
+        animate={{ y: [0, 5, 0] }}
+        transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 z-20 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-[11px] font-mono shadow-md hover:scale-105 active:scale-95 transition-all cursor-pointer"
+      >
+        <span>Scroll to explore</span>
+        <ChevronDown size={13} className="animate-bounce" />
+      </motion.button>
+    </section>
   )
 }
 

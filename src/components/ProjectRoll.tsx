@@ -247,10 +247,10 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
 
   const categories = [
     { id: 'all', label: 'All Projects' },
-    { id: 'ios', label: 'iOS & Swift' },
+    { id: 'ios', label: 'iOS & Swift 6' },
     { id: 'react-native', label: 'React Native' },
     { id: 'fullstack', label: 'Systems & Web' },
-    { id: 'algorithms', label: 'DSA & CS' }
+    { id: 'algorithms', label: 'DSA & Core' }
   ]
 
   const filteredProjects =
@@ -264,9 +264,37 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
   }
 
   return (
-    <div className="relative w-full h-full flex flex-col justify-center px-4 sm:px-8 py-16 overflow-hidden select-none">
+    <section
+      id="projects"
+      className="relative w-full py-24 sm:py-32 px-4 sm:px-8 max-w-7xl mx-auto select-none"
+    >
+      {/* Section Header with Scroll Entrance */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-10 sm:mb-12"
+      >
+        <span className="inline-block px-3.5 py-1 rounded-full text-xs font-mono bg-indigo-500/10 border border-indigo-500/30 text-indigo-600 dark:text-indigo-400 mb-3 font-semibold">
+          // 01. PRODUCTION SYSTEMS & APPS
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Featured Engineering Projects
+        </h2>
+        <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-mono">
+          Native iOS architectures, Swift 6 strict concurrency, and high-throughput cross-platform mobile platforms.
+        </p>
+      </motion.div>
+
       {/* Category Filter Pills */}
-      <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-6 sm:mb-8 flex-wrap z-20">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+        className="flex items-center justify-center gap-1.5 sm:gap-2 mb-10 flex-wrap z-20"
+      >
         {categories.map((cat) => {
           const isActive = selectedCategory === cat.id
           return (
@@ -276,137 +304,118 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
                 playSound('click', soundEnabled)
                 setSelectedCategory(cat.id)
               }}
-              className={`px-3 py-1 sm:px-4 sm:py-1.5 rounded-full text-xs font-mono transition-all ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all ${
                 isActive
-                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/30 font-semibold'
-                  : 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/10'
+                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 font-semibold'
+                  : 'bg-white/80 dark:bg-slate-900/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/10'
               }`}
             >
               {cat.label}
             </button>
           )
         })}
-      </div>
+      </motion.div>
 
-      {/* Horizontal Scrollable Stamp Roll */}
-      <div className="relative w-full overflow-x-auto no-scrollbar py-4 px-2 sm:px-6">
-        <div className="flex items-stretch gap-5 sm:gap-7 min-w-max mx-auto justify-center">
-          {filteredProjects.map((project, idx) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 20, rotate: idx % 2 === 0 ? -1.5 : 1.5 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{
-                y: -8,
-                rotate: 0,
-                scale: 1.03,
-                transition: { type: 'spring', stiffness: 300, damping: 15 }
-              }}
-              className="relative w-72 sm:w-80 flex flex-col cursor-pointer group"
-              onClick={() => handleCardClick(project)}
-            >
-              {/* Stamp Washi Tape at Top */}
-              <div
-                className="washi-tape -top-2 left-1/2 -translate-x-1/2 w-16 bg-white/30 rotate-[-2deg]"
-                title="Washi Tape"
-              />
-
-              {/* Physical Postage Stamp Card */}
-              <div className="relative p-4 sm:p-5 rounded-xl bg-[#0f111c]/90 backdrop-blur-xl border border-white/10 shadow-2xl flex flex-col justify-between h-full transition-all group-hover:border-indigo-500/50 group-hover:shadow-indigo-500/20">
-                {/* Stamp Header */}
-                <div>
-                  <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
-                    <span className="text-[10px] font-mono tracking-widest text-cyan-400 font-bold uppercase">
-                      POSTAGE // {project.stampId}
-                    </span>
-                    <span className="text-[10px] font-mono text-gray-400">
-                      {project.year}
-                    </span>
-                  </div>
-
-                  {/* Title & Badge */}
-                  <div className="mb-2">
-                    <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-mono bg-white/5 border border-white/10 text-indigo-300 mb-1.5">
-                      {project.categoryLabel}
-                    </span>
-                    <h3 className="text-lg font-bold text-white group-hover:text-indigo-300 transition-colors">
-                      {project.title}
-                    </h3>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-xs text-gray-400 leading-relaxed line-clamp-3 mb-4">
-                    {project.description}
-                  </p>
+      {/* Responsive Grid of Project Cards with Scroll Animations */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        {filteredProjects.map((project, idx) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, delay: (idx % 3) * 0.1 }}
+            whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
+            onClick={() => handleCardClick(project)}
+            className="relative cursor-pointer group flex flex-col"
+          >
+            {/* Frosted Spatial Glass Project Card */}
+            <div className="relative p-5 sm:p-6 rounded-2xl bg-white/70 dark:bg-[#0c0e18]/80 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-lg group-hover:shadow-2xl group-hover:border-indigo-500/40 transition-all flex flex-col justify-between h-full">
+              {/* Card Header */}
+              <div>
+                <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/10 pb-2.5 mb-3.5">
+                  <span className="text-[10px] font-mono tracking-widest text-cyan-600 dark:text-cyan-400 font-bold uppercase">
+                    SYS // {project.stampId}
+                  </span>
+                  <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
+                    {project.year}
+                  </span>
                 </div>
 
-                {/* Tech Chips & Inspect Button */}
-                <div>
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {project.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-gray-300 border border-white/5"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {project.tags.length > 3 && (
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/5 text-gray-400">
-                        +{project.tags.length - 3}
-                      </span>
-                    )}
-                  </div>
+                <div className="mb-2.5">
+                  <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-mono bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-800/40 text-indigo-600 dark:text-indigo-400 mb-1.5 font-semibold">
+                    {project.categoryLabel}
+                  </span>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    {project.title}
+                  </h3>
+                </div>
 
-                  {/* Bottom Action Row */}
-                  <div className="flex items-center justify-between pt-3 border-t border-white/10 text-xs font-mono">
-                    <span className="text-indigo-400 group-hover:text-indigo-300 flex items-center gap-1">
-                      <span>Architecture</span>
-                      <Maximize2 size={12} />
+                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3 mb-4">
+                  {project.description}
+                </p>
+              </div>
+
+              {/* Card Footer: Tech Chips + Action */}
+              <div>
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {project.tags.slice(0, 3).map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 border border-slate-200/60 dark:border-white/5"
+                    >
+                      {tag}
                     </span>
-                    <div className="flex items-center gap-2">
-                      {project.githubUrl && (
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="p-1 text-gray-400 hover:text-white transition-colors"
-                        >
-                          <Github size={14} />
-                        </a>
-                      )}
-                      {project.liveUrl && (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="p-1 text-cyan-400 hover:text-cyan-300 transition-colors"
-                        >
-                          <ExternalLink size={14} />
-                        </a>
-                      )}
-                    </div>
+                  ))}
+                  {project.tags.length > 3 && (
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 text-slate-400">
+                      +{project.tags.length - 3}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-white/10 text-xs font-mono">
+                  <span className="text-indigo-600 dark:text-indigo-400 group-hover:underline flex items-center gap-1 font-semibold">
+                    <span>Inspect Specs</span>
+                    <Maximize2 size={12} />
+                  </span>
+                  <div className="flex items-center gap-2">
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="p-1 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                        title="GitHub Repository"
+                      >
+                        <Github size={14} />
+                      </a>
+                    )}
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="p-1 text-cyan-600 dark:text-cyan-400 hover:opacity-80 transition-opacity"
+                        title="Live Deployment"
+                      >
+                        <ExternalLink size={14} />
+                      </a>
+                    )}
                   </div>
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-
-      {/* Instruction Tip */}
-      <div className="text-center mt-4">
-        <p className="text-[11px] font-mono text-gray-500">
-          Click any stamp card to inspect full system architecture &amp; benchmarks
-        </p>
+            </div>
+          </motion.div>
+        ))}
       </div>
 
       {/* Architectural Deep-Dive Modal */}
       <AnimatePresence>
         {activeModalProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -516,7 +525,7 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
           </div>
         )}
       </AnimatePresence>
-    </div>
+    </section>
   )
 }
 

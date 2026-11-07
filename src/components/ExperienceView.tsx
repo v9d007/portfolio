@@ -46,103 +46,108 @@ const experiences = [
 
 const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
   return (
-    <div className="relative w-full h-full flex flex-col justify-center px-4 sm:px-8 py-16 overflow-y-auto no-scrollbar select-none">
-      <div className="max-w-4xl mx-auto w-full">
-        {/* Section Header */}
-        <div className="text-center mb-8">
-          <span className="inline-block px-3 py-1 rounded-full text-xs font-mono bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 mb-2">
-            POSTAL ARCHIVE // CAREER CHRONOLOGY
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
-            Work Experience &amp; Education
-          </h2>
-        </div>
+    <section
+      id="experience"
+      className="relative w-full py-24 sm:py-32 px-4 sm:px-8 max-w-5xl mx-auto select-none"
+    >
+      {/* Section Header with Scroll Entrance */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-12 sm:mb-16"
+      >
+        <span className="inline-block px-3.5 py-1 rounded-full text-xs font-mono bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 mb-3 font-semibold">
+          // 02. CAREER SCALE & ALUMNI
+        </span>
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+          Work Experience &amp; Education
+        </h2>
+        <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-mono">
+          Engineering high-scale mobile platforms serving millions of enterprise users worldwide.
+        </p>
+      </motion.div>
 
-        {/* Experience Stamp Cards Grid */}
-        <div className="space-y-6">
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={exp.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.15 }}
-              whileHover={{ y: -4 }}
-              onMouseEnter={() => playSound('hover', soundEnabled)}
-              className="relative p-5 sm:p-7 rounded-2xl bg-[#0e101a]/90 backdrop-blur-xl border border-white/10 shadow-2xl transition-all hover:border-indigo-500/40"
-            >
-              {/* Top Washi Tape */}
-              <div
-                className="washi-tape -top-2.5 left-8 w-20 bg-amber-100/40 rotate-[-1deg]"
-                title="Washi Tape"
-              />
-
-              {/* Stamp ID Header */}
-              <div className="flex flex-wrap items-center justify-between border-b border-white/10 pb-3 mb-4 gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono tracking-widest text-cyan-400 font-bold">
-                    POSTMARK: {exp.stampId}
-                  </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-white/5 text-gray-300">
-                    {exp.type}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3 text-xs font-mono text-gray-400">
-                  <span className="flex items-center gap-1">
-                    <Calendar size={12} />
-                    <span>{exp.period}</span>
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <MapPin size={12} />
-                    <span>{exp.location}</span>
-                  </span>
-                </div>
+      {/* Experience Timeline Cards */}
+      <div className="space-y-8 sm:space-y-10">
+        {experiences.map((exp, index) => (
+          <motion.div
+            key={exp.id}
+            initial={{ opacity: 0, y: 35 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-50px' }}
+            transition={{ duration: 0.6, delay: index * 0.15 }}
+            whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
+            onMouseEnter={() => playSound('hover', soundEnabled)}
+            className="relative p-6 sm:p-8 rounded-3xl bg-white/70 dark:bg-[#0e101a]/80 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-lg hover:shadow-2xl hover:border-indigo-500/40 transition-all"
+          >
+            {/* Header Row */}
+            <div className="flex flex-wrap items-center justify-between border-b border-slate-100 dark:border-white/10 pb-3.5 mb-4 gap-2">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono tracking-widest text-indigo-600 dark:text-indigo-400 font-bold uppercase">
+                  RECORD // {exp.stampId}
+                </span>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 font-semibold">
+                  {exp.type}
+                </span>
               </div>
-
-              {/* Title & Company */}
-              <div className="mb-3">
-                <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-                  {exp.id.includes('iit') ? (
-                    <GraduationCap className="text-amber-400 shrink-0" size={20} />
-                  ) : (
-                    <Briefcase className="text-indigo-400 shrink-0" size={20} />
-                  )}
-                  <span>{exp.role}</span>
-                </h3>
-                <p className="text-sm font-semibold text-indigo-300 font-mono mt-0.5">
-                  {exp.company}
-                </p>
+              <div className="flex items-center gap-4 text-xs font-mono text-slate-500 dark:text-slate-400">
+                <span className="flex items-center gap-1.5">
+                  <Calendar size={13} />
+                  <span>{exp.period}</span>
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <MapPin size={13} />
+                  <span>{exp.location}</span>
+                </span>
               </div>
+            </div>
 
-              <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-4">
-                {exp.description}
+            {/* Title & Organization */}
+            <div className="mb-3.5">
+              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
+                {exp.id.includes('iit') ? (
+                  <GraduationCap className="text-amber-500 shrink-0" size={22} />
+                ) : (
+                  <Briefcase className="text-indigo-600 dark:text-indigo-400 shrink-0" size={22} />
+                )}
+                <span>{exp.role}</span>
+              </h3>
+              <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 font-mono mt-1">
+                {exp.company}
               </p>
+            </div>
 
-              {/* Key Achievements Bullet points */}
-              <div className="space-y-2 mb-5">
-                {exp.achievements.map((ach, i) => (
-                  <div key={i} className="flex items-start gap-2 text-xs sm:text-sm text-gray-400">
-                    <CheckCircle2 size={14} className="text-emerald-400 shrink-0 mt-0.5" />
-                    <span>{ach}</span>
-                  </div>
-                ))}
-              </div>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
+              {exp.description}
+            </p>
 
-              {/* Skills Footer */}
-              <div className="pt-3 border-t border-white/10 flex flex-wrap gap-1.5">
-                {exp.skills.map((sk) => (
-                  <span
-                    key={sk}
-                    className="text-[10px] sm:text-xs font-mono px-2.5 py-1 rounded-lg bg-white/5 border border-white/10 text-gray-300"
-                  >
-                    {sk}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+            {/* Key Achievements */}
+            <div className="space-y-2.5 mb-6">
+              {exp.achievements.map((ach, i) => (
+                <div key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
+                  <CheckCircle2 size={16} className="text-emerald-500 shrink-0 mt-0.5" />
+                  <span>{ach}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Technology Footer Pills */}
+            <div className="pt-4 border-t border-slate-100 dark:border-white/10 flex flex-wrap gap-2">
+              {exp.skills.map((sk) => (
+                <span
+                  key={sk}
+                  className="text-[10px] sm:text-xs font-mono px-3 py-1 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200/60 dark:border-white/5 text-slate-700 dark:text-slate-300"
+                >
+                  {sk}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        ))}
       </div>
-    </div>
+    </section>
   )
 }
 

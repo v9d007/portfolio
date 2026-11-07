@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import Notch, { type NavTab } from './Notch'
 import HomeStage from './HomeStage'
 import ProjectRoll from './ProjectRoll'
@@ -7,8 +6,6 @@ import ExperienceView from './ExperienceView'
 import SkillsView from './SkillsView'
 import ContactView from './ContactView'
 import BlueprintOverlay from './BlueprintOverlay'
-import { ArrowLeft } from 'lucide-react'
-import { playSound } from '../utils/audio'
 
 interface WallProps {
   isBlueprint: boolean
@@ -29,14 +26,17 @@ const Wall = ({
 }: WallProps) => {
   const [activeTab, setActiveTab] = useState<NavTab>('home')
 
-  const handleBackToHome = () => {
-    playSound('click', soundEnabled)
-    setActiveTab('home')
+  const handleNavigate = (tab: NavTab) => {
+    setActiveTab(tab)
+    const el = document.getElementById(tab)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   return (
     <div
-      className={`relative w-screen h-screen overflow-hidden select-none transition-colors duration-500 ${
+      className={`relative w-full min-h-screen select-none transition-colors duration-500 overflow-x-hidden ${
         isBlueprint
           ? 'blueprint-mode bg-[#021324] text-[#c9f0ff]'
           : theme === 'dark'
@@ -44,9 +44,9 @@ const Wall = ({
           : 'bg-[#ffffff] text-slate-900'
       }`}
     >
-      {/* Background Dot Grid (Matches Image 1 dots) */}
+      {/* Fixed Background Dot Grid */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20"
+        className="fixed inset-0 pointer-events-none opacity-40 dark:opacity-20 z-0"
         style={{
           backgroundImage:
             'radial-gradient(circle, #94a3b8 1px, transparent 1px)',
@@ -54,7 +54,7 @@ const Wall = ({
         }}
       />
 
-      {/* Top Floating Notch Pill */}
+      {/* Floating Top Dynamic Notch with ScrollSpy */}
       <Notch
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -66,86 +66,29 @@ const Wall = ({
         setSoundEnabled={setSoundEnabled}
       />
 
-      {/* Back to Home Button when in secondary view */}
-      {activeTab !== 'home' && (
-        <button
-          onClick={handleBackToHome}
-          className="fixed top-4 left-6 z-50 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-xs font-mono shadow-md hover:scale-105 active:scale-95 transition-all"
-        >
-          <ArrowLeft size={13} />
-          <span>Back to Home</span>
-        </button>
-      )}
+      {/* Fluid Continuous Scroll Sections */}
+      <main className="relative z-10 w-full flex flex-col">
+        {/* 1. Hero Dynamic Island & Core Canvas (#home) */}
+        <HomeStage onNavigate={handleNavigate} soundEnabled={soundEnabled} />
 
-      {/* Stage Views */}
-      <main className="relative w-full h-full">
-        <AnimatePresence mode="wait">
-          {activeTab === 'home' && (
-            <motion.div
-              key="home"
-              initial={{ opacity: 0, scale: 0.97 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.97 }}
-              transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
-              className="w-full h-full"
-            >
-              <HomeStage onNavigate={setActiveTab} soundEnabled={soundEnabled} />
-            </motion.div>
-          )}
+        {/* 2. Featured Projects Grid (#projects) */}
+        <ProjectRoll soundEnabled={soundEnabled} />
 
-          {activeTab === 'projects' && (
-            <motion.div
-              key="projects"
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
-              className="w-full h-full"
-            >
-              <ProjectRoll soundEnabled={soundEnabled} />
-            </motion.div>
-          )}
+        {/* 3. Career Scale & Experience (#experience) */}
+        <ExperienceView soundEnabled={soundEnabled} />
 
-          {activeTab === 'experience' && (
-            <motion.div
-              key="experience"
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
-              className="w-full h-full"
-            >
-              <ExperienceView soundEnabled={soundEnabled} />
-            </motion.div>
-          )}
+        {/* 4. Engineering Matrix & Skills (#skills) */}
+        <SkillsView soundEnabled={soundEnabled} />
 
-          {activeTab === 'skills' && (
-            <motion.div
-              key="skills"
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
-              className="w-full h-full"
-            >
-              <SkillsView soundEnabled={soundEnabled} />
-            </motion.div>
-          )}
-
-          {activeTab === 'contact' && (
-            <motion.div
-              key="contact"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.35, ease: [0.2, 0.8, 0.2, 1] }}
-              className="w-full h-full"
-            >
-              <ContactView soundEnabled={soundEnabled} />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* 5. Terminal Transmission Contact (#contact) */}
+        <ContactView soundEnabled={soundEnabled} />
       </main>
+
+      {/* Footer */}
+      <footer className="relative z-10 w-full py-8 border-t border-slate-200 dark:border-white/10 text-center font-mono text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">
+        <p>Engineered by Vinod Kumar Singh • Senior Mobile &amp; iOS Systems Architect</p>
+        <p className="mt-1 opacity-70">IIT Kanpur '19 • Built with React, Tailwind &amp; Framer Motion</p>
+      </footer>
 
       {/* Blueprint CAD Overlay */}
       <BlueprintOverlay isBlueprint={isBlueprint} />
