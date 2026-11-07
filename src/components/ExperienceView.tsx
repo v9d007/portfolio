@@ -1,152 +1,266 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Briefcase, GraduationCap, Calendar, MapPin, CheckCircle2 } from 'lucide-react'
+import { PostageStampBorder } from './PostageStampBorder'
+import { ArrowLeft, Briefcase, GraduationCap } from 'lucide-react'
 import { playSound } from '../utils/audio'
 
 interface ExperienceViewProps {
   soundEnabled: boolean
 }
 
-const experiences = [
+interface ExperienceItem {
+  id: string
+  num: string
+  company: string
+  period: string
+  datePill: string
+  role: string
+  type: string
+  icon: 'work' | 'iitk' | 'award'
+  bullets: string[]
+}
+
+const experiences: ExperienceItem[] = [
   {
-    id: 'xoxoday-giift',
-    role: 'Senior Mobile & iOS Developer',
+    id: 'xoxoday',
+    num: '01',
     company: 'Xoxoday (Giift)',
-    location: 'Bengaluru, India',
     period: '2021 - Present',
-    stampId: 'EXP-BLR-01',
-    type: 'Full-Time',
-    description:
-      'Leading core mobile client architecture for enterprise incentive automation (Compass) and global employee social engagement (Empuls).',
-    achievements: [
+    datePill: 'Now',
+    role: 'Senior Mobile & iOS Developer',
+    type: 'Full-time, Bengaluru',
+    icon: 'work',
+    bullets: [
       'Architected offline-first sync engine in Swift & CoreData, handling over 10M+ transaction updates with zero corruption.',
       'Reduced memory footprint by 35% in high-volume social feed views using custom virtualized cell caching in UIKit and SwiftUI.',
       'Engineered bi-directional GraphQL real-time event pipeline for enterprise leaderboards and peer recognition.',
       'Mentored mobile engineering squad and instituted strict code quality, CI/CD pipelines via Fastlane and GitHub Actions.'
-    ],
-    skills: ['Swift 6', 'UIKit', 'SwiftUI', 'React Native', 'GraphQL', 'CoreData', 'CI/CD']
+    ]
   },
   {
-    id: 'iit-kanpur',
-    role: 'B.Tech in Electrical Engineering',
-    company: 'Indian Institute of Technology, Kanpur (IITK)',
-    location: 'Kanpur, India',
+    id: 'compass',
+    num: '02',
+    company: 'Compass iOS Architecture',
+    period: '2022 - 2024',
+    datePill: '2022 - 2024',
+    role: 'Lead iOS Architect (Compass)',
+    type: 'Enterprise, Hybrid',
+    icon: 'work',
+    bullets: [
+      'Architected and scaled the flagship Compass iOS client for enterprise commission and sales incentive management.',
+      'Reduced cold start latency by 42% through modular dynamic framework loading and lazy memory allocation.',
+      'Custom interactive leaderboard graphs rendering 50,000+ data points smoothly with zero frame drops at 60 FPS.',
+      'Engineered multi-currency real-time commission calculation engine with local-first encrypted SQLite persistence.'
+    ]
+  },
+  {
+    id: 'empuls',
+    num: '03',
+    company: 'Empuls Mobile Client',
+    period: '2021 - 2023',
+    datePill: '2021 - 2023',
+    role: 'Senior React Native & Swift Engineer',
+    type: 'Global Scale, 1M+ Users',
+    icon: 'work',
+    bullets: [
+      'Led core mobile client development connecting distributed workforces across 500+ enterprises worldwide.',
+      'Custom Native iOS image pre-caching engine in Swift eliminating feed stutter and scroll lag.',
+      'Real-time peer applause & recognition feed powered by WebSocket subscriptions and optimistic local updates.',
+      'Integrated biometric authentication with Apple Secure Enclave keychain encryption.'
+    ]
+  },
+  {
+    id: 'iitk',
+    num: '04',
+    company: 'IIT Kanpur',
     period: '2015 - 2019',
-    stampId: 'IITK-EE-19',
-    type: 'Alma Mater',
-    description:
-      'Grounded in rigorous algorithmic fundamentals, digital signal processing, systems architecture, and competitive programming.',
-    achievements: [
+    datePill: '2015 - 2019',
+    role: 'B.Tech in Electrical Engineering',
+    type: 'Alma Mater, Kanpur',
+    icon: 'iitk',
+    bullets: [
       'Graduated with strong foundations in Computer Systems, Discrete Mathematics, and Algorithmic Complexity.',
-      'Strong coursework: Advanced Data Structures, Algorithms, Computer Systems, Microprocessors.',
-      'Active participant in algorithmic programming contests and competitive problem solving.'
-    ],
-    skills: ['Algorithms', 'Data Structures', 'C++', 'System Design', 'Mathematics']
+      'Deep coursework in Advanced Data Structures, Algorithms, Computer Architecture, and Digital Signal Processing.',
+      'Active participant in algorithmic problem solving and competitive systems programming contests.',
+      'Two-time football athlete contributing to Inter-IIT General Championship winning sports teams.'
+    ]
   }
 ]
 
 const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const activeExp = experiences[activeIndex]
+
+  const handleSelect = (idx: number) => {
+    playSound('pop', soundEnabled)
+    setActiveIndex(idx)
+  }
+
+  const handleBack = () => {
+    playSound('click', soundEnabled)
+    document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <section
       id="experience"
-      className="relative w-full py-24 sm:py-32 px-4 sm:px-8 max-w-5xl mx-auto select-none"
+      className="relative w-full min-h-screen py-24 sm:py-32 px-4 sm:px-10 max-w-7xl mx-auto select-none flex flex-col justify-between"
     >
-      {/* Section Header with Scroll Entrance */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-12 sm:mb-16"
-      >
-        <span className="inline-block px-3.5 py-1 rounded-full text-xs font-mono bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 mb-3 font-semibold">
-          // 02. CAREER SCALE & ALUMNI
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Work Experience &amp; Education
-        </h2>
-        <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-mono">
-          Engineering high-scale mobile platforms serving millions of enterprise users worldwide.
-        </p>
-      </motion.div>
+      {/* Top Header Row (Matching yl0.me Image 1) */}
+      <div>
+        <div className="flex items-center justify-between font-mono text-xs sm:text-sm border-b border-slate-200/60 dark:border-white/10 pb-3 mb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-purple-600 dark:text-purple-400 font-bold">[E]</span>
+            <span className="text-purple-600 dark:text-purple-400 font-bold">Experiences</span>
+          </div>
+          <div className="text-slate-400 dark:text-slate-500 tracking-wider">
+            {String(activeIndex + 1).padStart(2, '0')} — {String(experiences.length).padStart(2, '0')}
+          </div>
+        </div>
 
-      {/* Experience Timeline Cards */}
-      <div className="space-y-8 sm:space-y-10">
-        {experiences.map((exp, index) => (
-          <motion.div
-            key={exp.id}
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6, delay: index * 0.15 }}
-            whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
-            onMouseEnter={() => playSound('hover', soundEnabled)}
-            className="relative p-6 sm:p-8 rounded-3xl bg-white/70 dark:bg-[#0e101a]/80 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-lg hover:shadow-2xl hover:border-indigo-500/40 transition-all"
+        {/* Subtitle & Back Button */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <p className="text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+            Places I have worked and what I did there. Scroll sideways or click to browse them.
+          </p>
+
+          {/* Minimalist Back Button */}
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
-            {/* Header Row */}
-            <div className="flex flex-wrap items-center justify-between border-b border-slate-100 dark:border-white/10 pb-3.5 mb-4 gap-2">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono tracking-widest text-indigo-600 dark:text-indigo-400 font-bold uppercase">
-                  RECORD // {exp.stampId}
-                </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 font-semibold">
-                  {exp.type}
-                </span>
-              </div>
-              <div className="flex items-center gap-4 text-xs font-mono text-slate-500 dark:text-slate-400">
-                <span className="flex items-center gap-1.5">
-                  <Calendar size={13} />
-                  <span>{exp.period}</span>
-                </span>
-                <span className="flex items-center gap-1.5">
-                  <MapPin size={13} />
-                  <span>{exp.location}</span>
-                </span>
-              </div>
-            </div>
+            <ArrowLeft size={12} />
+            <span>Back</span>
+          </button>
+        </div>
 
-            {/* Title & Organization */}
-            <div className="mb-3.5">
-              <h3 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2.5">
-                {exp.id.includes('iit') ? (
-                  <GraduationCap className="text-amber-500 shrink-0" size={22} />
-                ) : (
-                  <Briefcase className="text-indigo-600 dark:text-indigo-400 shrink-0" size={22} />
-                )}
-                <span>{exp.role}</span>
-              </h3>
-              <p className="text-sm font-semibold text-indigo-600 dark:text-indigo-400 font-mono mt-1">
-                {exp.company}
-              </p>
-            </div>
+        {/* Timeline Rail */}
+        <div className="relative w-full my-6 sm:my-8 px-4">
+          {/* Continuous Line */}
+          <div className="w-full h-[2px] bg-slate-200 dark:bg-white/10 relative">
+            {/* Active progress highlight */}
+            <div
+              className="h-full bg-purple-600 dark:bg-purple-400 transition-all duration-500"
+              style={{
+                width: `${((activeIndex + 1) / experiences.length) * 100}%`
+              }}
+            />
+          </div>
 
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-5">
-              {exp.description}
-            </p>
-
-            {/* Key Achievements */}
-            <div className="space-y-2.5 mb-6">
-              {exp.achievements.map((ach, i) => (
-                <div key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-                  <CheckCircle2 size={16} className="text-emerald-500 shrink-0 mt-0.5" />
-                  <span>{ach}</span>
+          {/* Date Nodes */}
+          <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-2 pointer-events-none">
+            {experiences.map((exp, idx) => {
+              const isPastOrActive = idx <= activeIndex
+              return (
+                <div key={exp.id} className="flex flex-col items-center">
+                  <span
+                    className={`text-[9px] font-mono px-2 py-0.5 rounded-full mb-1 transition-colors ${
+                      idx === activeIndex
+                        ? 'bg-purple-600 text-white font-bold shadow-sm'
+                        : isPastOrActive
+                        ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
+                    }`}
+                  >
+                    {exp.datePill}
+                  </span>
+                  <div
+                    className={`w-3 h-3 rounded-full border-2 transition-all ${
+                      idx === activeIndex
+                        ? 'bg-white border-purple-600 scale-125'
+                        : isPastOrActive
+                        ? 'bg-purple-600 border-purple-600'
+                        : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-white/20'
+                    }`}
+                  />
                 </div>
-              ))}
-            </div>
+              )
+            })}
+          </div>
+        </div>
 
-            {/* Technology Footer Pills */}
-            <div className="pt-4 border-t border-slate-100 dark:border-white/10 flex flex-wrap gap-2">
-              {exp.skills.map((sk) => (
-                <span
-                  key={sk}
-                  className="text-[10px] sm:text-xs font-mono px-3 py-1 rounded-lg bg-slate-100 dark:bg-white/5 border border-slate-200/60 dark:border-white/5 text-slate-700 dark:text-slate-300"
+        {/* Horizontal Stamp Roll Carousel */}
+        <div className="w-full overflow-x-auto no-scrollbar py-6">
+          <div className="flex items-stretch gap-6 min-w-max mx-auto px-4 justify-start sm:justify-center">
+            {experiences.map((exp, idx) => {
+              const isActive = idx === activeIndex
+              return (
+                <motion.div
+                  key={exp.id}
+                  whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
+                  onClick={() => handleSelect(idx)}
+                  className={`relative w-60 sm:w-64 h-80 rounded p-6 cursor-pointer flex flex-col justify-between text-slate-800 dark:text-slate-100 transition-all ${
+                    isActive
+                      ? 'shadow-2xl scale-102'
+                      : 'opacity-85 hover:opacity-100 shadow-md'
+                  }`}
+                  style={{
+                    backgroundColor: isActive ? 'var(--bg-surface)' : 'rgba(255, 255, 255, 0.7)'
+                  }}
                 >
-                  {sk}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        ))}
+                  {/* Authentic Postage Stamp Scalloped Edge */}
+                  <PostageStampBorder isActive={isActive} />
+
+                  {/* Stamp Contents */}
+                  <div className="relative z-10 flex flex-col items-center text-center mt-2">
+                    {/* Stamp Logo Circle */}
+                    <div className="w-14 h-14 rounded-full bg-slate-100 dark:bg-slate-800 p-2 flex items-center justify-center shadow-inner mb-4 border border-slate-200 dark:border-white/10">
+                      {exp.icon === 'iitk' ? (
+                        <GraduationCap className="text-amber-500" size={26} />
+                      ) : (
+                        <Briefcase className="text-purple-600 dark:text-purple-400" size={26} />
+                      )}
+                    </div>
+
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-tight mb-1">
+                      {exp.company}
+                    </h3>
+                    <p className="text-xs font-mono text-slate-500 dark:text-slate-400">
+                      {exp.period}
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 text-center border-t border-slate-200/60 dark:border-white/10 pt-3">
+                    <p className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-snug">
+                      {exp.role}
+                    </p>
+                    <p className="text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
+                      {exp.type}
+                    </p>
+                  </div>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
       </div>
+
+      {/* Bottom Details Section for Selected Experience (Exact match to yl0.me Image 1) */}
+      <motion.div
+        key={activeExp.id}
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35 }}
+        className="mt-8 pt-6 border-t border-dashed border-slate-200 dark:border-white/10 font-mono text-xs sm:text-sm text-slate-700 dark:text-slate-300"
+      >
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-4 text-xs">
+          <span className="text-purple-600 dark:text-purple-400 font-bold">
+            /{activeExp.period}
+          </span>
+          <span className="font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+            {activeExp.company}
+          </span>
+        </div>
+
+        <ul className="space-y-2.5 max-w-4xl text-xs sm:text-[13px] leading-relaxed text-slate-600 dark:text-slate-300">
+          {activeExp.bullets.map((bullet, bIdx) => (
+            <li key={bIdx} className="flex items-start gap-2.5">
+              <span className="text-purple-500 font-bold mt-0.5">•</span>
+              <span>{bullet}</span>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
     </section>
   )
 }

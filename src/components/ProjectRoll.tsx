@@ -3,12 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import {
   ExternalLink,
   Github,
-  Maximize2,
   X,
   Layers,
   Cpu,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  ArrowLeft,
+  Star
 } from 'lucide-react'
 import { playSound } from '../utils/audio'
 
@@ -18,13 +19,16 @@ interface ProjectRollProps {
 
 export interface ProjectData {
   id: string
+  num: string
   title: string
   category: 'ios' | 'react-native' | 'fullstack' | 'algorithms'
   categoryLabel: string
   year: string
-  stampId: string
   tagline: string
+  subtitle: string
   description: string
+  stars?: string
+  mockupType: 'chart' | 'window' | 'typography' | 'buttons' | 'map' | 'tree'
   architectureDetails: {
     overview: string
     patterns: string[]
@@ -34,18 +38,20 @@ export interface ProjectData {
   tags: string[]
   githubUrl?: string
   liveUrl?: string
-  color: string
 }
 
 const projects: ProjectData[] = [
   {
     id: 'system-awakening',
+    num: '01',
     title: 'System: Awakening',
     category: 'ios',
     categoryLabel: 'iOS • Swift 6',
     year: '2024',
-    stampId: 'SWIFT-01',
     tagline: 'Solo Leveling RPG Engine with strict concurrency & offline persistence',
+    subtitle: 'Swift 6, SwiftUI, SwiftData',
+    stars: '60 FPS',
+    mockupType: 'chart',
     description:
       'Native iOS application built with modern Swift 6 strict concurrency, declarative SwiftUI, and SwiftData for responsive offline-first RPG stat tracking and quest mechanics.',
     architectureDetails: {
@@ -59,19 +65,21 @@ const projects: ProjectData[] = [
       ],
       metrics: '60 FPS UI • Zero Data Races • 100% Native'
     },
-    tags: ['Swift 6', 'SwiftUI', 'SwiftData', 'Clean Arch', 'Concurrency'],
+    tags: ['Swift 6', 'SwiftUI', 'SwiftData', 'Clean Arch'],
     githubUrl: 'https://github.com/v9d007',
-    liveUrl: 'https://v9d.is-a.dev',
-    color: 'from-purple-500/20 via-indigo-500/20 to-blue-500/20 border-purple-500/40 text-purple-300'
+    liveUrl: 'https://v9d.is-a.dev'
   },
   {
     id: 'compass-xoxoday',
+    num: '02',
     title: 'Compass (Xoxoday)',
     category: 'ios',
     categoryLabel: 'Enterprise iOS',
     year: '2022 - 2024',
-    stampId: 'XOXO-02',
     tagline: 'Enterprise gamification & commission calculation engine',
+    subtitle: 'UIKit, Swift, GraphQL, CoreData',
+    stars: '10M+',
+    mockupType: 'window',
     description:
       'Architected and scaled the flagship Compass iOS client for enterprise commission and sales incentive management. Handled multi-currency calculations and offline sync.',
     architectureDetails: {
@@ -86,17 +94,19 @@ const projects: ProjectData[] = [
       metrics: 'Enterprise Scale • 42% Faster Boot • Millions Processed'
     },
     tags: ['UIKit', 'Swift', 'GraphQL', 'CoreData', 'VIPER'],
-    githubUrl: 'https://github.com/v9d007',
-    color: 'from-cyan-500/20 via-blue-500/20 to-indigo-500/20 border-cyan-500/40 text-cyan-300'
+    githubUrl: 'https://github.com/v9d007'
   },
   {
     id: 'empuls-xoxoday',
-    title: 'Empuls (Xoxoday)',
+    num: '03',
+    title: 'Empuls Mobile',
     category: 'react-native',
-    categoryLabel: 'Mobile App',
+    categoryLabel: 'Social Engagement',
     year: '2021 - 2023',
-    stampId: 'XOXO-03',
     tagline: 'Global employee engagement & social reward platform',
+    subtitle: 'React Native, Swift Bridge, Redux',
+    stars: '1M+ Users',
+    mockupType: 'buttons',
     description:
       'Led core mobile client development for Empuls, connecting distributed workforces across 500+ enterprises worldwide with social feeds, surveys, and peer recognition.',
     architectureDetails: {
@@ -110,18 +120,20 @@ const projects: ProjectData[] = [
       ],
       metrics: '1,000,000+ Active Users • 99.8% Crash-Free Rate'
     },
-    tags: ['React Native', 'Swift Bridge', 'Redux', 'WebSockets', 'iOS SDK'],
-    githubUrl: 'https://github.com/v9d007',
-    color: 'from-blue-500/20 via-indigo-500/20 to-purple-500/20 border-blue-500/40 text-blue-300'
+    tags: ['React Native', 'Swift Bridge', 'Redux', 'WebSockets'],
+    githubUrl: 'https://github.com/v9d007'
   },
   {
     id: 'natural-traders',
+    num: '04',
     title: 'Natural Traders',
     category: 'fullstack',
     categoryLabel: 'Fintech & Systems',
     year: '2024',
-    stampId: 'FIN-04',
     tagline: 'High-frequency algorithmic options analytics & live Greek calculations',
+    subtitle: 'Next.js 14, WebSockets, TypeScript',
+    stars: '<50ms',
+    mockupType: 'chart',
     description:
       'High-speed fintech dashboard providing real-time Black-Scholes options pricing, implied volatility surfaces, and automated multi-leg strategy execution.',
     architectureDetails: {
@@ -135,18 +147,20 @@ const projects: ProjectData[] = [
       ],
       metrics: '<50ms Streaming Latency • Real-Time Greeks'
     },
-    tags: ['Next.js 14', 'TypeScript', 'WebSockets', 'Tailwind', 'Trading'],
-    githubUrl: 'https://github.com/v9d007',
-    color: 'from-emerald-500/20 via-teal-500/20 to-cyan-500/20 border-emerald-500/40 text-emerald-300'
+    tags: ['Next.js 14', 'TypeScript', 'WebSockets', 'Trading'],
+    githubUrl: 'https://github.com/v9d007'
   },
   {
     id: 'maidpro',
+    num: '05',
     title: 'MaidPro Operations',
     category: 'fullstack',
     categoryLabel: 'Enterprise Suite',
     year: '2024',
-    stampId: 'OPS-05',
     tagline: 'Service dispatching & field workforce management suite',
+    subtitle: 'Next.js 15, React Native, Postgres',
+    stars: '28% Opt',
+    mockupType: 'map',
     description:
       'Modern web and mobile operations suite featuring automated dispatch algorithms, live geolocation fleet tracking, and automated customer scheduling.',
     architectureDetails: {
@@ -160,18 +174,20 @@ const projects: ProjectData[] = [
       ],
       metrics: '28% Dispatch Efficiency Gain • Multi-Tenant'
     },
-    tags: ['Next.js 15', 'React Native', 'PostgreSQL', 'Tailwind'],
-    githubUrl: 'https://github.com/v9d007',
-    color: 'from-amber-500/20 via-orange-500/20 to-yellow-500/20 border-amber-500/40 text-amber-300'
+    tags: ['Next.js 15', 'React Native', 'PostgreSQL'],
+    githubUrl: 'https://github.com/v9d007'
   },
   {
     id: 'nudge-habits',
-    title: 'Nudge Habit Tracker',
+    num: '06',
+    title: 'Nudge Habits',
     category: 'react-native',
     categoryLabel: 'Mobile App',
     year: '2023',
-    stampId: 'APP-06',
     tagline: 'Gamified habit architecture with haptic feedback & streak locks',
+    subtitle: 'React Native, Expo, Reanimated 3',
+    stars: 'Offline',
+    mockupType: 'typography',
     description:
       'A sleek, minimalist iOS & Android habit tracking app built with React Native and Expo, utilizing psychological micro-commitments and haptic feedback loops.',
     architectureDetails: {
@@ -186,17 +202,19 @@ const projects: ProjectData[] = [
       metrics: '100% Offline-First • 60 FPS Gestures'
     },
     tags: ['React Native', 'Expo', 'Reanimated 3', 'SQLite'],
-    githubUrl: 'https://github.com/v9d007',
-    color: 'from-rose-500/20 via-pink-500/20 to-purple-500/20 border-rose-500/40 text-rose-300'
+    githubUrl: 'https://github.com/v9d007'
   },
   {
     id: 'pulse-mobile',
+    num: '07',
     title: 'Pulse Field Sync',
     category: 'react-native',
     categoryLabel: 'Cross-Platform',
     year: '2023',
-    stampId: 'APP-07',
     tagline: 'Ultra-low bandwidth field communication & operational sync',
+    subtitle: 'React Native, Protobuf, Redux',
+    stars: 'Protobuf',
+    mockupType: 'buttons',
     description:
       'Field team coordination mobile app optimized for harsh network conditions, featuring packet batching, background synchronization, and push notifications.',
     architectureDetails: {
@@ -211,17 +229,19 @@ const projects: ProjectData[] = [
       metrics: '70% Data Compression • Resilient Edge Sync'
     },
     tags: ['React Native', 'Redux', 'Protobuf', 'Offline Sync'],
-    githubUrl: 'https://github.com/v9d007',
-    color: 'from-teal-500/20 via-emerald-500/20 to-cyan-500/20 border-teal-500/40 text-teal-300'
+    githubUrl: 'https://github.com/v9d007'
   },
   {
     id: 'dsa-competitive',
-    title: 'DSA & Algorithmic Core',
+    num: '08',
+    title: 'DSA Systems Core',
     category: 'algorithms',
     categoryLabel: 'Computer Science',
     year: '2019 - Present',
-    stampId: 'IITK-08',
     tagline: 'High-performance algorithms, graph theory & competitive problem solving',
+    subtitle: 'C++, Swift, Data Structures',
+    stars: 'O(1) Core',
+    mockupType: 'tree',
     description:
       'Deep exploration of advanced data structures, algorithmic optimizations, and graph algorithms. Grounded in rigorous IIT Kanpur engineering curriculum.',
     architectureDetails: {
@@ -235,184 +255,202 @@ const projects: ProjectData[] = [
       ],
       metrics: 'O(1) Cache-Conscious Optimization • Scalable Primitives'
     },
-    tags: ['Algorithms', 'C++', 'Swift', 'IIT Kanpur', 'Data Structures'],
-    githubUrl: 'https://github.com/v9d007',
-    color: 'from-amber-500/20 via-yellow-500/20 to-orange-500/20 border-amber-500/40 text-amber-300'
+    tags: ['Algorithms', 'C++', 'Swift', 'IIT Kanpur'],
+    githubUrl: 'https://github.com/v9d007'
   }
 ]
 
+// Vector illustrations inside each card (matching yl0.me Image 2 aesthetic)
+const ProjectMockupGraphic = ({ type, title }: { type: string; title: string }) => {
+  if (type === 'chart') {
+    return (
+      <div className="w-44 h-44 rounded-2xl bg-[#0f131d] border border-white/10 p-3.5 flex flex-col justify-between shadow-inner">
+        {/* Glowing Chart Curve */}
+        <div className="relative w-full h-20">
+          <svg className="w-full h-full overflow-visible" viewBox="0 0 140 60">
+            <defs>
+              <linearGradient id="chartGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#38bdf8" />
+                <stop offset="100%" stopColor="#818cf8" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M 5,50 Q 30,55 50,35 T 90,25 T 135,8"
+              fill="none"
+              stroke="url(#chartGrad)"
+              strokeWidth="3.5"
+              strokeLinecap="round"
+            />
+            <circle cx="135" cy="8" r="4.5" fill="#38bdf8" stroke="#ffffff" strokeWidth="2" />
+          </svg>
+        </div>
+
+        {/* Level / Bar indicator */}
+        <div className="space-y-1.5 font-mono text-[9px] text-slate-400">
+          <div className="flex items-center gap-2">
+            <span>1</span>
+            <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div className="w-4/5 h-full bg-cyan-400 rounded-full" />
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span>2</span>
+            <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div className="w-3/5 h-full bg-indigo-400 rounded-full" />
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span>3</span>
+            <div className="flex-1 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div className="w-2/5 h-full bg-cyan-400 rounded-full" />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (type === 'window') {
+    return (
+      <div className="w-44 h-44 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-white/10 p-3.5 flex flex-col justify-between shadow-md">
+        {/* Window controls */}
+        <div className="flex items-center gap-1.5 pb-2 border-b border-slate-100 dark:border-white/10">
+          <span className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600" />
+          <span className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600" />
+          <span className="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-600" />
+        </div>
+
+        <div className="space-y-2 py-2">
+          <div className="w-3/4 h-2 bg-slate-800 dark:bg-white rounded-full" />
+          <div className="w-1/2 h-1.5 bg-slate-400 rounded-full" />
+        </div>
+
+        <div className="flex items-center justify-between pt-2">
+          <div className="w-12 h-4 rounded-md bg-slate-900 dark:bg-cyan-400" />
+          <div className="w-6 h-6 rounded-full bg-slate-200 dark:bg-slate-700" />
+        </div>
+      </div>
+    )
+  }
+
+  if (type === 'buttons') {
+    return (
+      <div className="w-44 h-44 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-white/10 p-3.5 flex flex-col justify-center gap-2.5 shadow-sm">
+        <div className="w-full h-8 rounded-xl bg-slate-900 dark:bg-slate-800 flex items-center justify-center">
+          <div className="w-10 h-1.5 bg-white/80 rounded-full" />
+        </div>
+        <div className="w-full h-8 rounded-xl bg-blue-600 flex items-center justify-center shadow-sm">
+          <div className="w-12 h-1.5 bg-white rounded-full" />
+        </div>
+        <div className="w-full h-8 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 flex items-center justify-between px-3">
+          <div className="w-8 h-1.5 bg-slate-400 rounded-full" />
+          <div className="w-3.5 h-3.5 rounded-full bg-blue-500" />
+        </div>
+      </div>
+    )
+  }
+
+  // Default typographic / graphics fallback
+  return (
+    <div className="w-44 h-44 rounded-2xl bg-slate-50 dark:bg-slate-850 border border-slate-200 dark:border-white/10 p-4 flex flex-col justify-center items-center text-center shadow-sm">
+      <p className="font-bold text-lg text-indigo-600 dark:text-cyan-400 tracking-tight leading-tight">
+        {title.split(' ')[0]}
+      </p>
+      <p className="font-mono text-xs text-slate-500 dark:text-slate-400 mt-1">
+        Architecture
+      </p>
+    </div>
+  )
+}
+
 const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [activeModalProject, setActiveModalProject] = useState<ProjectData | null>(null)
-
-  const categories = [
-    { id: 'all', label: 'All Projects' },
-    { id: 'ios', label: 'iOS & Swift 6' },
-    { id: 'react-native', label: 'React Native' },
-    { id: 'fullstack', label: 'Systems & Web' },
-    { id: 'algorithms', label: 'DSA & Core' }
-  ]
-
-  const filteredProjects =
-    selectedCategory === 'all'
-      ? projects
-      : projects.filter((p) => p.category === selectedCategory)
 
   const handleCardClick = (project: ProjectData) => {
     playSound('pop', soundEnabled)
     setActiveModalProject(project)
   }
 
+  const handleBack = () => {
+    playSound('click', soundEnabled)
+    document.getElementById('home')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <section
       id="projects"
-      className="relative w-full py-24 sm:py-32 px-4 sm:px-8 max-w-7xl mx-auto select-none"
+      className="relative w-full min-h-screen py-24 sm:py-32 px-4 sm:px-10 max-w-7xl mx-auto select-none flex flex-col justify-between"
     >
-      {/* Section Header with Scroll Entrance */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-10 sm:mb-12"
-      >
-        <span className="inline-block px-3.5 py-1 rounded-full text-xs font-mono bg-indigo-500/10 border border-indigo-500/30 text-indigo-600 dark:text-indigo-400 mb-3 font-semibold">
-          // 01. PRODUCTION SYSTEMS & APPS
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Featured Engineering Projects
-        </h2>
-        <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-mono">
-          Native iOS architectures, Swift 6 strict concurrency, and high-throughput cross-platform mobile platforms.
-        </p>
-      </motion.div>
+      <div>
+        {/* Top Header Row (Exact match to yl0.me Image 2) */}
+        <div className="flex items-center justify-between font-mono text-xs sm:text-sm border-b border-slate-200/60 dark:border-white/10 pb-3 mb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-purple-600 dark:text-purple-400 font-bold">[P]</span>
+            <span className="text-purple-600 dark:text-purple-400 font-bold">Projects</span>
+          </div>
+          <div className="text-slate-400 dark:text-slate-500 tracking-wider">
+            01 — {String(projects.length).padStart(2, '0')}
+          </div>
+        </div>
 
-      {/* Category Filter Pills */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="flex items-center justify-center gap-1.5 sm:gap-2 mb-10 flex-wrap z-20"
-      >
-        {categories.map((cat) => {
-          const isActive = selectedCategory === cat.id
-          return (
-            <button
-              key={cat.id}
-              onClick={() => {
-                playSound('click', soundEnabled)
-                setSelectedCategory(cat.id)
-              }}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all ${
-                isActive
-                  ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 font-semibold'
-                  : 'bg-white/80 dark:bg-slate-900/80 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/10'
-              }`}
-            >
-              {cat.label}
-            </button>
-          )
-        })}
-      </motion.div>
+        {/* Subtitle & Back Button */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <p className="text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+            Libraries, apps and architecture I have built, mostly in Swift, SwiftUI &amp; React Native. Scroll sideways to browse them.
+          </p>
 
-      {/* Responsive Grid of Project Cards with Scroll Animations */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-        {filteredProjects.map((project, idx) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5, delay: (idx % 3) * 0.1 }}
-            whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
-            onClick={() => handleCardClick(project)}
-            className="relative cursor-pointer group flex flex-col"
+          <button
+            onClick={handleBack}
+            className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
-            {/* Frosted Spatial Glass Project Card */}
-            <div className="relative p-5 sm:p-6 rounded-2xl bg-white/70 dark:bg-[#0c0e18]/80 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-lg group-hover:shadow-2xl group-hover:border-indigo-500/40 transition-all flex flex-col justify-between h-full">
-              {/* Card Header */}
-              <div>
-                <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/10 pb-2.5 mb-3.5">
-                  <span className="text-[10px] font-mono tracking-widest text-cyan-600 dark:text-cyan-400 font-bold uppercase">
-                    SYS // {project.stampId}
-                  </span>
-                  <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500">
-                    {project.year}
-                  </span>
+            <ArrowLeft size={12} />
+            <span>Back</span>
+          </button>
+        </div>
+
+        {/* Horizontal Card Roll Conveyor (Matching yl0.me Image 2) */}
+        <div className="w-full overflow-x-auto no-scrollbar py-6">
+          <div className="flex items-stretch gap-6 min-w-max mx-auto px-4 justify-start sm:justify-center">
+            {projects.map((project) => (
+              <motion.div
+                key={project.id}
+                whileHover={{ y: -8, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
+                onClick={() => handleCardClick(project)}
+                className="relative w-64 sm:w-72 rounded-2xl bg-white dark:bg-[#0c0e18] border border-slate-200/80 dark:border-white/10 shadow-lg hover:shadow-2xl transition-all cursor-pointer p-4 flex flex-col justify-between"
+              >
+                {/* Number in top-left */}
+                <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 mb-2 block">
+                  {project.num}
+                </span>
+
+                {/* Center Vector UI Mockup Graphic */}
+                <div className="flex items-center justify-center my-auto py-2">
+                  <ProjectMockupGraphic type={project.mockupType} title={project.title} />
                 </div>
 
-                <div className="mb-2.5">
-                  <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-mono bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100 dark:border-indigo-800/40 text-indigo-600 dark:text-indigo-400 mb-1.5 font-semibold">
-                    {project.categoryLabel}
-                  </span>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                    {project.title}
-                  </h3>
-                </div>
+                {/* Bottom Caption Row */}
+                <div className="border-t border-slate-100 dark:border-white/10 pt-3 mt-3 flex items-end justify-between font-mono">
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">
+                      {project.title}
+                    </h4>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate max-w-[150px] mt-0.5">
+                      {project.subtitle}
+                    </p>
+                  </div>
 
-                <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed line-clamp-3 mb-4">
-                  {project.description}
-                </p>
-              </div>
-
-              {/* Card Footer: Tech Chips + Action */}
-              <div>
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {project.tags.slice(0, 3).map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 border border-slate-200/60 dark:border-white/5"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                  {project.tags.length > 3 && (
-                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-white/5 text-slate-400">
-                      +{project.tags.length - 3}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-white/10 text-xs font-mono">
-                  <span className="text-indigo-600 dark:text-indigo-400 group-hover:underline flex items-center gap-1 font-semibold">
-                    <span>Inspect Specs</span>
-                    <Maximize2 size={12} />
-                  </span>
-                  <div className="flex items-center gap-2">
-                    {project.githubUrl && (
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="p-1 text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
-                        title="GitHub Repository"
-                      >
-                        <Github size={14} />
-                      </a>
-                    )}
-                    {project.liveUrl && (
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="p-1 text-cyan-600 dark:text-cyan-400 hover:opacity-80 transition-opacity"
-                        title="Live Deployment"
-                      >
-                        <ExternalLink size={14} />
-                      </a>
-                    )}
+                  <div className="flex items-center gap-1 text-[10px] text-slate-500 dark:text-slate-400">
+                    <Star size={10} className="text-amber-500 fill-amber-500" />
+                    <span>{project.stars || 'Core'}</span>
                   </div>
                 </div>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* Architectural Deep-Dive Modal */}
+      {/* Architecture Deep-Dive Modal */}
       <AnimatePresence>
         {activeModalProject && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
@@ -422,7 +460,6 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
               exit={{ opacity: 0, scale: 0.95 }}
               className="relative w-full max-w-2xl bg-[#0c0e18] border border-indigo-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-indigo-500/20 text-slate-100 max-h-[90vh] overflow-y-auto"
             >
-              {/* Close Button */}
               <button
                 onClick={() => {
                   playSound('pop', soundEnabled)
@@ -433,11 +470,10 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
                 <X size={18} />
               </button>
 
-              {/* Modal Header */}
               <div className="flex items-center gap-2 text-xs font-mono text-cyan-400 mb-1">
                 <span>SYSTEM SPECIFICATION</span>
                 <span>•</span>
-                <span>{activeModalProject.stampId}</span>
+                <span>{activeModalProject.num}</span>
               </div>
               <h2 className="text-2xl font-bold text-white mb-2">
                 {activeModalProject.title}
@@ -446,7 +482,6 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
                 {activeModalProject.tagline}
               </p>
 
-              {/* Architecture Blueprint Section */}
               <div className="space-y-6">
                 <div>
                   <h4 className="text-xs font-mono uppercase text-gray-400 mb-2 flex items-center gap-1.5">
@@ -490,13 +525,11 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
                   </ul>
                 </div>
 
-                {/* Benchmark Metric Pill */}
                 <div className="p-3 rounded-xl bg-gradient-to-r from-indigo-900/40 to-cyan-900/40 border border-cyan-500/30 text-xs font-mono text-cyan-300 text-center">
                   ⚡ Benchmark: {activeModalProject.architectureDetails.metrics}
                 </div>
               </div>
 
-              {/* Action Links */}
               <div className="mt-8 pt-4 border-t border-white/10 flex items-center justify-end gap-3">
                 {activeModalProject.githubUrl && (
                   <a
