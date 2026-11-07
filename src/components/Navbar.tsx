@@ -1,8 +1,28 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ArrowUpRight } from 'lucide-react'
+import {
+  Menu,
+  X,
+  ArrowUpRight,
+  Compass,
+  Volume2,
+  VolumeX
+} from 'lucide-react'
+import { playSound } from '../utils/audio'
 
-const Navbar = () => {
+interface NavbarProps {
+  isBlueprint: boolean
+  setIsBlueprint: React.Dispatch<React.SetStateAction<boolean>>
+  soundEnabled: boolean
+  setSoundEnabled: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const Navbar = ({
+  isBlueprint,
+  setIsBlueprint,
+  soundEnabled,
+  setSoundEnabled
+}: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [scrolled, setScrolled] = useState(false)
@@ -41,11 +61,23 @@ const Navbar = () => {
   }, [])
 
   const scrollToSection = (href: string) => {
+    playSound('click', soundEnabled)
     const element = document.querySelector(href)
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' })
     }
     setIsOpen(false)
+  }
+
+  const toggleBlueprint = () => {
+    playSound('toggle', soundEnabled)
+    setIsBlueprint((prev) => !prev)
+  }
+
+  const toggleSound = () => {
+    const next = !soundEnabled
+    setSoundEnabled(next)
+    if (next) playSound('chime', true)
   }
 
   return (
@@ -117,29 +149,77 @@ const Navbar = () => {
             })}
           </div>
 
-          {/* Action CTA */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* Controls: Blueprint Mode + Sound Toggle + Contact */}
+          <div className="hidden sm:flex items-center gap-2">
+            {/* Blueprint Mode Toggle Button (Inspired by yl0.me) */}
+            <button
+              onClick={toggleBlueprint}
+              title={isBlueprint ? 'Switch to Normal Mode' : 'Switch to Blueprint CAD Mode'}
+              className={`p-2 rounded-xl text-xs font-mono transition-all duration-300 flex items-center gap-1.5 border cursor-pointer ${
+                isBlueprint
+                  ? 'bg-cyan-500/20 text-cyan-300 border-cyan-400 shadow-glow-cyan/50'
+                  : 'bg-white/[0.04] text-gray-400 hover:text-cyan-300 border-white/[0.08] hover:border-cyan-500/30'
+              }`}
+            >
+              <Compass size={15} className={isBlueprint ? 'animate-spin' : ''} />
+              <span className="hidden lg:inline text-[11px] font-semibold">
+                {isBlueprint ? 'CAD Active' : 'Blueprint'}
+              </span>
+            </button>
+
+            {/* Sound Toggle Button */}
+            <button
+              onClick={toggleSound}
+              title={soundEnabled ? 'Mute Sound FX' : 'Enable Sound FX'}
+              className={`p-2 rounded-xl transition-all border cursor-pointer ${
+                soundEnabled
+                  ? 'bg-indigo-500/20 text-indigo-300 border-indigo-400/40'
+                  : 'bg-white/[0.04] text-gray-500 hover:text-gray-300 border-white/[0.08]'
+              }`}
+            >
+              {soundEnabled ? <Volume2 size={15} /> : <VolumeX size={15} />}
+            </button>
+
+            {/* Contact CTA */}
             <a
               href="#contact"
               onClick={(e) => {
                 e.preventDefault()
                 scrollToSection('#contact')
               }}
-              className="text-xs font-semibold px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-md shadow-indigo-500/25 flex items-center gap-1.5 transition-all duration-200 hover:scale-105 active:scale-95"
+              className="text-xs font-semibold px-4 py-2 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-md shadow-indigo-500/25 flex items-center gap-1.5 transition-all duration-200 hover:scale-105 active:scale-95 ml-1"
             >
-              <span>Get in Touch</span>
+              <span>Let's Talk</span>
               <ArrowUpRight size={14} />
             </a>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-xl text-gray-300 hover:text-white bg-white/[0.05] border border-white/[0.08]"
-            aria-label="Toggle Navigation Menu"
-          >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
+          {/* Mobile Menu Button + Quick Toggles */}
+          <div className="flex sm:hidden items-center gap-2">
+            <button
+              onClick={toggleBlueprint}
+              className={`p-1.5 rounded-lg border ${
+                isBlueprint ? 'bg-cyan-500/20 text-cyan-300 border-cyan-400' : 'bg-white/[0.04] text-gray-400 border-white/[0.08]'
+              }`}
+            >
+              <Compass size={16} />
+            </button>
+            <button
+              onClick={toggleSound}
+              className={`p-1.5 rounded-lg border ${
+                soundEnabled ? 'bg-indigo-500/20 text-indigo-300 border-indigo-400/40' : 'bg-white/[0.04] text-gray-500 border-white/[0.08]'
+              }`}
+            >
+              {soundEnabled ? <Volume2 size={16} /> : <VolumeX size={16} />}
+            </button>
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-xl text-gray-300 hover:text-white bg-white/[0.05] border border-white/[0.08]"
+              aria-label="Toggle Navigation Menu"
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Dropdown */}

@@ -15,6 +15,7 @@
     background-color: #07070b;
     color: #f1f5f9;
     overflow-x: hidden;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   ::selection {
@@ -106,5 +107,36 @@
 
   .gradient-text-gold {
     @apply bg-gradient-to-r from-amber-300 via-orange-300 to-yellow-200 bg-clip-text text-transparent;
+  }
+
+  /* Architectural Blueprint CAD Mode (Inspired by yl0.me) */
+  .blueprint-mode {
+    background-color: #031526 !important;
+    color: #d8f5ff !important;
+  }
+
+  .blueprint-mode .bg-grid-pattern {
+    background-image: 
+      linear-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(6, 182, 212, 0.15) 1px, transparent 1px) !important;
+    background-size: 32px 32px !important;
+  }
+
+  .blueprint-mode .glass-panel,
+  .blueprint-mode .glass-card {
+    background: rgba(5, 26, 48, 0.8) !important;
+    border-color: rgba(6, 182, 212, 0.35) !important;
+    box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.2) !important;
+  }
+
+  .blueprint-mode .glass-card:hover {
+    border-color: rgba(6, 182, 212, 0.7) !important;
+    box-shadow: 0 0 35px 0px rgba(6, 182, 212, 0.35) !important;
+  }
+
+  .blueprint-mode .gradient-text-aurora {
+    background: linear-gradient(to right, #00f0ff, #38bdf8, #ffffff) !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
   }
 }

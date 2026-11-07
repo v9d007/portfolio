@@ -12,6 +12,8 @@ import BackgroundEffects from './components/BackgroundEffects.tsx'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
+  const [isBlueprint, setIsBlueprint] = useState(false)
+  const [soundEnabled, setSoundEnabled] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -22,7 +24,11 @@ function App() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#07070b] text-slate-100 relative selection:bg-indigo-500/30 selection:text-white font-sans antialiased overflow-x-hidden">
+    <div
+      className={`min-h-screen ${
+        isBlueprint ? 'blueprint-mode' : 'bg-[#07070b]'
+      } text-slate-100 relative selection:bg-indigo-500/30 selection:text-white font-sans antialiased overflow-x-hidden transition-colors duration-500`}
+    >
       {/* Background Ambience & Canvas Spotlights */}
       <BackgroundEffects />
 
@@ -45,7 +51,7 @@ function App() {
               </div>
             </div>
             <div className="mt-4 font-mono text-xs text-gray-400 tracking-wider">
-              INITIALIZING SYSTEMS...
+              INITIALIZING SYSTEM BOT...
             </div>
           </motion.div>
         ) : null}
@@ -53,9 +59,14 @@ function App() {
 
       {/* Main Content Layout */}
       <div className="relative z-10 flex flex-col min-h-screen">
-        <Navbar />
+        <Navbar
+          isBlueprint={isBlueprint}
+          setIsBlueprint={setIsBlueprint}
+          soundEnabled={soundEnabled}
+          setSoundEnabled={setSoundEnabled}
+        />
         <main className="flex-1">
-          <Hero />
+          <Hero soundEnabled={soundEnabled} />
           <About />
           <Projects />
           <Skills />
