@@ -63,7 +63,7 @@ const DeveloperPass = ({
         }}
         transition={{ type: 'spring', damping: 20, stiffness: 260 }}
         whileHover={{ scale: 1.04, y: -4 }}
-        className="relative w-36 sm:w-44 rounded-2xl p-2.5 sm:p-3 bg-white/90 dark:bg-[#0c0e18]/90 backdrop-blur-xl border border-slate-200/80 dark:border-white/15 shadow-2xl cursor-pointer group overflow-hidden"
+        className="relative w-32 sm:w-36 rounded-2xl p-2 sm:p-2.5 bg-white/90 dark:bg-[#0c0e18]/90 backdrop-blur-xl border border-slate-200/80 dark:border-white/15 shadow-xl cursor-pointer group overflow-hidden"
         style={{ transformStyle: 'preserve-3d' }}
       >
         {/* Holographic Sheen Layer */}
@@ -75,20 +75,20 @@ const DeveloperPass = ({
         />
 
         {/* Top Header Bar */}
-        <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/10 pb-1.5 mb-2">
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/10 pb-1 mb-1.5">
           <div className="flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-[9px] font-mono font-bold tracking-wider text-slate-700 dark:text-slate-300">
+            <span className="text-[8px] font-mono font-bold tracking-wider text-slate-700 dark:text-slate-300">
               DEV PASS // 2026
             </span>
           </div>
-          <span className="text-[8px] font-mono px-1 py-0.2 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold border border-indigo-200 dark:border-indigo-800/40">
+          <span className="text-[7.5px] font-mono px-1 py-0.2 rounded bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-bold border border-indigo-200 dark:border-indigo-800/40">
             PRO
           </span>
         </div>
 
         {/* Photo Container with subtle rim */}
-        <div className="relative aspect-[4/4.2] w-full rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 shadow-inner mb-2 border border-black/5 dark:border-white/10">
+        <div className="relative h-20 sm:h-22 w-full rounded-lg overflow-hidden bg-slate-100 dark:bg-slate-800 shadow-inner mb-1.5 border border-black/5 dark:border-white/10">
           <img
             src="./avatar.png"
             alt="Vinod Kumar Singh"
@@ -102,31 +102,31 @@ const DeveloperPass = ({
           />
           {/* Subtle gradient vignette */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60" />
-          <div className="absolute bottom-1.5 left-2 flex items-center gap-1 text-[9px] font-mono text-white font-semibold">
-            <ShieldCheck size={11} className="text-cyan-400" />
+          <div className="absolute bottom-1 left-1.5 flex items-center gap-1 text-[7.5px] font-mono text-white font-semibold">
+            <ShieldCheck size={9} className="text-cyan-400" />
             <span>Verified Engineer</span>
           </div>
         </div>
 
         {/* Identity Information */}
         <div className="text-left space-y-0.5">
-          <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
+          <h4 className="text-[11px] sm:text-xs font-bold text-slate-900 dark:text-white leading-tight tracking-tight">
             Vinod Kumar Singh
           </h4>
-          <p className="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold">
+          <p className="text-[8.5px] sm:text-[9px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold truncate">
             Senior Mobile Architect
           </p>
-          <div className="flex items-center gap-1 text-[9px] font-mono text-amber-600 dark:text-amber-400 pt-0.5">
-            <Award size={10} />
-            <span>IIT Kanpur • B.Tech EE '19</span>
+          <div className="flex items-center gap-1 text-[8px] font-mono text-amber-600 dark:text-amber-400 pt-0.5">
+            <Award size={9} />
+            <span>IIT Kanpur • EE '19</span>
           </div>
         </div>
 
         {/* Bottom Barcode Strip */}
-        <div className="mt-2.5 pt-1.5 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-[8px] font-mono text-slate-400 dark:text-slate-500">
+        <div className="mt-1.5 pt-1 border-t border-slate-100 dark:border-white/10 flex items-center justify-between text-[7.5px] font-mono text-slate-400 dark:text-slate-500">
           <span>UID: V9D-007</span>
           <span className="flex items-center gap-0.5 text-emerald-500 font-semibold">
-            <Sparkles size={8} /> ACTIVE
+            <Sparkles size={7} /> ACTIVE
           </span>
         </div>
       </motion.div>

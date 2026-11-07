@@ -13,7 +13,7 @@ interface TypewriterIntroProps {
 const TypewriterIntro = ({
   onNavigate,
   soundEnabled,
-  className = 'absolute left-2 sm:left-6 bottom-4 sm:bottom-6 z-20 max-w-xs sm:max-w-sm lg:max-w-md select-none pointer-events-auto'
+  className = 'absolute left-2 sm:left-4 bottom-4 sm:bottom-6 z-20 max-w-[300px] sm:max-w-[325px] select-none pointer-events-auto'
 }: TypewriterIntroProps) => {
   const fullText = `Hey there, I'm Vinod Kumar Singh!
 
@@ -41,11 +41,11 @@ Crafting resilient, zero data-race applications for millions of users worldwide.
   return (
     <div className={className}>
       {/* Monospace Developer Intro Text */}
-      <div className="text-xs sm:text-[13px] leading-relaxed font-mono text-slate-700 dark:text-slate-300">
+      <div className="text-[11px] sm:text-xs leading-relaxed font-mono text-slate-700 dark:text-slate-300">
         <div className="whitespace-pre-wrap">
           {currentText.split('\n\n').map((paragraph, idx) => {
             return (
-              <p key={idx} className="mb-2.5">
+              <p key={idx} className="mb-2">
                 {paragraph.includes('Vinod Kumar Singh') ? (
                   <>
                     Hey there, I'm{' '}
