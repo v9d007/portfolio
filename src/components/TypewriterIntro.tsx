@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Mail } from 'lucide-react'
+import { Sparkles, ArrowRight, Mail } from 'lucide-react'
 import { playSound } from '../utils/audio'
 import type { NavTab } from './Notch'
 
@@ -10,70 +10,63 @@ interface TypewriterIntroProps {
 }
 
 const TypewriterIntro = ({ onNavigate, soundEnabled }: TypewriterIntroProps) => {
-  // Full text paragraphs to type
   const fullText = `Hey there, I'm Vinod Kumar Singh!
 
-I love crafting high-performance iOS engines and distributed mobile architectures. Always eager to optimize for 60 FPS fluidity and zero data-race concurrency.
+Senior Mobile & iOS Systems Engineer. Alumnus of IIT Kanpur (JEE Adv AIR 110).
 
-Crafting enterprise mobile experiences at Xoxoday (Giift).
+Specializing in Swift 6 strict concurrency, fluid 60 FPS architectures, and distributed mobile systems at Xoxoday (Giift).
 
-Originally hailing from IIT Kanpur (AIR 110), I now reside in Bengaluru with my laptop 🚀.`
+Crafting resilient, zero data-race applications for millions of users worldwide.`
 
   const [displayedLength, setDisplayedLength] = useState(0)
 
-  // Character by character continuous typing animation
+  // Fluid continuous typewriter animation
   useEffect(() => {
     if (displayedLength < fullText.length) {
-      const timeout = setTimeout(() => {
+      const timer = setTimeout(() => {
         setDisplayedLength((prev) => prev + 1)
-      }, 16) // ~60 chars/second for fluid typewriter feel
+      }, 15)
 
-      return () => clearTimeout(timeout)
+      return () => clearTimeout(timer)
     }
   }, [displayedLength, fullText.length])
 
-  // Helper to format the displayed text with colored spans
   const currentText = fullText.slice(0, displayedLength)
 
   return (
-    <div className="absolute left-6 sm:left-14 bottom-10 sm:bottom-12 z-20 max-w-sm sm:max-w-md select-none pointer-events-auto">
-      {/* Monospace Typed Text */}
-      <div className="text-xs sm:text-[13px] leading-relaxed font-mono text-[#3a404c] dark:text-slate-300">
-        {/* Render formatted paragraphs */}
+    <div className="absolute left-6 sm:left-14 bottom-8 sm:bottom-12 z-20 max-w-sm sm:max-w-md select-none pointer-events-auto">
+      {/* Monospace Developer Intro Text */}
+      <div className="text-xs sm:text-[13px] leading-relaxed font-mono text-slate-700 dark:text-slate-300">
         <div className="whitespace-pre-wrap">
-          {currentText.split('\n\n').map((paragraph, pIdx) => {
+          {currentText.split('\n\n').map((paragraph, idx) => {
             return (
-              <p key={pIdx} className="mb-3">
+              <p key={idx} className="mb-2.5">
                 {paragraph.includes('Vinod Kumar Singh') ? (
                   <>
                     Hey there, I'm{' '}
-                    <span className="font-bold text-[#7c3aed] dark:text-[#a78bfa]">
+                    <span className="font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 px-1 py-0.5 rounded border border-indigo-200 dark:border-indigo-800/40">
                       Vinod Kumar Singh
                     </span>
-                    {paragraph.slice(paragraph.indexOf('!') || paragraph.length)}
+                    !
+                  </>
+                ) : paragraph.includes('IIT Kanpur') ? (
+                  <>
+                    Senior Mobile &amp; iOS Systems Engineer. Alumnus of{' '}
+                    <span className="font-semibold text-amber-600 dark:text-amber-400">
+                      IIT Kanpur
+                    </span>{' '}
+                    (JEE Adv AIR 110).
                   </>
                 ) : paragraph.includes('Xoxoday (Giift)') ? (
                   <>
-                    Crafting enterprise mobile experiences at{' '}
+                    Specializing in Swift 6 strict concurrency, fluid 60 FPS architectures, and distributed mobile systems at{' '}
                     <button
                       onClick={() => onNavigate('experience')}
-                      className="text-[#2563eb] dark:text-[#60a5fa] underline underline-offset-2 hover:opacity-80 transition-opacity"
+                      className="text-cyan-600 dark:text-cyan-400 font-semibold underline underline-offset-2 hover:opacity-80 transition-opacity"
                     >
                       Xoxoday (Giift)
                     </button>
                     .
-                  </>
-                ) : paragraph.includes('IIT Kanpur') ? (
-                  <>
-                    Originally hailing from{' '}
-                    <span className="font-semibold text-slate-900 dark:text-white">
-                      IIT Kanpur
-                    </span>{' '}
-                    (AIR 110), I now reside in{' '}
-                    <span className="font-semibold text-slate-900 dark:text-white">
-                      Bengaluru
-                    </span>{' '}
-                    with my laptop 🚀.
                   </>
                 ) : (
                   paragraph
@@ -82,25 +75,38 @@ Originally hailing from IIT Kanpur (AIR 110), I now reside in Bengaluru with my 
             )
           })}
 
-          {/* Blinking Typewriter Cursor */}
-          <span className="inline-block w-2 h-3.5 bg-slate-900 dark:bg-white ml-0.5 animate-pulse align-middle" />
+          {/* Active Blinking Cursor */}
+          <span className="inline-block w-2 h-3.5 bg-indigo-600 dark:bg-cyan-400 ml-0.5 animate-pulse align-middle" />
         </div>
       </div>
 
-      {/* Say Hi Pill Button */}
+      {/* Quick Action Navigation Pills */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1 }}
-        className="mt-4"
+        transition={{ delay: 0.8 }}
+        className="mt-4 flex items-center gap-2 flex-wrap"
       >
+        <button
+          onClick={() => {
+            playSound('click', soundEnabled)
+            onNavigate('projects')
+          }}
+          onMouseEnter={() => playSound('hover', soundEnabled)}
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-mono font-medium shadow-md shadow-indigo-600/25 transition-all hover:scale-105 active:scale-95"
+        >
+          <Sparkles size={12} />
+          <span>Explore 8 Projects</span>
+          <ArrowRight size={11} />
+        </button>
+
         <button
           onClick={() => {
             playSound('click', soundEnabled)
             onNavigate('contact')
           }}
           onMouseEnter={() => playSound('hover', soundEnabled)}
-          className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#151922] dark:bg-white text-white dark:text-[#151922] text-xs font-mono font-medium shadow-md hover:scale-105 active:scale-95 transition-all"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900 text-white dark:bg-white dark:text-slate-900 text-xs font-mono font-medium shadow-sm transition-all hover:scale-105 active:scale-95"
         >
           <Mail size={12} />
           <span>Say hi</span>
