@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { playSound } from '../utils/audio'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, Terminal } from 'lucide-react'
 
 interface CompanionBotProps {
   soundEnabled: boolean
+  onStatusChange?: (status: string) => void
 }
 
-const CompanionBot = ({ soundEnabled }: CompanionBotProps) => {
+const CompanionBot = ({ soundEnabled, onStatusChange }: CompanionBotProps) => {
   const [pupilOffset, setPupilOffset] = useState({ x: 0, y: 0 })
   const [isBlinking, setIsBlinking] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
@@ -18,14 +19,14 @@ const CompanionBot = ({ soundEnabled }: CompanionBotProps) => {
   const dialogues = [
     'System: Awakening online! ⚔️',
     'Swift 6 & Strict Concurrency ⚡',
-    'Try dragging the tech stickers below! 🛸',
+    'Drag any sticker around! 🛸',
     'IIT Kanpur EE \'19 checking in 🎓',
-    'Toggle Blueprint Mode in the navbar! 📐',
-    '60 FPS zero-jank mobile interfaces 🚀',
-    'Watching your cursor 👀'
+    'Toggle Blueprint Mode in the notch! 📐',
+    '60 FPS zero-jank mobile engines 🚀',
+    'Watching your cursor coordinates 👀'
   ]
 
-  // Track cursor position relative to the bot
+  // Track cursor position anywhere across the viewport
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!botRef.current) return
@@ -37,27 +38,35 @@ const CompanionBot = ({ soundEnabled }: CompanionBotProps) => {
       const deltaY = e.clientY - botCenterY
       const distance = Math.hypot(deltaX, deltaY)
 
-      // Clamp pupil travel distance to 7px max
-      const maxDistance = 7
+      // Clamp pupil travel distance to 9px max
+      const maxDistance = 9
       const angle = Math.atan2(deltaY, deltaX)
-      const clampedDist = Math.min(distance / 25, maxDistance)
+      const clampedDist = Math.min(distance / 20, maxDistance)
 
       setPupilOffset({
         x: Math.cos(angle) * clampedDist,
         y: Math.sin(angle) * clampedDist
       })
+
+      if (onStatusChange) {
+        if (distance < 200) {
+          onStatusChange('observing')
+        } else {
+          onStatusChange('tracking')
+        }
+      }
     }
 
     window.addEventListener('mousemove', handleMouseMove)
     return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
+  }, [onStatusChange])
 
   // Spontaneous blinking loop
   useEffect(() => {
     const blinkInterval = setInterval(() => {
       setIsBlinking(true)
-      setTimeout(() => setIsBlinking(false), 160)
-    }, 4000)
+      setTimeout(() => setIsBlinking(false), 170)
+    }, 4200)
 
     return () => clearInterval(blinkInterval)
   }, [])
@@ -66,6 +75,7 @@ const CompanionBot = ({ soundEnabled }: CompanionBotProps) => {
     playSound('pop', soundEnabled)
     setDialogueIndex((prev) => (prev + 1) % dialogues.length)
     setShowSpeech(true)
+    if (onStatusChange) onStatusChange('amused')
   }
 
   return (
@@ -79,12 +89,12 @@ const CompanionBot = ({ soundEnabled }: CompanionBotProps) => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="absolute -top-12 z-20 whitespace-nowrap px-3.5 py-1.5 rounded-full bg-[#0d0f18]/90 backdrop-blur-md border border-indigo-500/30 text-xs font-mono text-indigo-300 shadow-lg shadow-indigo-500/20 flex items-center gap-1.5 pointer-events-none"
+            className="absolute -top-12 sm:-top-14 z-20 whitespace-nowrap px-3.5 py-1.5 rounded-full bg-[#0d0f18]/95 backdrop-blur-md border border-indigo-500/40 text-xs font-mono text-cyan-300 shadow-xl shadow-cyan-500/20 flex items-center gap-1.5 pointer-events-none"
           >
-            <Sparkles size={12} className="text-cyan-400 animate-pulse" />
+            <Sparkles size={12} className="text-cyan-400 animate-spin" />
             <span>{dialogues[dialogueIndex]}</span>
             {/* Pointer arrow */}
-            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#0d0f18] border-r border-b border-indigo-500/30 rotate-45"></div>
+            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#0d0f18] border-r border-b border-indigo-500/40 rotate-45"></div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -95,36 +105,40 @@ const CompanionBot = ({ soundEnabled }: CompanionBotProps) => {
         onMouseEnter={() => {
           setIsHovered(true)
           playSound('hover', soundEnabled)
+          if (onStatusChange) onStatusChange('happy')
         }}
-        onMouseLeave={() => setIsHovered(false)}
-        whileHover={{ scale: 1.06, y: -3 }}
+        onMouseLeave={() => {
+          setIsHovered(false)
+          if (onStatusChange) onStatusChange('idle')
+        }}
+        whileHover={{ scale: 1.05, y: -4 }}
         whileTap={{ scale: 0.95 }}
-        className="relative w-28 h-20 sm:w-32 sm:h-22 rounded-[28px] p-[2px] bg-gradient-to-b from-indigo-500/60 via-purple-500/30 to-cyan-400/50 shadow-2xl shadow-indigo-500/25 cursor-pointer group"
+        className="relative w-36 h-24 sm:w-44 sm:h-28 rounded-[32px] p-[2.5px] bg-gradient-to-b from-indigo-500/80 via-purple-500/40 to-cyan-400/70 shadow-2xl shadow-indigo-500/30 cursor-pointer group"
       >
         {/* Antenna / Status Beacon on Top */}
-        <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-glow-cyan animate-pulse"></div>
-          <div className="w-0.5 h-2 bg-gradient-to-b from-cyan-400 to-indigo-500"></div>
+        <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 flex flex-col items-center">
+          <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] animate-pulse"></div>
+          <div className="w-0.5 h-2.5 bg-gradient-to-b from-cyan-400 to-indigo-500"></div>
         </div>
 
         {/* Inner Dark Glass Screen */}
-        <div className="w-full h-full rounded-[26px] bg-[#07080e] p-2 flex flex-col items-center justify-center relative overflow-hidden border border-white/10">
+        <div className="w-full h-full rounded-[30px] bg-[#07080e] p-2 flex flex-col items-center justify-center relative overflow-hidden border border-white/10">
           {/* Subtle Screen Scanline Texture */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none"></div>
 
           {/* OLED Eyes Container */}
-          <div className="flex items-center justify-center gap-4 relative z-10">
+          <div className="flex items-center justify-center gap-5 sm:gap-6 relative z-10">
             {/* Left Eye */}
-            <div className="relative w-7 h-9 rounded-full bg-[#0a0c16] border border-cyan-500/40 flex items-center justify-center overflow-hidden shadow-inner shadow-black">
+            <div className="relative w-9 h-11 sm:w-10 sm:h-13 rounded-full bg-[#0a0c16] border border-cyan-500/50 flex items-center justify-center overflow-hidden shadow-inner shadow-black">
               {isBlinking ? (
-                <div className="w-5 h-[2px] bg-cyan-400 rounded-full"></div>
+                <div className="w-6 h-[2.5px] bg-cyan-400 rounded-full"></div>
               ) : isHovered ? (
                 /* Happy Squint Eye Arc */
-                <div className="w-5 h-5 border-t-2 border-cyan-400 rounded-full mt-2 animate-bounce"></div>
+                <div className="w-6 h-6 border-t-3 border-cyan-400 rounded-full mt-3"></div>
               ) : (
                 /* Dynamic Pupil tracking cursor */
                 <motion.div
-                  className="w-4 h-5 rounded-full bg-gradient-to-b from-cyan-300 to-indigo-500 shadow-[0_0_8px_rgba(6,182,212,0.8)] relative"
+                  className="w-5 h-6 sm:w-6 sm:h-7 rounded-full bg-gradient-to-b from-cyan-300 via-cyan-400 to-indigo-500 shadow-[0_0_10px_rgba(6,182,212,0.9)] relative"
                   animate={{
                     x: pupilOffset.x,
                     y: pupilOffset.y
@@ -132,22 +146,22 @@ const CompanionBot = ({ soundEnabled }: CompanionBotProps) => {
                   transition={{ type: 'spring', damping: 25, stiffness: 280 }}
                 >
                   {/* Eye highlight glint */}
-                  <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 rounded-full bg-white"></div>
+                  <div className="absolute top-1 left-1 w-2 h-2 rounded-full bg-white"></div>
                 </motion.div>
               )}
             </div>
 
             {/* Right Eye */}
-            <div className="relative w-7 h-9 rounded-full bg-[#0a0c16] border border-cyan-500/40 flex items-center justify-center overflow-hidden shadow-inner shadow-black">
+            <div className="relative w-9 h-11 sm:w-10 sm:h-13 rounded-full bg-[#0a0c16] border border-cyan-500/50 flex items-center justify-center overflow-hidden shadow-inner shadow-black">
               {isBlinking ? (
-                <div className="w-5 h-[2px] bg-cyan-400 rounded-full"></div>
+                <div className="w-6 h-[2.5px] bg-cyan-400 rounded-full"></div>
               ) : isHovered ? (
                 /* Happy Squint Eye Arc */
-                <div className="w-5 h-5 border-t-2 border-cyan-400 rounded-full mt-2 animate-bounce"></div>
+                <div className="w-6 h-6 border-t-3 border-cyan-400 rounded-full mt-3"></div>
               ) : (
                 /* Dynamic Pupil tracking cursor */
                 <motion.div
-                  className="w-4 h-5 rounded-full bg-gradient-to-b from-cyan-300 to-indigo-500 shadow-[0_0_8px_rgba(6,182,212,0.8)] relative"
+                  className="w-5 h-6 sm:w-6 sm:h-7 rounded-full bg-gradient-to-b from-cyan-300 via-cyan-400 to-indigo-500 shadow-[0_0_10px_rgba(6,182,212,0.9)] relative"
                   animate={{
                     x: pupilOffset.x,
                     y: pupilOffset.y
@@ -155,19 +169,25 @@ const CompanionBot = ({ soundEnabled }: CompanionBotProps) => {
                   transition={{ type: 'spring', damping: 25, stiffness: 280 }}
                 >
                   {/* Eye highlight glint */}
-                  <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 rounded-full bg-white"></div>
+                  <div className="absolute top-1 left-1 w-2 h-2 rounded-full bg-white"></div>
                 </motion.div>
               )}
             </div>
           </div>
 
           {/* Bottom Cheek Micro-LEDs */}
-          <div className="flex items-center gap-8 mt-1 opacity-70">
-            <div className="w-1.5 h-1 rounded-full bg-rose-400/80"></div>
-            <div className="w-1.5 h-1 rounded-full bg-rose-400/80"></div>
+          <div className="flex items-center gap-10 mt-1 opacity-80">
+            <div className="w-2 h-1 rounded-full bg-rose-400/90 shadow-[0_0_6px_#fb7185]"></div>
+            <div className="w-2 h-1 rounded-full bg-rose-400/90 shadow-[0_0_6px_#fb7185]"></div>
           </div>
         </div>
       </motion.div>
+
+      {/* Small Bot Badge */}
+      <div className="mt-2 flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-[10px] font-mono text-gray-400">
+        <Terminal size={10} className="text-indigo-400" />
+        <span>V9D-CORE // ONLINE</span>
+      </div>
     </div>
   )
 }
