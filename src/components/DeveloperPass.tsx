@@ -44,8 +44,8 @@ const DeveloperPass = ({
 
   return (
     <div className={className}>
-      {/* Lanyard Clip */}
-      <div className="flex flex-col items-center z-30 mb-[-6px]">
+      {/* Lanyard Clip Container matching Card Width */}
+      <div className="w-32 sm:w-36 flex flex-col items-center z-30 mb-[-6px]">
         <div className="w-10 h-2 bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 rounded-full shadow-md" />
         <div className="w-3.5 h-4 bg-slate-500 rounded-b-sm border-t border-slate-600 shadow-inner" />
       </div>

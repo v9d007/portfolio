@@ -40,13 +40,32 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
         </span>
       </motion.div>
 
-      {/* Centered Stage Cockpit HUD (Anchored tightly around the center Dynamic Core) */}
-      <div className="relative w-full max-w-[1040px] h-[680px] sm:h-[720px] mx-auto flex items-center justify-center px-4 sm:px-6">
-        {/* 2. Top Left: Holographic 3D Developer Pass Credential */}
-        <DeveloperPass
-          soundEnabled={soundEnabled}
-          className="absolute top-4 sm:top-6 left-2 sm:left-4 z-20 flex flex-col items-center select-none perspective-1000 scale-95 sm:scale-100 origin-top-left"
-        />
+      {/* Centered Stage Cockpit HUD (Wider container shifted left, perfectly balanced) */}
+      <div className="relative w-full max-w-[1240px] xl:max-w-[1300px] h-[720px] sm:h-[760px] mx-auto flex items-center justify-center px-4 sm:px-6">
+        {/* 2. Unified Left Profile Identity Entity (Credential Pass + Monospace Terminal Bio) */}
+        <div className="absolute left-0 sm:left-2 lg:left-4 top-2 sm:top-4 z-20 flex flex-col items-start max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] select-none pointer-events-auto">
+          {/* Holographic 3D Developer Pass Credential */}
+          <DeveloperPass
+            soundEnabled={soundEnabled}
+            className="flex flex-col items-start select-none perspective-1000 scale-95 sm:scale-100 origin-top-left"
+          />
+
+          {/* Micro Telemetry Connector / Station Rail */}
+          <div className="my-2.5 sm:my-3 flex items-center gap-2 pl-1 font-mono text-[9px] text-slate-400 dark:text-slate-500">
+            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 dark:bg-cyan-400 animate-pulse" />
+            <span className="tracking-wider uppercase font-semibold text-slate-600 dark:text-slate-400">
+              ARCHITECT BIO // TERMINAL
+            </span>
+            <div className="h-[1px] w-8 sm:w-12 bg-slate-200 dark:bg-white/10" />
+          </div>
+
+          {/* Continuous Typewriter Bio & Quick Actions */}
+          <TypewriterIntro
+            onNavigate={onNavigate}
+            soundEnabled={soundEnabled}
+            className="w-full select-none pointer-events-auto"
+          />
+        </div>
 
         {/* 3. Center Assembly: Dynamic Island Core + Floating Tech Tokens Orbit */}
         <div className="relative flex items-center justify-center w-[420px] h-[360px] my-auto pointer-events-none">
@@ -59,18 +78,11 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
           </div>
         </div>
 
-        {/* 4. Bottom Left: Continuous Typewriter Bio & Quick Actions */}
-        <TypewriterIntro
-          onNavigate={onNavigate}
-          soundEnabled={soundEnabled}
-          className="absolute left-2 sm:left-4 bottom-4 sm:bottom-6 z-20 max-w-[290px] sm:max-w-[320px] select-none pointer-events-auto"
-        />
-
-        {/* 5. Right Side Interactive Stacks (Experience Accordion, Projects Fan, Socials) */}
+        {/* 4. Right Side Interactive Stacks (Experience Accordion, Projects Fan, Socials) */}
         <RightSidebarStacks
           onNavigate={onNavigate}
           soundEnabled={soundEnabled}
-          className="absolute right-2 sm:right-4 top-6 sm:top-8 bottom-4 sm:bottom-6 z-20"
+          className="absolute right-2 sm:right-4 lg:right-6 top-6 sm:top-8 bottom-4 sm:bottom-6 z-20"
         />
       </div>
 
