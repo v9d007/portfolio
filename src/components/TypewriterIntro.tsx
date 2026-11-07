@@ -37,73 +37,81 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
 
   return (
     <div className={className}>
-      {/* Monospace Developer Intro Text with bold high contrast */}
-      <div className="text-[13px] sm:text-[13.5px] lg:text-[14px] leading-[1.85] sm:leading-[1.95] font-mono text-[#09090B] dark:text-[#E2E8F0]">
+      {/* Monospace Developer Intro Text matching yl0.me */}
+      <div className="text-[12.5px] sm:text-[13px] leading-[2.1] sm:leading-[2.2] font-mono text-[#09090B] dark:text-[#E2E8F0]">
         <div className="whitespace-pre-wrap">
           {currentText.split('\n\n').map((para, pIdx) => {
             const parts = para.split(
               /(Vinod Kumar Singh|IIT Kanpur \(EE '19\)|Swift 6|60 FPS|Xoxoday \(Giift\)|zero data-race)/g
             )
+            const isFirst = pIdx === 0
             return (
-              <p key={pIdx} className="mb-2 sm:mb-2.5">
-                {parts.map((part, idx) => {
-                  if (part === 'Vinod Kumar Singh') {
-                    return (
-                      <span
-                        key={idx}
-                        className="font-extrabold text-[#6D28D9] dark:text-[#A78BFA] transition-colors"
-                      >
-                        Vinod Kumar Singh
-                      </span>
-                    )
-                  }
-                  if (part === "IIT Kanpur (EE '19)") {
-                    return (
-                      <span key={idx} className="font-extrabold text-[#000000] dark:text-[#FFFFFF]">
-                        IIT Kanpur (EE '19)
-                      </span>
-                    )
-                  }
-                  if (part === 'Swift 6') {
-                    return (
-                      <span key={idx} className="font-bold text-[#7C3AED] dark:text-[#A78BFA]">
-                        Swift 6
-                      </span>
-                    )
-                  }
-                  if (part === '60 FPS') {
-                    return (
-                      <span key={idx} className="font-semibold text-emerald-600 dark:text-emerald-400">
-                        60 FPS
-                      </span>
-                    )
-                  }
-                  if (part === 'Xoxoday (Giift)') {
-                    return (
-                      <button
-                        key={idx}
-                        onClick={() => onNavigate('experience')}
-                        className="text-[#1D4ED8] dark:text-[#8AB0FF] font-semibold underline decoration-dashed underline-offset-4 hover:opacity-80 transition-opacity cursor-pointer"
-                      >
-                        Xoxoday (Giift)
-                      </button>
-                    )
-                  }
-                  if (part === 'zero data-race') {
-                    return (
-                      <span key={idx} className="font-semibold text-emerald-600 dark:text-emerald-400">
-                        zero data-race
-                      </span>
-                    )
-                  }
-                  return <span key={idx}>{part}</span>
-                })}
-              </p>
+              <div
+                key={pIdx}
+                className={`relative pb-1.5 mb-2.5 sm:mb-3 border-b border-dashed border-slate-300/80 dark:border-white/15 ${
+                  isFirst ? 'font-bold text-sm sm:text-[14.5px] text-[#09090B] dark:text-[#F8FAFC]' : ''
+                }`}
+              >
+                <p>
+                  {parts.map((part, idx) => {
+                    if (part === 'Vinod Kumar Singh') {
+                      return (
+                        <span
+                          key={idx}
+                          className="font-extrabold text-[#6D28D9] dark:text-[#A78BFA] transition-colors"
+                        >
+                          Vinod Kumar Singh
+                        </span>
+                      )
+                    }
+                    if (part === "IIT Kanpur (EE '19)") {
+                      return (
+                        <span key={idx} className="font-extrabold text-[#000000] dark:text-[#FFFFFF]">
+                          IIT Kanpur (EE '19)
+                        </span>
+                      )
+                    }
+                    if (part === 'Swift 6') {
+                      return (
+                        <span key={idx} className="font-bold text-[#7C3AED] dark:text-[#A78BFA]">
+                          Swift 6
+                        </span>
+                      )
+                    }
+                    if (part === '60 FPS') {
+                      return (
+                        <span key={idx} className="font-semibold text-emerald-600 dark:text-emerald-400">
+                          60 FPS
+                        </span>
+                      )
+                    }
+                    if (part === 'Xoxoday (Giift)') {
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => onNavigate('experience')}
+                          className="text-[#1D4ED8] dark:text-[#8AB0FF] font-semibold underline decoration-dashed underline-offset-4 hover:opacity-80 transition-opacity cursor-pointer"
+                        >
+                          Xoxoday (Giift)
+                        </button>
+                      )
+                    }
+                    if (part === 'zero data-race') {
+                      return (
+                        <span key={idx} className="font-semibold text-emerald-600 dark:text-emerald-400">
+                          zero data-race
+                        </span>
+                      )
+                    }
+                    return <span key={idx}>{part}</span>
+                  })}
+                </p>
+              </div>
             )
           })}
 
           {/* Active Blinking Monospace Cursor */}
-          <span className="inline-block w-1.5 h-3.5 bg-[#151922] dark:bg-[#ECEFF5] ml-0.5 animate-pulse align-middle" />
+          <span className="inline-block w-2 h-4 bg-[#09090B] dark:bg-[#ECEFF5] ml-0.5 animate-pulse align-middle" />
         </div>
       </div>
 

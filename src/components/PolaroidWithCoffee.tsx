@@ -13,7 +13,7 @@ const PolaroidWithCoffee = ({ className = '' }: PolaroidWithCoffeeProps) => {
   const [isCupOpen, setIsCupOpen] = useState(false)
 
   return (
-    <div className={`relative flex items-end gap-4 sm:gap-5 select-none ${className}`}>
+    <div className={`relative flex flex-col items-center select-none ${className}`}>
       {/* 1. Authentic Paper White Polaroid Card matching yl0.me */}
       <motion.figure
         initial={{ opacity: 0, scale: 0.9, rotate: -5 }}
@@ -58,15 +58,15 @@ const PolaroidWithCoffee = ({ className = '' }: PolaroidWithCoffeeProps) => {
         </div>
       </motion.figure>
 
-      {/* 2. Steaming Coffee Cup sitting on desk beside Polaroid (.cup) */}
-      <div className="relative pb-1 flex flex-col items-center">
+      {/* 2. Steaming Coffee Cup sitting just under Polaroid (same center line) matching yl0.me */}
+      <div className="relative mt-4 sm:mt-5 flex flex-col items-center">
         <button
           onClick={() => setIsCupOpen(!isCupOpen)}
           aria-label="Buy me a cappuccino"
           type="button"
           className="group relative cursor-pointer outline-none transition-transform hover:scale-110 active:scale-95"
         >
-          <svg viewBox="0 0 46 58" className="w-8 h-9 overflow-visible" aria-hidden="true">
+          <svg viewBox="0 0 46 58" className="w-8 h-9 sm:w-9 sm:h-10 overflow-visible" aria-hidden="true">
             {/* Animated Rising Steam */}
             <g className="stroke-[#94A3B8] dark:stroke-[#64748B] fill-none stroke-[1.8] stroke-linecap-round">
               <motion.path

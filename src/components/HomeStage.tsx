@@ -40,19 +40,18 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
 
       {/* Centered Stage Cockpit HUD (Wider container shifted left, balanced layout) */}
       <div className="relative w-full max-w-[1240px] xl:max-w-[1300px] h-[680px] sm:h-[720px] lg:h-[740px] mx-auto flex items-center justify-center px-4 sm:px-6">
-        {/* 2. Unified Left Profile Identity Entity (Polaroid with Coffee + Monospace Terminal Bio) */}
-        <div className="absolute left-3 sm:left-6 lg:left-8 bottom-2 sm:bottom-4 lg:bottom-5 z-20 flex flex-col items-start max-w-[340px] sm:max-w-[380px] lg:max-w-[400px] select-none pointer-events-auto">
-          {/* Polaroid Card with Washi Tape and Steaming Coffee Cup */}
-          <PolaroidWithCoffee
-            soundEnabled={soundEnabled}
-            className="origin-bottom-left ml-1 sm:ml-2"
-          />
+        {/* 2. Unified Left Profile Identity Entity matching yl0.me */}
+        <div className="absolute left-3 sm:left-6 lg:left-8 bottom-2 sm:bottom-4 lg:bottom-5 z-20 flex flex-col items-center max-w-[340px] sm:max-w-[370px] lg:max-w-[390px] select-none pointer-events-auto">
+          {/* Top: Polaroid Card + Steaming Coffee Cup directly under it, centered on same axis */}
+          <div className="w-full flex justify-center mb-5 sm:mb-7">
+            <PolaroidWithCoffee soundEnabled={soundEnabled} />
+          </div>
 
-          {/* Continuous Typewriter Bio & Say hi Action */}
+          {/* Bottom: Monospace Terminal Bio with Say hi Action */}
           <TypewriterIntro
             onNavigate={onNavigate}
             soundEnabled={soundEnabled}
-            className="w-full mt-3 sm:mt-4 select-none pointer-events-auto"
+            className="w-full select-none pointer-events-auto"
           />
         </div>
 
