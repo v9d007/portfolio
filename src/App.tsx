@@ -6,7 +6,17 @@ function App() {
   const [isLoading, setIsLoading] = useState(true)
   const [isBlueprint, setIsBlueprint] = useState(false)
   const [soundEnabled, setSoundEnabled] = useState(true)
-  const [theme, setTheme] = useState<'dark' | 'light'>('light')
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search)
+      const qTheme = params.get('theme')
+      if (qTheme === 'dark' || qTheme === 'light') return qTheme
+      const saved = localStorage.getItem('theme')
+      if (saved === 'dark' || saved === 'light') return saved
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark'
+    }
+    return 'light'
+  })
 
   useEffect(() => {
     // Set data-theme and class on html element

@@ -383,27 +383,27 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
     >
       <div>
         {/* Top Header Row (Exact match to yl0.me Image 2) */}
-        <div className="flex items-center justify-between font-mono text-xs sm:text-sm border-b border-slate-200/60 dark:border-white/10 pb-3 mb-3">
+        <div className="flex items-center justify-between font-mono text-xs sm:text-sm border-b border-slate-200/80 dark:border-white/10 pb-3 mb-3">
           <div className="flex items-center gap-2">
-            <span className="text-purple-600 dark:text-purple-400 font-bold">[P]</span>
-            <span className="text-purple-600 dark:text-purple-400 font-bold">Projects</span>
+            <span className="text-[#7C3AED] dark:text-[#A78BFA] font-extrabold">[P]</span>
+            <span className="text-[#7C3AED] dark:text-[#A78BFA] font-extrabold tracking-wide">Projects</span>
           </div>
-          <div className="text-slate-400 dark:text-slate-500 tracking-wider">
+          <div className="text-[#5A6272] dark:text-[#8E96A6] tracking-wider font-semibold">
             01 — {String(projects.length).padStart(2, '0')}
           </div>
         </div>
 
         {/* Subtitle & Back Button */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-          <p className="text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
-            Libraries, apps and architecture I have built, mostly in Swift, SwiftUI &amp; React Native. Scroll sideways to browse them.
+          <p className="text-xs sm:text-sm font-mono text-[#5A6272] dark:text-[#C5CBD8] max-w-xl leading-relaxed">
+            Libraries, systems and mobile architecture I have built, mostly in Swift, SwiftUI &amp; React Native. Scroll sideways to explore them.
           </p>
 
           <button
             onClick={handleBack}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FBFBF9] dark:bg-[#181D26] border border-slate-200 dark:border-white/15 text-xs font-mono text-[#151922] dark:text-[#ECEFF5] shadow-sm hover:bg-slate-100 dark:hover:bg-[#202632] transition-colors cursor-pointer"
           >
-            <ArrowLeft size={12} />
+            <ArrowLeft size={13} className="text-[#7C3AED] dark:text-[#A78BFA]" />
             <span>Back</span>
           </button>
         </div>
@@ -416,10 +416,14 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
                 key={project.id}
                 whileHover={{ y: -8, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
                 onClick={() => handleCardClick(project)}
-                className="relative w-64 sm:w-72 rounded-2xl bg-white dark:bg-[#0c0e18] border border-slate-200/80 dark:border-white/10 shadow-lg hover:shadow-2xl transition-all cursor-pointer p-4 flex flex-col justify-between"
+                className="relative w-64 sm:w-72 rounded-2xl bg-[#FBFBF9] text-[#151922] border border-slate-200/90 shadow-xl hover:shadow-2xl transition-all cursor-pointer p-4 flex flex-col justify-between"
+                style={{
+                  boxShadow:
+                    '0 0 0 1px rgba(21,25,34,.06), 0 4px 14px -3px rgba(0,0,0,0.18)'
+                }}
               >
                 {/* Number in top-left */}
-                <span className="text-[11px] font-mono text-slate-400 dark:text-slate-500 mb-2 block">
+                <span className="text-[11px] font-mono text-slate-400 font-bold mb-2 block">
                   {project.num}
                 </span>
 
@@ -429,18 +433,18 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
                 </div>
 
                 {/* Bottom Caption Row */}
-                <div className="border-t border-slate-100 dark:border-white/10 pt-3 mt-3 flex items-end justify-between font-mono">
+                <div className="border-t border-slate-200/80 pt-3 mt-3 flex items-end justify-between font-mono">
                   <div>
-                    <h4 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight">
+                    <h4 className="text-xs sm:text-sm font-bold text-[#151922] leading-tight">
                       {project.title}
                     </h4>
-                    <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate max-w-[150px] mt-0.5">
+                    <p className="text-[10px] text-slate-500 truncate max-w-[150px] mt-0.5 font-medium">
                       {project.subtitle}
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-1 text-[10px] text-slate-500 dark:text-slate-400">
-                    <Star size={10} className="text-amber-500 fill-amber-500" />
+                  <div className="flex items-center gap-1 text-[10px] text-slate-500 font-semibold">
+                    <Star size={11} className="text-amber-500 fill-amber-500" />
                     <span>{project.stars || 'Core'}</span>
                   </div>
                 </div>

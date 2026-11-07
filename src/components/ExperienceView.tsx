@@ -108,28 +108,28 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
     >
       {/* Top Header Row (Matching yl0.me Image 1) */}
       <div>
-        <div className="flex items-center justify-between font-mono text-xs sm:text-sm border-b border-slate-200/60 dark:border-white/10 pb-3 mb-3">
+        <div className="flex items-center justify-between font-mono text-xs sm:text-sm border-b border-slate-200/80 dark:border-white/10 pb-3 mb-3">
           <div className="flex items-center gap-2">
-            <span className="text-purple-600 dark:text-purple-400 font-bold">[E]</span>
-            <span className="text-purple-600 dark:text-purple-400 font-bold">Experiences</span>
+            <span className="text-[#7C3AED] dark:text-[#A78BFA] font-extrabold">[E]</span>
+            <span className="text-[#7C3AED] dark:text-[#A78BFA] font-extrabold tracking-wide">Experiences</span>
           </div>
-          <div className="text-slate-400 dark:text-slate-500 tracking-wider">
+          <div className="text-[#5A6272] dark:text-[#8E96A6] tracking-wider font-semibold">
             {String(activeIndex + 1).padStart(2, '0')} — {String(experiences.length).padStart(2, '0')}
           </div>
         </div>
 
         {/* Subtitle & Back Button */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-          <p className="text-xs sm:text-sm font-mono text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
-            Places I have worked and what I did there. Scroll sideways or click to browse them.
+          <p className="text-xs sm:text-sm font-mono text-[#5A6272] dark:text-[#C5CBD8] max-w-xl leading-relaxed">
+            Places I have worked and what I built there. Scroll sideways or click to browse.
           </p>
 
           {/* Minimalist Back Button */}
           <button
             onClick={handleBack}
-            className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 text-xs font-mono text-slate-700 dark:text-slate-300 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#FBFBF9] dark:bg-[#181D26] border border-slate-200 dark:border-white/15 text-xs font-mono text-[#151922] dark:text-[#ECEFF5] shadow-sm hover:bg-slate-100 dark:hover:bg-[#202632] transition-colors cursor-pointer"
           >
-            <ArrowLeft size={12} />
+            <ArrowLeft size={13} className="text-[#7C3AED] dark:text-[#A78BFA]" />
             <span>Back</span>
           </button>
         </div>
@@ -137,10 +137,10 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
         {/* Timeline Rail */}
         <div className="relative w-full my-6 sm:my-8 px-4">
           {/* Continuous Line */}
-          <div className="w-full h-[2px] bg-slate-200 dark:bg-white/10 relative">
+          <div className="w-full h-[2px] bg-slate-200 dark:bg-white/15 relative">
             {/* Active progress highlight */}
             <div
-              className="h-full bg-purple-600 dark:bg-purple-400 transition-all duration-500"
+              className="h-full bg-[#7C3AED] dark:bg-[#A78BFA] transition-all duration-500"
               style={{
                 width: `${((activeIndex + 1) / experiences.length) * 100}%`
               }}
@@ -156,9 +156,9 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
                   <span
                     className={`text-[9px] font-mono px-2 py-0.5 rounded-full mb-1 transition-colors ${
                       idx === activeIndex
-                        ? 'bg-purple-600 text-white font-bold shadow-sm'
+                        ? 'bg-[#7C3AED] text-white font-bold shadow-sm'
                         : isPastOrActive
-                        ? 'bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300'
+                        ? 'bg-purple-100 dark:bg-purple-950/60 text-[#7C3AED] dark:text-[#A78BFA] font-medium'
                         : 'bg-slate-100 dark:bg-slate-800 text-slate-400'
                     }`}
                   >
@@ -167,9 +167,9 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
                   <div
                     className={`w-3 h-3 rounded-full border-2 transition-all ${
                       idx === activeIndex
-                        ? 'bg-white border-purple-600 scale-125'
+                        ? 'bg-white border-[#7C3AED] scale-125'
                         : isPastOrActive
-                        ? 'bg-purple-600 border-purple-600'
+                        ? 'bg-[#7C3AED] border-[#7C3AED]'
                         : 'bg-white dark:bg-slate-900 border-slate-300 dark:border-white/20'
                     }`}
                   />
@@ -189,42 +189,43 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
                   key={exp.id}
                   whileHover={{ y: -6, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
                   onClick={() => handleSelect(idx)}
-                  className={`relative w-60 sm:w-64 h-80 rounded p-6 cursor-pointer flex flex-col justify-between text-slate-800 dark:text-slate-100 transition-all ${
+                  className={`relative w-60 sm:w-64 h-80 rounded p-6 cursor-pointer flex flex-col justify-between text-[#151922] transition-all bg-[#FDFDFB] ${
                     isActive
-                      ? 'shadow-2xl scale-102'
-                      : 'opacity-85 hover:opacity-100 shadow-md'
+                      ? 'shadow-2xl scale-102 ring-2 ring-[#7C3AED]/40'
+                      : 'opacity-90 hover:opacity-100 shadow-md'
                   }`}
                   style={{
-                    backgroundColor: isActive ? 'var(--bg-surface)' : 'rgba(255, 255, 255, 0.7)'
+                    boxShadow:
+                      '0 0 0 1px rgba(21,25,34,.06), 0 4px 14px -3px rgba(0,0,0,0.18)'
                   }}
                 >
-                  {/* Authentic Postage Stamp Scalloped Edge */}
-                  <PostageStampBorder isActive={isActive} />
+                  {/* Authentic Postage Stamp Scalloped Edge (Paper white in both modes!) */}
+                  <PostageStampBorder isActive={isActive} fillColor="#FDFDFB" />
 
                   {/* Stamp Contents */}
                   <div className="relative z-10 flex flex-col items-center text-center mt-2">
                     {/* Stamp Logo Circle */}
-                    <div className="w-14 h-14 rounded-full bg-slate-100 dark:bg-slate-800 p-2 flex items-center justify-center shadow-inner mb-4 border border-slate-200 dark:border-white/10">
+                    <div className="w-14 h-14 rounded-full bg-slate-100 p-2 flex items-center justify-center shadow-inner mb-4 border border-slate-200">
                       {exp.icon === 'iitk' ? (
                         <GraduationCap className="text-amber-500" size={26} />
                       ) : (
-                        <Briefcase className="text-purple-600 dark:text-purple-400" size={26} />
+                        <Briefcase className="text-[#7C3AED]" size={26} />
                       )}
                     </div>
 
-                    <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-tight mb-1">
+                    <h3 className="text-base sm:text-lg font-bold text-[#151922] leading-tight mb-1">
                       {exp.company}
                     </h3>
-                    <p className="text-xs font-mono text-slate-500 dark:text-slate-400">
+                    <p className="text-xs font-mono text-slate-500">
                       {exp.period}
                     </p>
                   </div>
 
-                  <div className="relative z-10 text-center border-t border-slate-200/60 dark:border-white/10 pt-3">
-                    <p className="text-xs font-bold text-slate-800 dark:text-slate-200 leading-snug">
+                  <div className="relative z-10 text-center border-t border-slate-200/80 pt-3">
+                    <p className="text-xs font-bold text-[#151922] leading-snug">
                       {exp.role}
                     </p>
-                    <p className="text-[10px] font-mono text-slate-500 dark:text-slate-400 mt-0.5">
+                    <p className="text-[10px] font-mono text-slate-500 mt-0.5 font-medium">
                       {exp.type}
                     </p>
                   </div>
@@ -241,21 +242,21 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35 }}
-        className="mt-8 pt-6 border-t border-dashed border-slate-200 dark:border-white/10 font-mono text-xs sm:text-sm text-slate-700 dark:text-slate-300"
+        className="mt-8 pt-6 border-t border-dashed border-slate-200 dark:border-white/10 font-mono text-xs sm:text-sm text-[#3A404C] dark:text-[#C5CBD8]"
       >
         <div className="flex flex-wrap items-center justify-between gap-2 mb-4 text-xs">
-          <span className="text-purple-600 dark:text-purple-400 font-bold">
+          <span className="text-[#7C3AED] dark:text-[#A78BFA] font-bold">
             /{activeExp.period}
           </span>
-          <span className="font-bold text-slate-900 dark:text-white uppercase tracking-wider">
+          <span className="font-bold text-[#151922] dark:text-[#ECEFF5] uppercase tracking-wider">
             {activeExp.company}
           </span>
         </div>
 
-        <ul className="space-y-2.5 max-w-4xl text-xs sm:text-[13px] leading-relaxed text-slate-600 dark:text-slate-300">
+        <ul className="space-y-2.5 max-w-4xl text-xs sm:text-[13px] leading-relaxed text-[#3A404C] dark:text-[#C5CBD8]">
           {activeExp.bullets.map((bullet, bIdx) => (
             <li key={bIdx} className="flex items-start gap-2.5">
-              <span className="text-purple-500 font-bold mt-0.5">•</span>
+              <span className="text-[#7C3AED] dark:text-[#A78BFA] font-bold mt-0.5">•</span>
               <span>{bullet}</span>
             </li>
           ))}

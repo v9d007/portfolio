@@ -40,19 +40,13 @@ const Wall = ({
         isBlueprint
           ? 'blueprint-mode bg-[#021324] text-[#c9f0ff]'
           : theme === 'dark'
-          ? 'bg-[#09090b] text-slate-100'
-          : 'bg-[#ffffff] text-slate-900'
+          ? 'bg-[#12151B] text-[#ECEFF5]'
+          : 'bg-[#FFFFFF] text-[#151922]'
       }`}
     >
-      {/* Fixed Background Dot Grid */}
-      <div
-        className="fixed inset-0 pointer-events-none opacity-40 dark:opacity-20 z-0"
-        style={{
-          backgroundImage:
-            'radial-gradient(circle, #94a3b8 1px, transparent 1px)',
-          backgroundSize: '24px 24px'
-        }}
-      />
+      {/* yl0.me Authentic Ripple Dot Grids (Top Right & Bottom Right) */}
+      <div className="dots-bottom-right z-0" aria-hidden="true" />
+      <div className="dots-top-right z-0" aria-hidden="true" />
 
       {/* Floating Top Dynamic Notch with ScrollSpy */}
       <Notch
@@ -85,9 +79,9 @@ const Wall = ({
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 w-full py-8 border-t border-slate-200 dark:border-white/10 text-center font-mono text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">
+      <footer className="relative z-10 w-full py-10 border-t border-slate-200/80 dark:border-white/10 text-center font-mono text-[11px] sm:text-xs text-[#5A6272] dark:text-[#8E96A6]">
         <p>Engineered by Vinod Kumar Singh • Senior Mobile &amp; iOS Systems Architect</p>
-        <p className="mt-1 opacity-70">IIT Kanpur '19 • Built with React, Tailwind &amp; Framer Motion</p>
+        <p className="mt-1.5 opacity-75">IIT Kanpur '19 • Built with React, Tailwind &amp; Framer Motion</p>
       </footer>
 
       {/* Blueprint CAD Overlay */}

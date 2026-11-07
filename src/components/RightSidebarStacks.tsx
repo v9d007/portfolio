@@ -107,20 +107,18 @@ const RightSidebarStacks = ({
         }}
         onClick={handleNavigateExp}
       >
-        {/* Accordion Stage: width accommodates both collapsed and spread states */}
-        <div className="relative h-[114px] sm:h-[122px] w-[174px] sm:w-[188px] flex items-center justify-start">
+        {/* Accordion Stage */}
+        <div className="relative h-[116px] sm:h-[122px] w-[176px] sm:w-[190px] flex items-center justify-start">
           {experienceStamps.map((stamp, idx) => {
             const IconComponent = stamp.icon
             const isSingleHovered = hoveredStampIdx === idx
 
             // Horizontal accordion spreading offsets
-            // Front stamp stays at left (x = 0), subsequent stamps spread out to the right
             const targetX = isExpHovered ? idx * 28 : idx * 5.5
             const targetY = isSingleHovered ? -8 : 0
             const targetRotate = isExpHovered ? (idx - 1.5) * 1.5 : idx * 1.2
             const targetScale = isSingleHovered ? 1.06 : 1.0
 
-            // Z-index: Front card (0) is on top, or elevated if hovered individually
             const zIndex = isSingleHovered ? 50 : 40 - idx
 
             return (
@@ -148,16 +146,16 @@ const RightSidebarStacks = ({
                   setHoveredStampIdx(null)
                 }}
                 style={{ zIndex }}
-                className="absolute left-0 top-0 w-[82px] sm:w-[88px] h-[108px] sm:h-[116px] text-white dark:text-[#0e1322] drop-shadow-[0_4px_12px_rgba(0,0,0,0.12)] dark:drop-shadow-[0_4px_16px_rgba(0,0,0,0.5)] cursor-pointer"
+                className="absolute left-0 top-0 w-[84px] sm:w-[88px] h-[110px] sm:h-[116px] text-[#FDFDFB] drop-shadow-[0_4px_12px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_6px_16px_rgba(0,0,0,0.5)] cursor-pointer"
               >
-                {/* Authentic Postage Stamp Scalloped Edge */}
+                {/* Authentic Postage Stamp Scalloped Edge (Paper white in both modes!) */}
                 <PostageStampBorder isActive={isSingleHovered} />
 
                 {/* Inner Dashed Border matching philatelic stamp design */}
-                <div className="absolute inset-1.5 border border-dashed border-slate-300/90 dark:border-slate-700/80 rounded pointer-events-none" />
+                <div className="absolute inset-1.5 border border-dashed border-slate-300 rounded pointer-events-none" />
 
                 {/* Stamp Contents */}
-                <div className="relative z-10 w-full h-full p-2 flex flex-col items-center justify-between text-center">
+                <div className="relative z-10 w-full h-full p-2 flex flex-col items-center justify-between text-center text-[#151922]">
                   {/* Stamp Circular Icon Badge */}
                   <div
                     className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr ${stamp.gradient} p-1.5 flex items-center justify-center text-white shadow-sm mt-0.5`}
@@ -167,16 +165,16 @@ const RightSidebarStacks = ({
 
                   {/* Company Name & Role */}
                   <div className="w-full px-0.5 my-auto">
-                    <p className="text-[9.5px] sm:text-[10px] font-bold text-slate-800 dark:text-slate-100 leading-tight truncate">
+                    <p className="text-[10px] sm:text-[10.5px] font-bold text-[#151922] leading-tight truncate">
                       {stamp.company}
                     </p>
-                    <p className="text-[7.5px] sm:text-[8px] font-mono text-indigo-600 dark:text-indigo-400 font-semibold truncate">
+                    <p className="text-[8px] sm:text-[8.5px] font-mono text-[#7C3AED] font-semibold truncate">
                       {stamp.role}
                     </p>
                   </div>
 
                   {/* Date Pill at bottom of stamp */}
-                  <span className="text-[7px] sm:text-[7.5px] font-mono px-1 py-0.2 rounded bg-slate-100 dark:bg-slate-800/90 text-slate-500 dark:text-slate-400 font-medium">
+                  <span className="text-[7.5px] sm:text-[8px] font-mono px-1 py-0.2 rounded bg-slate-100 text-slate-600 font-medium">
                     {stamp.period}
                   </span>
                 </div>
@@ -186,9 +184,9 @@ const RightSidebarStacks = ({
         </div>
 
         {/* Caption below stamps: Experiences [04] */}
-        <div className="mt-2 w-full flex items-center justify-center sm:justify-start gap-1.5 font-mono text-[11px] text-slate-600 dark:text-slate-400 px-1">
+        <div className="mt-2 w-full flex items-center justify-center sm:justify-start gap-1.5 font-mono text-[11px] text-[#4B5160] dark:text-[#AEB5C4] px-1">
           <span>Experiences</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-indigo-50 dark:bg-slate-800 text-[10px] font-bold text-indigo-600 dark:text-indigo-300 border border-indigo-100 dark:border-slate-700">
+          <span className="px-1.5 py-0.2 rounded-full bg-purple-50 dark:bg-white/10 text-[10px] font-bold text-[#7C3AED] dark:text-[#A78BFA] border border-purple-200 dark:border-white/10">
             04
           </span>
         </div>
@@ -213,8 +211,6 @@ const RightSidebarStacks = ({
             const offsetIdx = idx - 2 // -2, -1, 0, 1, 2
 
             // Fan spread rotation & translation
-            // Collapsed: slight casual stack (-4deg to +4deg)
-            // Hovered: wide radial fan (-13deg to +13deg)
             const targetRotate = isProjHovered ? offsetIdx * 6.5 : offsetIdx * 2
             const targetX = isProjHovered ? offsetIdx * 7.5 : offsetIdx * 2
             const targetY = isProjHovered
@@ -225,7 +221,7 @@ const RightSidebarStacks = ({
             const targetScale = isProjHovered && isFront ? 1.04 : 0.94 + idx * 0.015
 
             if (!isFront) {
-              // Background Deck Cards with visible top number tabs
+              // Background Deck Cards (Paper white in both modes!)
               return (
                 <motion.div
                   key={card.id}
@@ -242,14 +238,14 @@ const RightSidebarStacks = ({
                     mass: 0.8
                   }}
                   style={{ zIndex: idx * 5 }}
-                  className="absolute inset-0 rounded-2xl bg-white dark:bg-[#121626] border border-slate-200/90 dark:border-white/10 shadow-md p-1.5 flex flex-col justify-between pointer-events-none"
+                  className="absolute inset-0 rounded-2xl bg-[#FBFBF9] border border-slate-200/90 shadow-md p-1.5 flex flex-col justify-between pointer-events-none"
                 >
                   {/* Top corner label visible when fanned */}
-                  <div className="flex justify-between items-center px-1 text-[8px] font-mono text-slate-400 dark:text-slate-500 font-bold">
+                  <div className="flex justify-between items-center px-1 text-[8px] font-mono text-slate-400 font-bold">
                     <span>{card.num}</span>
-                    <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700" />
+                    <span className="w-1 h-1 rounded-full bg-slate-300" />
                   </div>
-                  <div className="w-full h-1/2 rounded-lg bg-slate-50 dark:bg-[#0c0f1c] border border-slate-100 dark:border-white/5 opacity-50" />
+                  <div className="w-full h-1/2 rounded-lg bg-slate-100 border border-slate-200/50 opacity-60" />
                 </motion.div>
               )
             }
@@ -271,15 +267,15 @@ const RightSidebarStacks = ({
                   mass: 0.8
                 }}
                 style={{ zIndex: 30 }}
-                className="absolute inset-0 rounded-2xl bg-white dark:bg-[#15192c] border border-slate-200 dark:border-white/15 p-2 sm:p-2.5 shadow-xl group-hover:shadow-2xl flex flex-col justify-between transition-shadow"
+                className="absolute inset-0 rounded-2xl bg-[#FBFBF9] border border-slate-200 p-2 sm:p-2.5 shadow-xl group-hover:shadow-2xl flex flex-col justify-between transition-shadow"
               >
                 {/* Dark Inner Display */}
-                <div className="relative w-full h-full rounded-xl bg-[#070b14] border border-cyan-500/20 p-2 flex flex-col justify-between overflow-hidden shadow-inner">
+                <div className="relative w-full h-full rounded-xl bg-[#151922] border border-cyan-500/30 p-2 flex flex-col justify-between overflow-hidden shadow-inner">
                   {/* Top Status Header */}
                   <div className="flex items-center justify-between text-cyan-400">
                     <div className="flex items-center gap-1">
                       <Layers size={12} />
-                      <span className="text-[7.5px] font-mono tracking-wider font-bold">01</span>
+                      <span className="text-[8px] font-mono tracking-wider font-bold">01</span>
                     </div>
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
                   </div>
@@ -293,19 +289,19 @@ const RightSidebarStacks = ({
                     >
                       <path
                         d="M 2 18 Q 18 4, 34 14 T 62 6 T 78 12"
-                        stroke="#22d3ee"
-                        strokeWidth="1.8"
+                        stroke="#0EA5E9"
+                        strokeWidth="2"
                         strokeLinecap="round"
                       />
-                      <circle cx="62" cy="6" r="2" fill="#22d3ee" className="animate-pulse" />
+                      <circle cx="62" cy="6" r="2.2" fill="#0EA5E9" className="animate-pulse" />
                     </svg>
                   </div>
 
                   {/* Micro Visual Telemetry Bars */}
                   <div className="space-y-1">
-                    <div className="w-full h-1 bg-cyan-400/90 rounded-full" />
-                    <div className="w-4/5 h-1 bg-indigo-400/80 rounded-full" />
-                    <div className="w-3/5 h-1 bg-purple-400/80 rounded-full" />
+                    <div className="w-full h-1 bg-cyan-400 rounded-full" />
+                    <div className="w-4/5 h-1 bg-indigo-400 rounded-full" />
+                    <div className="w-3/5 h-1 bg-purple-400 rounded-full" />
                   </div>
 
                   {/* Status Footer */}
@@ -319,31 +315,31 @@ const RightSidebarStacks = ({
         </div>
 
         {/* Caption below cards: Projects [08] */}
-        <div className="mt-2 w-full flex items-center justify-center gap-1.5 text-[11px] font-mono text-slate-600 dark:text-slate-400">
+        <div className="mt-2 w-full flex items-center justify-center gap-1.5 text-[11px] font-mono text-[#4B5160] dark:text-[#AEB5C4]">
           <span>Projects</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-cyan-50 dark:bg-slate-800 text-[10px] font-bold text-cyan-600 dark:text-cyan-300 border border-cyan-100 dark:border-slate-700">
+          <span className="px-1.5 py-0.2 rounded-full bg-cyan-50 dark:bg-white/10 text-[10px] font-bold text-cyan-600 dark:text-cyan-300 border border-cyan-200 dark:border-white/10">
             08
           </span>
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. SOCIALS (Bottom Right)                                                */}
+      {/* 3. "FIND ME VIA" SOCIALS (Bottom Right)                                   */}
       {/* ========================================================================= */}
       <div className="flex flex-col items-center sm:items-end">
-        <p className="text-[10px] font-mono text-slate-500 dark:text-slate-400 mb-1.5">
+        <p className="text-[11px] font-mono text-[#4B5160] dark:text-[#AEB5C4] mb-2 font-medium">
           Find me via
         </p>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5">
           <a
             href="https://github.com/v9d007"
             target="_blank"
             rel="noreferrer"
             onMouseEnter={() => playSound('hover', soundEnabled)}
-            className="w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform shadow-md"
+            className="w-9 h-9 rounded-full bg-[#09090B] dark:bg-[#F1F3F8] text-white dark:text-[#12151B] flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-md"
             title="GitHub (v9d007)"
           >
-            <Github size={14} />
+            <Github size={15} />
           </a>
 
           <a
@@ -351,10 +347,10 @@ const RightSidebarStacks = ({
             target="_blank"
             rel="noreferrer"
             onMouseEnter={() => playSound('hover', soundEnabled)}
-            className="w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform shadow-md"
+            className="w-9 h-9 rounded-full bg-[#09090B] dark:bg-[#F1F3F8] text-white dark:text-[#12151B] flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-md"
             title="LinkedIn"
           >
-            <Linkedin size={13} />
+            <Linkedin size={14} />
           </a>
 
           <a
@@ -362,10 +358,10 @@ const RightSidebarStacks = ({
             target="_blank"
             rel="noreferrer"
             onMouseEnter={() => playSound('hover', soundEnabled)}
-            className="w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform shadow-md"
+            className="w-9 h-9 rounded-full bg-[#09090B] dark:bg-[#F1F3F8] text-white dark:text-[#12151B] flex items-center justify-center hover:scale-110 active:scale-95 transition-all shadow-md"
             title="X (Twitter)"
           >
-            <Twitter size={13} />
+            <Twitter size={14} />
           </a>
         </div>
       </div>

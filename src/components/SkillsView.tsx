@@ -79,13 +79,13 @@ const SkillsView = ({ soundEnabled }: SkillsViewProps) => {
         transition={{ duration: 0.6 }}
         className="text-center mb-12 sm:mb-16"
       >
-        <span className="inline-block px-3.5 py-1 rounded-full text-xs font-mono bg-purple-500/10 border border-purple-500/30 text-purple-600 dark:text-purple-400 mb-3 font-semibold">
+        <span className="inline-block px-3.5 py-1 rounded-full text-xs font-mono bg-[#7C3AED]/10 dark:bg-[#A78BFA]/10 border border-[#7C3AED]/30 dark:border-[#A78BFA]/30 text-[#7C3AED] dark:text-[#A78BFA] mb-3 font-semibold">
           // 03. ENGINEERING MATRIX
         </span>
-        <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-[#151922] dark:text-[#ECEFF5] tracking-tight">
           Technical Capabilities &amp; Skills
         </h2>
-        <p className="mt-3 text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-mono">
+        <p className="mt-3 text-xs sm:text-sm text-[#5A6272] dark:text-[#C5CBD8] max-w-2xl mx-auto font-mono">
           Comprehensive stack across native iOS systems, cross-platform architecture, and algorithmic design.
         </p>
       </motion.div>
@@ -102,15 +102,15 @@ const SkillsView = ({ soundEnabled }: SkillsViewProps) => {
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.5, delay: catIdx * 0.1 }}
               whileHover={{ y: -4, transition: { type: 'spring', stiffness: 300, damping: 15 } }}
-              className="p-6 sm:p-7 rounded-3xl bg-white/70 dark:bg-[#0d0f1a]/80 backdrop-blur-xl border border-slate-200/80 dark:border-white/10 shadow-lg hover:shadow-2xl hover:border-indigo-500/40 transition-all flex flex-col justify-between"
+              className="p-6 sm:p-7 rounded-3xl bg-[#FBFBF9] dark:bg-[#181D26] border border-slate-200/90 dark:border-white/10 shadow-lg hover:shadow-xl hover:border-[#7C3AED]/40 transition-all flex flex-col justify-between"
             >
               <div>
                 {/* Category Header */}
-                <div className="flex items-center gap-3 mb-5 border-b border-slate-100 dark:border-white/10 pb-3.5">
+                <div className="flex items-center gap-3 mb-5 border-b border-slate-200/80 dark:border-white/10 pb-3.5">
                   <div className={`p-2.5 rounded-2xl border ${cat.color}`}>
                     <Icon size={20} />
                   </div>
-                  <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">
+                  <h3 className="text-base sm:text-lg font-bold text-[#151922] dark:text-[#ECEFF5]">
                     {cat.title}
                   </h3>
                 </div>
@@ -122,17 +122,17 @@ const SkillsView = ({ soundEnabled }: SkillsViewProps) => {
                       key={sk.name}
                       whileHover={{ scale: 1.02, x: 2 }}
                       onMouseEnter={() => playSound('hover', soundEnabled)}
-                      className="p-3 rounded-xl bg-slate-50/80 dark:bg-white/[0.03] border border-slate-200/60 dark:border-white/[0.06] hover:border-indigo-500/30 transition-all flex flex-col justify-between"
+                      className="p-3 rounded-xl bg-white dark:bg-[#12151B] border border-slate-200/70 dark:border-white/[0.08] hover:border-[#7C3AED]/40 transition-all flex flex-col justify-between"
                     >
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                        <span className="text-xs font-bold text-[#151922] dark:text-[#ECEFF5]">
                           {sk.name}
                         </span>
-                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-indigo-50 dark:bg-white/10 text-indigo-600 dark:text-cyan-300 font-bold">
+                        <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-purple-50 dark:bg-purple-950/60 text-[#7C3AED] dark:text-[#A78BFA] font-bold border border-purple-200/60 dark:border-purple-800/40">
                           {sk.level}
                         </span>
                       </div>
-                      <p className="text-[10px] text-slate-500 dark:text-gray-400 line-clamp-2">
+                      <p className="text-[10px] text-[#5A6272] dark:text-[#8E96A6] line-clamp-2">
                         {sk.desc}
                       </p>
                     </motion.div>
