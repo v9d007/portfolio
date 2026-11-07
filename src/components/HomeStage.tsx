@@ -40,25 +40,39 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
         </span>
       </motion.div>
 
-      {/* 2. Top Left: Holographic 3D Developer Pass Credential */}
-      <DeveloperPass soundEnabled={soundEnabled} />
+      {/* Centered Stage Cockpit HUD (Anchored tightly around the center Dynamic Core) */}
+      <div className="relative w-full max-w-[1020px] h-full min-h-[660px] max-h-[860px] mx-auto flex items-center justify-center px-4 sm:px-6">
+        {/* 2. Top Left: Holographic 3D Developer Pass Credential */}
+        <DeveloperPass
+          soundEnabled={soundEnabled}
+          className="absolute top-6 sm:top-10 left-2 sm:left-4 lg:left-6 z-20 flex flex-col items-center select-none perspective-1000 scale-90 sm:scale-100 origin-top-left"
+        />
 
-      {/* 3. Center Assembly: Dynamic Island Core + Floating Tech Tokens */}
-      <div className="relative flex items-center justify-center w-full max-w-4xl h-full my-auto">
-        {/* Floating Spatial Tech Tokens Orbit */}
-        <TechTokensOrbit soundEnabled={soundEnabled} />
+        {/* 3. Center Assembly: Dynamic Island Core + Floating Tech Tokens Orbit */}
+        <div className="relative flex items-center justify-center w-[440px] h-[440px] my-auto pointer-events-none">
+          {/* Floating Spatial Tech Tokens Orbit */}
+          <TechTokensOrbit soundEnabled={soundEnabled} />
 
-        {/* Interactive Dynamic Island Core */}
-        <div className="relative z-10">
-          <DynamicCore soundEnabled={soundEnabled} onStatusChange={setCoreStatus} />
+          {/* Interactive Dynamic Island Core */}
+          <div className="relative z-10 pointer-events-auto">
+            <DynamicCore soundEnabled={soundEnabled} onStatusChange={setCoreStatus} />
+          </div>
         </div>
+
+        {/* 4. Bottom Left: Continuous Typewriter Bio & Quick Actions */}
+        <TypewriterIntro
+          onNavigate={onNavigate}
+          soundEnabled={soundEnabled}
+          className="absolute left-2 sm:left-4 lg:left-6 bottom-4 sm:bottom-8 z-20 max-w-xs sm:max-w-sm lg:max-w-md select-none pointer-events-auto scale-90 sm:scale-100 origin-bottom-left"
+        />
+
+        {/* 5. Right Side Interactive Stacks (Experience Accordion, Projects Fan, Socials) */}
+        <RightSidebarStacks
+          onNavigate={onNavigate}
+          soundEnabled={soundEnabled}
+          className="absolute right-2 sm:right-4 lg:right-6 top-8 sm:top-10 bottom-4 sm:bottom-8 z-20"
+        />
       </div>
-
-      {/* 4. Bottom Left: Continuous Typewriter Bio & Quick Actions */}
-      <TypewriterIntro onNavigate={onNavigate} soundEnabled={soundEnabled} />
-
-      {/* 5. Right Side Interactive Stacks (Experience, Projects, Socials) */}
-      <RightSidebarStacks onNavigate={onNavigate} soundEnabled={soundEnabled} />
 
       {/* 6. Animated Scroll Down Indicator */}
       <motion.button

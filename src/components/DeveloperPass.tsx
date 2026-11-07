@@ -5,9 +5,13 @@ import { playSound } from '../utils/audio'
 
 interface DeveloperPassProps {
   soundEnabled: boolean
+  className?: string
 }
 
-const DeveloperPass = ({ soundEnabled }: DeveloperPassProps) => {
+const DeveloperPass = ({
+  soundEnabled,
+  className = 'absolute top-8 sm:top-12 left-2 sm:left-6 z-20 flex flex-col items-center select-none perspective-1000'
+}: DeveloperPassProps) => {
   const [rotateX, setRotateX] = useState(0)
   const [rotateY, setRotateY] = useState(0)
   const [glarePos, setGlarePos] = useState({ x: 50, y: 50 })
@@ -39,7 +43,7 @@ const DeveloperPass = ({ soundEnabled }: DeveloperPassProps) => {
   }
 
   return (
-    <div className="absolute top-16 sm:top-20 left-6 sm:left-14 z-20 flex flex-col items-center select-none perspective-1000">
+    <div className={className}>
       {/* Lanyard Clip */}
       <div className="flex flex-col items-center z-30 mb-[-6px]">
         <div className="w-10 h-2 bg-gradient-to-r from-slate-400 via-slate-200 to-slate-400 rounded-full shadow-md" />

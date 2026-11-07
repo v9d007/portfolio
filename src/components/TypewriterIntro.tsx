@@ -7,9 +7,14 @@ import type { NavTab } from './Notch'
 interface TypewriterIntroProps {
   onNavigate: (tab: NavTab) => void
   soundEnabled: boolean
+  className?: string
 }
 
-const TypewriterIntro = ({ onNavigate, soundEnabled }: TypewriterIntroProps) => {
+const TypewriterIntro = ({
+  onNavigate,
+  soundEnabled,
+  className = 'absolute left-2 sm:left-6 bottom-4 sm:bottom-6 z-20 max-w-xs sm:max-w-sm lg:max-w-md select-none pointer-events-auto'
+}: TypewriterIntroProps) => {
   const fullText = `Hey there, I'm Vinod Kumar Singh!
 
 Senior Mobile & iOS Systems Engineer. Alumnus of IIT Kanpur.
@@ -34,7 +39,7 @@ Crafting resilient, zero data-race applications for millions of users worldwide.
   const currentText = fullText.slice(0, displayedLength)
 
   return (
-    <div className="absolute left-6 sm:left-14 bottom-8 sm:bottom-12 z-20 max-w-sm sm:max-w-md select-none pointer-events-auto">
+    <div className={className}>
       {/* Monospace Developer Intro Text */}
       <div className="text-xs sm:text-[13px] leading-relaxed font-mono text-slate-700 dark:text-slate-300">
         <div className="whitespace-pre-wrap">

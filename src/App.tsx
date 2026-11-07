@@ -9,8 +9,9 @@ function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>('light')
 
   useEffect(() => {
-    // Set data-theme on html element
+    // Set data-theme and class on html element
     document.documentElement.setAttribute('data-theme', theme)
+    document.documentElement.classList.toggle('dark', theme === 'dark')
 
     const timer = setTimeout(() => {
       setIsLoading(false)
