@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Navbar from './components/Navbar.tsx'
 import Hero from './components/Hero.tsx'
 import About from './components/About.tsx'
@@ -8,47 +8,62 @@ import Projects from './components/Projects.tsx'
 import Experience from './components/Experience.tsx'
 import Contact from './components/Contact.tsx'
 import Footer from './components/Footer.tsx'
+import BackgroundEffects from './components/BackgroundEffects.tsx'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    // Simulate loading time
     const timer = setTimeout(() => {
       setIsLoading(false)
-    }, 1000)
+    }, 700)
 
     return () => clearTimeout(timer)
   }, [])
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-center"
-        >
-          <div className="w-16 h-16 border-4 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <h2 className="text-white text-xl font-semibold">Loading Portfolio...</h2>
-        </motion.div>
-      </div>
-    )
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900 text-white">
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Experience />
-        <Projects />
-        <Contact />
-      </main>
-      <Footer />
+    <div className="min-h-screen bg-[#07070b] text-slate-100 relative selection:bg-indigo-500/30 selection:text-white font-sans antialiased overflow-x-hidden">
+      {/* Background Ambience & Canvas Spotlights */}
+      <BackgroundEffects />
+
+      {/* Screen Entry Transition */}
+      <AnimatePresence>
+        {isLoading ? (
+          <motion.div
+            key="loader"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+            className="fixed inset-0 z-50 bg-[#07070b] flex flex-col items-center justify-center"
+          >
+            <div className="relative flex items-center justify-center">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-cyan-400 p-[1.5px] animate-spin">
+                <div className="w-full h-full bg-[#07070b] rounded-[14px]"></div>
+              </div>
+              <div className="absolute font-mono font-bold text-sm text-white">
+                VS
+              </div>
+            </div>
+            <div className="mt-4 font-mono text-xs text-gray-400 tracking-wider">
+              INITIALIZING SYSTEMS...
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
+
+      {/* Main Content Layout */}
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-1">
+          <Hero />
+          <About />
+          <Projects />
+          <Skills />
+          <Experience />
+          <Contact />
+        </main>
+        <Footer />
+      </div>
     </div>
   )
 }

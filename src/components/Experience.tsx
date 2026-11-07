@@ -1,58 +1,70 @@
 import { motion } from 'framer-motion'
-import { Calendar, MapPin } from 'lucide-react'
+import {
+  Briefcase,
+  Calendar,
+  MapPin,
+  CheckCircle2,
+  ExternalLink
+} from 'lucide-react'
 
 const Experience = () => {
   const experiences = [
     {
-      title: 'Mobile Developer',
+      role: 'Mobile Developer (Cross-Platform & Native)',
       company: 'Xoxoday',
-      location: 'Bangalore, India',
+      companyUrl: 'https://www.xoxoday.com',
       period: "Jul '19 – Present",
-      description: 'Contributed to the development of rewarding and incentive-based mobile apps using React Native and Expo Go. Integrated RESTful APIs, GraphQL, push notifications, deep linking, animations, Redux, multi-language support, and EAS builds. Published apps on iOS App Store and Google Play Store.',
+      location: 'Bangalore, India',
+      tag: 'React Native & iOS',
+      description:
+        'Led and contributed to the engineering of high-scale mobile applications using React Native and native iOS (Swift). Architected RESTful and GraphQL data flows, push notifications, deep linking, Redux stores, and automated EAS deployment pipelines for iOS App Store and Google Play Store.',
       achievements: [
-        'Developed scalable mobile apps with React Native, Expo Go, and Redux',
-        'Integrated RESTful APIs and GraphQL for efficient data communication',
-        'Implemented push notifications and deep linking',
-        'Added animations for improved user experience',
-        'Enabled multi-language support and multi-user account login',
-        'Utilized third-party libraries and native libraries for navigation and other functionalities',
-        'Deployed apps using EAS builds and published on iOS App Store and Google Play Store',
+        'Engineered responsive mobile frontends with React Native, Expo Go, and Redux Toolkit',
+        'Implemented end-to-end push notification architectures and custom universal deep links',
+        'Built multi-language internationalization (i18n) and multi-account enterprise authentication',
+        'Automated app releases through Expo Application Services (EAS) CI/CD to App Store and Google Play'
       ],
-      technologies: ['React Native', 'Expo Go', 'Redux', 'RESTful APIs', 'GraphQL', 'EAS', 'iOS', 'Android']
+      technologies: ['React Native', 'Expo Go', 'Redux', 'GraphQL', 'REST APIs', 'EAS Build', 'iOS', 'Android']
     },
     {
-      title: 'iOS Developer (Compass)',
+      role: 'iOS Developer (Compass Platform)',
       company: 'Xoxoday',
-      location: 'Bangalore, India',
+      companyUrl: 'https://www.xoxoday.com/compass',
       period: "Jul '19 – Present",
-      description: 'Proficient in storyboarding, auto-layout, scalable UIs, and visually appealing animations using UIKit, UIBezierPath, and Swift animation classes. Extensive knowledge of iOS SDK, app architecture, design patterns, OOP, memory management, dependency injection, and third-party libraries.',
+      location: 'Bangalore, India',
+      tag: 'Native iOS / Swift',
+      description:
+        'Architected native iOS screens, auto-layout constraints, and fluid animations for the Compass incentive gamification platform using UIKit and Swift. Engineered robust networking with Alamofire, Grand Central Dispatch, and asynchronous image pipelines.',
       achievements: [
-        'Created scalable UIs and smooth animations using UIKit and Swift',
-        'Strong grasp of iOS SDK, app architecture, and design patterns',
-        'Integrated third-party libraries: Alamofire, Kingfisher, GoogleTagManager, Firebase',
-        'Implemented JSON formatted services and Grand Central Dispatch',
-        'Wrote comprehensive unit tests with XCTest',
+        'Created custom 60fps animations utilizing UIKit, UIBezierPath, and Swift animation curves',
+        'Optimized background tasks and networking performance with Grand Central Dispatch (GCD)',
+        'Integrated third-party SDKs including Kingfisher, Alamofire, GoogleTagManager, and Firebase',
+        'Authored robust unit test suites utilizing XCTest to guarantee zero-regression releases'
       ],
-      technologies: ['Swift', 'UIKit', 'Alamofire', 'Kingfisher', 'GoogleTagManager', 'Firebase', 'CocoaPods']
+      technologies: ['Swift', 'UIKit', 'Alamofire', 'Kingfisher', 'Firebase', 'GCD', 'XCTest', 'CocoaPods']
     },
     {
-      title: 'iOS Developer (Empuls)',
+      role: 'iOS Developer (Empuls Platform)',
       company: 'Xoxoday',
-      location: 'Bangalore, India',
+      companyUrl: 'https://www.xoxoday.com/empuls',
       period: "Jul '19 – Present",
-      description: 'Developed applications using Swift, Xcode, Interface Builder, Cocoa Touch, and other iOS development tools. Assisted in analysis, design, development, and performance optimization of mobile applications.',
+      location: 'Bangalore, India',
+      tag: 'Native iOS / Swift',
+      description:
+        'Developed mobile features for the Empuls employee engagement and recognition platform using Swift, Xcode, Interface Builder, and Cocoa Touch. Focused on UI performance, feed responsiveness, and protocol-oriented architecture.',
       achievements: [
-        'Developed UI screens with UITableView, UIAlertView, UIScrollView',
-        'Utilized GIT for codebase management',
-        'Worked with Protocols, Delegates, Extensions, Class, and Struct for enhanced app functionality',
+        'Built reusable, high-performance UI components using UITableView and UIScrollView',
+        'Architected modular code patterns using Protocols, Delegates, Extensions, and Structs',
+        'Collaborated closely with cross-functional design and product teams across release cycles'
       ],
-      technologies: ['Swift', 'Xcode', 'Cocoa Touch', 'GIT', 'Protocols', 'Delegates', 'Extensions']
+      technologies: ['Swift', 'Xcode', 'Cocoa Touch', 'Protocols & Delegates', 'Memory Optimization', 'Git']
     }
   ]
 
   return (
-    <section id="experience" className="section-padding">
+    <section id="experience" className="section-padding relative">
       <div className="container-custom">
+        {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -60,69 +72,117 @@ const Experience = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Work <span className="gradient-text">Experience</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            <Briefcase size={13} />
+            Professional Journey
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
+            Engineering <span className="gradient-text-aurora">Impact &amp; Experience</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            My professional journey and the impact I've made in various organizations.
+          <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            Delivering high-reliability mobile solutions, enterprise incentive engines, and engagement platforms.
           </p>
         </motion.div>
 
-        <div className="space-y-12">
-          {experiences.map((experience, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-dark-800 rounded-xl p-6 card-hover"
-            >
-              <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-xl font-semibold text-white mb-1 md:mb-0">
-                    {experience.title}
-                  </h3>
-                  <span className="text-primary-400 font-medium">@ {experience.company}</span>
+        {/* Timeline Stack */}
+        <div className="max-w-4xl mx-auto relative">
+          {/* Vertical Glowing Line */}
+          <div className="hidden md:block absolute left-8 top-4 bottom-4 w-[2px] bg-gradient-to-b from-indigo-500 via-purple-500 to-cyan-500 opacity-30"></div>
+
+          <div className="space-y-8">
+            {experiences.map((exp, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                className="relative md:pl-20"
+              >
+                {/* Timeline Icon Node */}
+                <div className="hidden md:flex absolute left-4 top-6 -translate-x-1/2 w-8 h-8 rounded-full bg-[#07070b] border-2 border-indigo-500 items-center justify-center shadow-glow-indigo/50 z-10">
+                  <div className="w-2.5 h-2.5 rounded-full bg-indigo-400 animate-pulse"></div>
                 </div>
-                <div className="flex items-center gap-4 text-sm text-gray-400 mt-2 md:mt-0">
-                  <span className="flex items-center gap-1"><MapPin size={16} />{experience.location}</span>
-                  <span className="flex items-center gap-1"><Calendar size={16} />{experience.period}</span>
+
+                {/* Experience Card */}
+                <div className="glass-card rounded-2xl p-6 sm:p-7 border border-white/[0.08] hover:border-indigo-500/40 transition-all">
+                  {/* Top Row: Role, Company, Period */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-4 border-b border-white/[0.06] gap-2">
+                    <div>
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                        <h3 className="text-lg font-bold text-white">
+                          {exp.role}
+                        </h3>
+                        <a
+                          href={exp.companyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
+                        >
+                          @{exp.company}
+                          <ExternalLink size={12} />
+                        </a>
+                      </div>
+                      <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-white/[0.04] text-gray-300 border border-white/[0.08]">
+                        {exp.tag}
+                      </span>
+                    </div>
+
+                    <div className="flex sm:flex-col items-start sm:items-end gap-2 sm:gap-1 text-xs text-gray-400 font-mono">
+                      <span className="flex items-center gap-1.5">
+                        <Calendar size={13} className="text-indigo-400" />
+                        {exp.period}
+                      </span>
+                      <span className="flex items-center gap-1.5">
+                        <MapPin size={13} className="text-rose-400" />
+                        {exp.location}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-5">
+                    {exp.description}
+                  </p>
+
+                  {/* Key Achievements Checklist */}
+                  <div className="mb-5">
+                    <h4 className="text-xs font-mono uppercase tracking-wider text-indigo-400 mb-2.5 flex items-center gap-1.5">
+                      <CheckCircle2 size={13} />
+                      Key Contributions &amp; Achievements
+                    </h4>
+                    <ul className="space-y-2">
+                      {exp.achievements.map((item, itemIdx) => (
+                        <li
+                          key={itemIdx}
+                          className="text-xs text-gray-300 flex items-start gap-2.5 leading-relaxed"
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 shrink-0"></span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Tech Stack Pills */}
+                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-white/[0.06]">
+                    {exp.technologies.map((tech, techIdx) => (
+                      <span
+                        key={techIdx}
+                        className="px-2.5 py-0.5 bg-white/[0.03] rounded-md text-[11px] font-mono text-gray-300 border border-white/[0.06]"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <p className="text-gray-300 mb-4 leading-relaxed">
-                {experience.description}
-              </p>
-              <div className="mb-4">
-                <h4 className="text-sm font-semibold text-primary-400 mb-2">Key Achievements:</h4>
-                <ul className="space-y-1">
-                  {experience.achievements.map((achievement, achievementIndex) => (
-                    <li key={achievementIndex} className="text-sm text-gray-400 flex items-start">
-                      <span className="text-primary-500 mr-2">•</span>
-                      {achievement}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <h4 className="text-sm font-semibold text-primary-400 mb-2">Technologies:</h4>
-                <div className="flex flex-wrap gap-2">
-                  {experience.technologies.map((tech, techIndex) => (
-                    <span
-                      key={techIndex}
-                      className="px-3 py-1 bg-dark-700 rounded-full text-xs text-gray-300"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   )
 }
 
-export default Experience 
+export default Experience

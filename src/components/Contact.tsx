@@ -1,6 +1,17 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, Instagram } from 'lucide-react'
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  Github,
+  Linkedin,
+  Copy,
+  Check,
+  MessageSquare,
+  Clock
+} from 'lucide-react'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,89 +21,99 @@ const Contact = () => {
     message: ''
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [copiedEmail, setCopiedEmail] = useState(false)
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: value
     }))
   }
 
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('v9d200@gmail.com')
+    setCopiedEmail(true)
+    setTimeout(() => setCopiedEmail(false), 2200)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData)
-    
-    // Reset form
+
+    // Simulate reliable dispatch
+    await new Promise((resolve) => setTimeout(resolve, 1200))
+
+    // Direct mailto fallback trigger as backup
+    const mailtoLink = `mailto:v9d200@gmail.com?subject=${encodeURIComponent(
+      formData.subject || 'Portfolio Inquiry'
+    )}&body=${encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`
+    )}`
+
+    window.open(mailtoLink, '_blank')
+
+    setIsSubmitting(false)
+    setIsSubmitted(true)
     setFormData({
       name: '',
       email: '',
       subject: '',
       message: ''
     })
-    setIsSubmitting(false)
-    
-    // Show success message (you can implement a toast notification here)
-    alert('Thank you for your message! I will get back to you soon.')
+
+    setTimeout(() => setIsSubmitted(false), 5000)
   }
 
-  const contactInfo = [
+  const contactChannels = [
     {
       icon: Mail,
-      title: 'Email',
-      value: 'vinod@example.com',
-      link: 'mailto:vinod@example.com'
+      title: 'Email Address',
+      value: 'v9d200@gmail.com',
+      action: 'Click to copy',
+      onClick: handleCopyEmail,
+      isCopied: copiedEmail
     },
     {
       icon: Phone,
-      title: 'Phone',
-      value: '+91 98765 43210',
-      link: 'tel:+919876543210'
+      title: 'Direct Phone',
+      value: '+91 7054117364',
+      action: 'Direct Call',
+      href: 'tel:+917054117364'
     },
     {
       icon: MapPin,
-      title: 'Location',
+      title: 'Base Location',
       value: 'Bangalore, India',
-      link: null
+      action: 'Active (IST UTC+5:30)',
+      href: null
     }
   ]
 
   const socialLinks = [
     {
-      icon: Github,
       name: 'GitHub',
-      url: 'https://github.com/vinod',
-      color: 'hover:text-gray-400'
+      handle: 'v9d007',
+      url: 'https://github.com/v9d007',
+      icon: Github,
+      color: 'hover:text-white hover:border-white/30'
     },
     {
-      icon: Linkedin,
       name: 'LinkedIn',
-      url: 'https://linkedin.com/in/vinod',
-      color: 'hover:text-blue-400'
-    },
-    {
-      icon: Twitter,
-      name: 'Twitter',
-      url: 'https://twitter.com/vinod',
-      color: 'hover:text-blue-400'
-    },
-    {
-      icon: Instagram,
-      name: 'Instagram',
-      url: 'https://instagram.com/vinod',
-      color: 'hover:text-pink-400'
+      handle: 'vinod-kumar-singh200',
+      url: 'https://www.linkedin.com/in/vinod-kumar-singh200',
+      icon: Linkedin,
+      color: 'hover:text-blue-400 hover:border-blue-500/30'
     }
   ]
 
   return (
-    <section id="contact" className="section-padding">
+    <section id="contact" className="section-padding relative">
       <div className="container-custom">
+        {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -100,102 +121,137 @@ const Contact = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Get In <span className="gradient-text">Touch</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-3">
+            <MessageSquare size={13} />
+            Let's Collaborate
+          </div>
+          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-4">
+            Start a <span className="gradient-text-aurora">Conversation</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology.
+          <p className="text-gray-400 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            Interested in discussing mobile engineering roles, architectural consultations, or high-impact projects? Let's talk.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
+        <div className="grid lg:grid-cols-12 gap-8 max-w-5xl mx-auto">
+          {/* Left Column: Direct Contact Info (5 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -25 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="space-y-8"
+            className="lg:col-span-5 space-y-4"
           >
-            <div>
-              <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
-              <p className="text-gray-400 leading-relaxed mb-8">
-                I'm currently available for freelance work and full-time opportunities. 
-                Whether you have a question or just want to say hi, I'll try my best to get back to you!
+            {/* Quick Status Card */}
+            <div className="glass-panel rounded-2xl p-6 border border-white/[0.08]">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                </span>
+                <span className="text-xs font-semibold text-white uppercase tracking-wider">
+                  Available Immediately
+                </span>
+              </div>
+              <p className="text-xs text-gray-300 leading-relaxed mb-4">
+                Currently open to full-time Senior Mobile Engineer, iOS Lead, and Systems Architect roles in Bangalore or remote worldwide.
               </p>
+              <div className="flex items-center gap-2 text-xs font-mono text-gray-400">
+                <Clock size={13} className="text-indigo-400" />
+                <span>Typical response time: &lt; 24 hours</span>
+              </div>
             </div>
 
-            {/* Contact Info Cards */}
-            <div className="space-y-4">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={info.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="flex items-center space-x-4 p-4 bg-dark-800 rounded-lg hover:bg-dark-700 transition-colors duration-200"
-                >
-                  <div className="flex-shrink-0">
-                    <info.icon className="w-6 h-6 text-primary-400" />
+            {/* Contact Channels */}
+            {contactChannels.map((channel, idx) => (
+              <div
+                key={idx}
+                onClick={channel.onClick}
+                className={`glass-card rounded-2xl p-4 sm:p-5 border border-white/[0.08] hover:border-indigo-500/40 transition-all flex items-center justify-between group ${
+                  channel.onClick ? 'cursor-pointer' : ''
+                }`}
+              >
+                <div className="flex items-center gap-3.5">
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.08] flex items-center justify-center text-indigo-400 group-hover:scale-110 transition-transform">
+                    <channel.icon size={18} />
                   </div>
-                  <div className="flex-1">
-                    <p className="text-gray-400 text-sm">{info.title}</p>
-                    {info.link ? (
+                  <div>
+                    <div className="text-[11px] font-mono text-gray-400">
+                      {channel.title}
+                    </div>
+                    {channel.href ? (
                       <a
-                        href={info.link}
-                        className="text-white font-medium hover:text-primary-400 transition-colors duration-200"
+                        href={channel.href}
+                        className="text-sm font-semibold text-white hover:text-indigo-400 transition-colors"
                       >
-                        {info.value}
+                        {channel.value}
                       </a>
                     ) : (
-                      <p className="text-white font-medium">{info.value}</p>
+                      <div className="text-sm font-semibold text-white">
+                        {channel.value}
+                      </div>
                     )}
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
 
-            {/* Social Links */}
-            <div>
-              <h4 className="text-lg font-semibold mb-4">Follow Me</h4>
-              <div className="flex space-x-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.url}
+                {channel.onClick ? (
+                  <button
+                    onClick={channel.onClick}
+                    className="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.1] text-gray-300 transition-colors border border-white/[0.06]"
+                    aria-label="Copy email"
+                  >
+                    {channel.isCopied ? (
+                      <Check size={14} className="text-emerald-400" />
+                    ) : (
+                      <Copy size={14} />
+                    )}
+                  </button>
+                ) : null}
+              </div>
+            ))}
+
+            {/* Social Links Bar */}
+            <div className="glass-panel rounded-2xl p-4 border border-white/[0.08]">
+              <div className="text-xs font-mono text-gray-400 mb-3">
+                Professional Profiles
+              </div>
+              <div className="grid grid-cols-2 gap-2">
+                {socialLinks.map((s, i) => (
+                  <a
+                    key={i}
+                    href={s.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3, delay: index * 0.1 }}
-                    viewport={{ once: true }}
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className={`p-3 bg-dark-800 rounded-full text-gray-400 transition-colors duration-200 ${social.color}`}
+                    className={`flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] text-xs font-semibold text-gray-300 transition-all ${s.color}`}
                   >
-                    <social.icon size={20} />
-                  </motion.a>
+                    <s.icon size={15} />
+                    <span>{s.name}</span>
+                  </a>
                 ))}
               </div>
             </div>
           </motion.div>
 
-          {/* Contact Form */}
+          {/* Right Column: Contact Inquiry Form (7 cols) */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 25 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
             viewport={{ once: true }}
-            className="bg-dark-800 rounded-xl p-8"
+            className="lg:col-span-7 glass-panel rounded-2xl p-6 sm:p-8 border border-white/[0.08] relative"
           >
-            <h3 className="text-2xl font-semibold mb-6">Send Message</h3>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
+            <h3 className="text-xl font-bold text-white mb-2">
+              Send Direct Message
+            </h3>
+            <p className="text-xs text-gray-400 mb-6">
+              Fill in the form below to initiate a discussion or send a project brief.
+            </p>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                    Name
+                  <label htmlFor="name" className="block text-xs font-mono text-gray-400 mb-1.5">
+                    Your Name
                   </label>
                   <input
                     type="text"
@@ -204,14 +260,14 @@ const Contact = () => {
                     value={formData.name}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors duration-200"
-                    placeholder="Your name"
+                    placeholder="e.g. Alex Morgan"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.1] text-white placeholder-gray-500 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
                   />
                 </div>
-                
+
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                    Email
+                  <label htmlFor="email" className="block text-xs font-mono text-gray-400 mb-1.5">
+                    Your Email
                   </label>
                   <input
                     type="email"
@@ -220,15 +276,15 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors duration-200"
-                    placeholder="your.email@example.com"
+                    placeholder="alex@company.com"
+                    className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.1] text-white placeholder-gray-500 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
-                  Subject
+                <label htmlFor="subject" className="block text-xs font-mono text-gray-400 mb-1.5">
+                  Subject / Topic
                 </label>
                 <input
                   type="text"
@@ -237,14 +293,14 @@ const Contact = () => {
                   value={formData.subject}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors duration-200"
-                  placeholder="What's this about?"
+                  placeholder="Mobile Engineering Role / Consultation"
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.1] text-white placeholder-gray-500 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                  Message
+                <label htmlFor="message" className="block text-xs font-mono text-gray-400 mb-1.5">
+                  Message Details
                 </label>
                 <textarea
                   id="message"
@@ -252,31 +308,32 @@ const Contact = () => {
                   value={formData.message}
                   onChange={handleInputChange}
                   required
-                  rows={6}
-                  className="w-full px-4 py-3 bg-dark-700 border border-dark-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-colors duration-200 resize-none"
-                  placeholder="Tell me about your project or just say hello!"
+                  rows={4}
+                  placeholder="Share details about the role, project requirements, or opportunity..."
+                  className="w-full px-4 py-2.5 rounded-xl bg-white/[0.03] border border-white/[0.1] text-white placeholder-gray-500 text-sm focus:outline-none focus:border-indigo-500 transition-colors resize-none"
                 />
               </div>
 
-              <motion.button
+              <button
                 type="submit"
                 disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full btn-primary flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full btn-primary py-3 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    Sending...
-                  </>
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
                   <>
-                    <Send size={20} />
-                    Send Message
+                    <span>Send Message</span>
+                    <Send size={14} />
                   </>
                 )}
-              </motion.button>
+              </button>
+
+              {isSubmitted && (
+                <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs text-center font-medium">
+                  Thank you! Your email client has been prepared. I look forward to connecting with you shortly.
+                </div>
+              )}
             </form>
           </motion.div>
         </div>
@@ -285,4 +342,4 @@ const Contact = () => {
   )
 }
 
-export default Contact 
+export default Contact
