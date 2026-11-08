@@ -113,20 +113,20 @@ const BotFace = ({ soundEnabled, onStatusChange, className = '' }: BotFaceProps)
       <motion.div
         animate={{ y: [0, -4, 0] }}
         transition={{ repeat: Infinity, duration: 4.5, ease: 'easeInOut' }}
-        className="flex items-center gap-12 sm:gap-16"
+        className="flex items-center gap-14 sm:gap-18"
       >
         {/* Left Eye */}
         <div className="flex flex-col items-center">
-          <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#151922] dark:bg-[#E9EDF5] shadow-lg flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
+          <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#151922] dark:bg-[#E9EDF5] shadow-lg flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
             {isBlinking ? (
-              <div className="w-8 h-[2.5px] bg-white dark:bg-[#12151B] rounded-full" />
+              <div className="w-9 h-[2.5px] bg-white dark:bg-[#12151B] rounded-full" />
             ) : isHovered ? (
               /* Squinting smiling arch */
-              <div className="w-7 h-7 border-t-[3.5px] border-white dark:border-[#12151B] rounded-full mt-3.5" />
+              <div className="w-8 h-8 border-t-[3.5px] border-white dark:border-[#12151B] rounded-full mt-4" />
             ) : (
               /* Eyeball with tracked pupil */
               <motion.div
-                className="w-4 h-4 rounded-full bg-white dark:bg-[#12151B] shadow-inner relative"
+                className="w-4.5 h-4.5 rounded-full bg-white dark:bg-[#12151B] shadow-inner relative"
                 animate={{ x: pupilOffset.x, y: pupilOffset.y }}
                 transition={{ type: 'spring', damping: 20, stiffness: 260 }}
               >
@@ -145,16 +145,16 @@ const BotFace = ({ soundEnabled, onStatusChange, className = '' }: BotFaceProps)
 
         {/* Right Eye */}
         <div className="flex flex-col items-center">
-          <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#151922] dark:bg-[#E9EDF5] shadow-lg flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
+          <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#151922] dark:bg-[#E9EDF5] shadow-lg flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105">
             {isBlinking ? (
-              <div className="w-8 h-[2.5px] bg-white dark:bg-[#12151B] rounded-full" />
+              <div className="w-9 h-[2.5px] bg-white dark:bg-[#12151B] rounded-full" />
             ) : isHovered ? (
               /* Squinting smiling arch */
-              <div className="w-7 h-7 border-t-[3.5px] border-white dark:border-[#12151B] rounded-full mt-3.5" />
+              <div className="w-8 h-8 border-t-[3.5px] border-white dark:border-[#12151B] rounded-full mt-4" />
             ) : (
               /* Eyeball with tracked pupil */
               <motion.div
-                className="w-4 h-4 rounded-full bg-white dark:bg-[#12151B] shadow-inner relative"
+                className="w-4.5 h-4.5 rounded-full bg-white dark:bg-[#12151B] shadow-inner relative"
                 animate={{ x: pupilOffset.x, y: pupilOffset.y }}
                 transition={{ type: 'spring', damping: 20, stiffness: 260 }}
               >

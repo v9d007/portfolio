@@ -38,8 +38,8 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
   return (
     <div className={className}>
       {/* Monospace Developer Intro Text matching yl0.me */}
-      <div className="text-[12.5px] sm:text-[13px] leading-[2.1] sm:leading-[2.2] font-mono text-[#09090B] dark:text-[#E2E8F0]">
-        <div className="whitespace-pre-wrap">
+      <div className="text-[11px] sm:text-[11.5px] leading-[1.65] sm:leading-[1.7] font-mono text-[#09090B] dark:text-[#E2E8F0]">
+        <div className="whitespace-pre-wrap break-words">
           {currentText.split('\n\n').map((para, pIdx) => {
             const parts = para.split(
               /(Vinod Kumar Singh|IIT Kanpur \(EE '19\)|Swift 6|60 FPS|Xoxoday \(Giift\)|zero data-race)/g
@@ -48,8 +48,8 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
             return (
               <div
                 key={pIdx}
-                className={`relative pb-1.5 mb-2.5 sm:mb-3 border-b border-dashed border-slate-300/80 dark:border-white/15 ${
-                  isFirst ? 'font-bold text-sm sm:text-[14.5px] text-[#09090B] dark:text-[#F8FAFC]' : ''
+                className={`relative pb-1 mb-1.5 sm:mb-2 border-b border-dashed border-slate-300/80 dark:border-white/15 ${
+                  isFirst ? 'font-bold text-[12px] sm:text-[12.5px] text-[#09090B] dark:text-[#F8FAFC]' : ''
                 }`}
               >
                 <p>
@@ -123,11 +123,11 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.35, ease: 'easeOut' }}
-            className="mt-3.5 sm:mt-4 flex items-center"
+            className="mt-2.5 sm:mt-3 flex items-center"
           >
             <button
               onClick={() => onNavigate('contact')}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#09090B] text-white hover:bg-[#1E1E24] dark:bg-[#F1F3F8] dark:text-[#12151B] dark:hover:bg-white text-xs font-mono font-medium transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer border border-white/10 dark:border-black/10"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#09090B] text-white hover:bg-[#1E1E24] dark:bg-[#F1F3F8] dark:text-[#12151B] dark:hover:bg-white text-xs font-mono font-medium transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer border border-white/10 dark:border-black/10"
             >
               <Mail size={13} className="text-[#A78BFA] dark:text-[#7C3AED]" />
               <span>Say hi</span>

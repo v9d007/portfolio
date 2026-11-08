@@ -29,26 +29,26 @@ interface TechToken {
 }
 
 const TechTokensOrbit = ({ soundEnabled }: TechTokensOrbitProps) => {
-  // Elliptical ring surrounding the Bot Face
+  // Elliptical ring surrounding the Bot Face (Enlarged prominent orbit)
   const tokens: TechToken[] = [
-    { id: 'swift', label: 'Swift 6', spec: 'Strict Concurrency', Icon: SwiftIcon, angle: -90, radiusX: 185, radiusY: 135 },
-    { id: 'swiftui', label: 'SwiftUI', spec: 'Declarative iOS 18+', Icon: SwiftUIIcon, angle: -52, radiusX: 190, radiusY: 135 },
-    { id: 'apple', label: 'iOS Core', spec: 'StoreKit & CoreData', Icon: AppleIcon, angle: -15, radiusX: 195, radiusY: 135 },
-    { id: 'iitk', label: 'IIT Kanpur', spec: 'B.Tech EE \'19', Icon: IITKIcon, angle: 22, radiusX: 195, radiusY: 135 },
-    { id: 'python', label: 'Python', spec: 'Systems & ML', Icon: PythonIcon, angle: 58, radiusX: 185, radiusY: 135 },
-    { id: 'cpp', label: 'C++', spec: 'Low Latency DSA', Icon: CppIcon, angle: 95, radiusX: 185, radiusY: 135 },
-    { id: 'typescript', label: 'TypeScript', spec: 'Strict Types', Icon: TypeScriptIcon, angle: 130, radiusX: 185, radiusY: 135 },
-    { id: 'react', label: 'React Native', spec: 'Cross-Platform', Icon: ReactIcon, angle: 165, radiusX: 190, radiusY: 135 },
-    { id: 'graphql', label: 'GraphQL', spec: 'Apollo Client', Icon: GraphQLIcon, angle: 200, radiusX: 190, radiusY: 135 },
-    { id: 'docker', label: 'Docker', spec: 'CI/CD Pipelines', Icon: DockerIcon, angle: 235, radiusX: 190, radiusY: 135 },
-    { id: 'kotlin', label: 'Kotlin', spec: 'Android Interop', Icon: KotlinIcon, angle: 270, radiusX: 185, radiusY: 135 }
+    { id: 'swift', label: 'Swift 6', spec: 'Strict Concurrency', Icon: SwiftIcon, angle: -90, radiusX: 190, radiusY: 145 },
+    { id: 'swiftui', label: 'SwiftUI', spec: 'Declarative iOS 18+', Icon: SwiftUIIcon, angle: -50, radiusX: 192, radiusY: 145 },
+    { id: 'apple', label: 'iOS Core', spec: 'StoreKit & CoreData', Icon: AppleIcon, angle: -15, radiusX: 195, radiusY: 145 },
+    { id: 'iitk', label: 'IIT Kanpur', spec: "B.Tech EE '19", Icon: IITKIcon, angle: 20, radiusX: 195, radiusY: 145 },
+    { id: 'python', label: 'Python', spec: 'Systems & ML', Icon: PythonIcon, angle: 55, radiusX: 192, radiusY: 145 },
+    { id: 'cpp', label: 'C++', spec: 'Low Latency DSA', Icon: CppIcon, angle: 90, radiusX: 190, radiusY: 145 },
+    { id: 'typescript', label: 'TypeScript', spec: 'Strict Types', Icon: TypeScriptIcon, angle: 125, radiusX: 192, radiusY: 145 },
+    { id: 'react', label: 'React Native', spec: 'Cross-Platform', Icon: ReactIcon, angle: 160, radiusX: 195, radiusY: 145 },
+    { id: 'graphql', label: 'GraphQL', spec: 'Apollo Client', Icon: GraphQLIcon, angle: 195, radiusX: 195, radiusY: 145 },
+    { id: 'docker', label: 'Docker', spec: 'CI/CD Pipelines', Icon: DockerIcon, angle: 230, radiusX: 192, radiusY: 145 },
+    { id: 'kotlin', label: 'Kotlin', spec: 'Android Interop', Icon: KotlinIcon, angle: 250, radiusX: 190, radiusY: 145 }
   ]
 
   return (
     <div className="absolute inset-0 pointer-events-none select-none">
       {/* Hand-Drawn Cursive Hint matching yl0.me: "Drag the stickers ↗" */}
       <div
-        className="absolute top-1 right-2 sm:right-6 pointer-events-none flex items-center gap-1.5 text-[#5A6272] dark:text-[#8E96A6]"
+        className="absolute -top-3 right-0 sm:right-4 pointer-events-none flex items-center gap-1.5 text-[#5A6272] dark:text-[#8E96A6]"
         style={{ transform: 'rotate(-4deg)' }}
       >
         <svg
@@ -80,28 +80,28 @@ const TechTokensOrbit = ({ soundEnabled }: TechTokensOrbitProps) => {
           <motion.div
             key={token.id}
             drag
-            dragConstraints={{ left: -320, right: 320, top: -220, bottom: 220 }}
+            dragConstraints={{ left: -360, right: 360, top: -260, bottom: 260 }}
             dragElastic={0.15}
             onDragStart={() => playSound('pop', soundEnabled)}
             onMouseEnter={() => playSound('hover', soundEnabled)}
             initial={{ x, y, scale: 0.8, opacity: 0 }}
             animate={{ x, y, scale: 1, opacity: 1 }}
             whileHover={{
-              scale: 1.18,
+              scale: 1.22,
               rotate: (token.angle % 12) - 6,
               zIndex: 60,
               transition: { type: 'spring', stiffness: 400, damping: 14 }
             }}
-            whileDrag={{ scale: 1.28, zIndex: 70 }}
+            whileDrag={{ scale: 1.3, zIndex: 70 }}
             className="absolute left-1/2 top-1/2 pointer-events-auto cursor-grab active:cursor-grabbing group"
             style={{
-              marginLeft: '-22px',
-              marginTop: '-22px'
+              marginLeft: '-24px',
+              marginTop: '-24px'
             }}
           >
             {/* Authentic Die-Cut White-Contour Vinyl Sticker (White paper/vinyl border in both themes) */}
             <div
-              className="p-2 sm:p-2.5 rounded-2xl bg-white border-[2.5px] border-white shadow-md transition-all duration-200 die-cut-sticker flex items-center justify-center"
+              className="p-2 sm:p-2.5 rounded-2xl bg-white border-[2.5px] border-white shadow-md transition-all duration-200 die-cut-sticker flex items-center justify-center scale-105 sm:scale-110"
               title={`${token.label} (${token.spec})`}
             >
               <token.Icon />

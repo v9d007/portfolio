@@ -23,7 +23,7 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
   return (
     <section
       id="home"
-      className="relative w-full h-screen min-h-[660px] max-h-[950px] flex items-center justify-center overflow-hidden select-none"
+      className="relative w-full h-screen min-h-[520px] max-h-[950px] flex items-center justify-center overflow-hidden select-none"
     >
       {/* 1. Top Right Telemetry Status Pill matching yl0.me */}
       <motion.div
@@ -38,24 +38,24 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
         </span>
       </motion.div>
 
+      {/* 2. Monospace Terminal Bio (Shifted far left and bottom, independent placement) */}
+      <div className="absolute left-2.5 sm:left-4 lg:left-6 bottom-3 sm:bottom-4 lg:bottom-5 z-20 max-w-[215px] sm:max-w-[230px] lg:max-w-[250px] select-none pointer-events-auto">
+        <TypewriterIntro
+          onNavigate={onNavigate}
+          soundEnabled={soundEnabled}
+          className="w-full select-none pointer-events-auto"
+        />
+      </div>
+
       {/* Centered Stage Cockpit HUD (Wider container shifted left, balanced layout) */}
-      <div className="relative w-full max-w-[1240px] xl:max-w-[1300px] h-[680px] sm:h-[720px] lg:h-[740px] mx-auto flex items-center justify-center px-4 sm:px-6">
-        {/* 2. Independent Polaroid & Steaming Coffee Setup (Fixed, visible at once, shifted up) */}
-        <div className="absolute left-[clamp(28px,6vw,96px)] top-[clamp(36px,7vh,72px)] z-20 select-none pointer-events-auto">
+      <div className="relative w-full max-w-[1240px] xl:max-w-[1300px] h-full min-h-[560px] mx-auto flex items-center justify-center px-4 sm:px-6">
+        {/* Independent Polaroid & Steaming Coffee Setup (Fixed, visible at once, shifted up) */}
+        <div className="absolute left-[clamp(28px,6vw,96px)] top-[clamp(44px,7vh,76px)] z-20 select-none pointer-events-auto">
           <PolaroidWithCoffee soundEnabled={soundEnabled} />
         </div>
 
-        {/* 3. Monospace Terminal Bio (Shifted ~50pt left and ~30pt down) */}
-        <div className="absolute left-[clamp(14px,2.5vw,40px)] bottom-[clamp(12px,2.5vh,28px)] z-20 max-w-[315px] sm:max-w-[340px] lg:max-w-[365px] select-none pointer-events-auto">
-          <TypewriterIntro
-            onNavigate={onNavigate}
-            soundEnabled={soundEnabled}
-            className="w-full select-none pointer-events-auto"
-          />
-        </div>
-
-        {/* 4. Center Assembly: Expressive Character Bot Face + Floating Die-Cut Tech Tokens Orbit (Shifted up & strictly centered) */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[58%] sm:-translate-y-[62%] flex items-center justify-center w-[440px] h-[380px] pointer-events-none z-10">
+        {/* Center Assembly: Expressive Character Bot Face + Floating Die-Cut Tech Tokens Orbit (Enlarged prominent orbit) */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[52%] sm:-translate-y-[54%] flex items-center justify-center w-[460px] sm:w-[500px] h-[360px] sm:h-[380px] pointer-events-none z-10">
           {/* Floating Spatial Die-Cut Tech Tokens Orbit */}
           <TechTokensOrbit soundEnabled={soundEnabled} />
 
@@ -65,11 +65,11 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
           </div>
         </div>
 
-        {/* 5. Right Side Interactive Stacks (Experience Accordion, Projects Fan, Socials) */}
+        {/* Right Side Interactive Stacks (Experience Accordion, Projects Fan, Socials) */}
         <RightSidebarStacks
           onNavigate={onNavigate}
           soundEnabled={soundEnabled}
-          className="absolute right-2 sm:right-4 lg:right-6 top-6 sm:top-8 bottom-4 sm:bottom-6 z-20"
+          className="absolute right-2 sm:right-4 lg:right-6 top-8 sm:top-10 bottom-4 sm:bottom-6 z-20"
         />
       </div>
 
