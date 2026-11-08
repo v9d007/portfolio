@@ -18,6 +18,7 @@ interface RightSidebarStacksProps {
   onNavigate: (tab: NavTab) => void
   soundEnabled: boolean
   className?: string
+  style?: React.CSSProperties
 }
 
 // 4 Career Milestone Stamps matching the reference accordion layout
@@ -72,7 +73,8 @@ const projectCards = [
 const RightSidebarStacks = ({
   onNavigate,
   soundEnabled,
-  className = ''
+  className = '',
+  style
 }: RightSidebarStacksProps) => {
   const [isExpHovered, setIsExpHovered] = useState(false)
   const [hoveredStampIdx, setHoveredStampIdx] = useState<number | null>(null)
@@ -90,6 +92,7 @@ const RightSidebarStacks = ({
 
   return (
     <aside
+      style={style}
       className={`select-none pointer-events-auto flex flex-col justify-between items-center sm:items-end ${className}`}
     >
       {/* ========================================================================= */}

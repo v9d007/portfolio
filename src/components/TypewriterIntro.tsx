@@ -38,8 +38,8 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
   return (
     <div className={className}>
       {/* Monospace Developer Intro Text matching yl0.me */}
-      <div className="text-[11px] sm:text-[11.5px] leading-[1.65] sm:leading-[1.7] font-mono text-[#09090B] dark:text-[#E2E8F0]">
-        <div className="whitespace-pre-wrap break-words">
+      <div className="text-[11px] sm:text-[11.5px] lg:text-[12px] leading-[1.75] sm:leading-[1.8] font-mono text-[#09090B] dark:text-[#E2E8F0]">
+        <div className="whitespace-pre-wrap">
           {currentText.split('\n\n').map((para, pIdx) => {
             const parts = para.split(
               /(Vinod Kumar Singh|IIT Kanpur \(EE '19\)|Swift 6|60 FPS|Xoxoday \(Giift\)|zero data-race)/g
@@ -48,8 +48,8 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
             return (
               <div
                 key={pIdx}
-                className={`relative pb-1 mb-1.5 sm:mb-2 border-b border-dashed border-slate-300/80 dark:border-white/15 ${
-                  isFirst ? 'font-bold text-[12px] sm:text-[12.5px] text-[#09090B] dark:text-[#F8FAFC]' : ''
+                className={`relative pb-1 mb-2 border-b border-dashed border-slate-300/80 dark:border-white/15 ${
+                  isFirst ? 'font-bold text-[12px] sm:text-[12.5px] lg:text-[13px] text-[#09090B] dark:text-[#F8FAFC]' : ''
                 }`}
               >
                 <p>

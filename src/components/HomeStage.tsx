@@ -23,13 +23,13 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
   return (
     <section
       id="home"
-      className="relative w-full h-screen min-h-[520px] max-h-[950px] flex items-center justify-center overflow-hidden select-none"
+      className="relative w-full h-screen min-h-[520px] max-h-[950px] overflow-hidden select-none bg-white dark:bg-[#0D1017]"
     >
       {/* 1. Top Right Telemetry Status Pill matching yl0.me */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="absolute top-4 sm:top-5 right-6 sm:right-12 z-30 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#09090B] text-white dark:bg-[#F1F3F8] dark:text-[#12151B] text-[10px] sm:text-[11px] font-mono shadow-md border border-white/10 dark:border-black/10"
+        className="absolute top-4 sm:top-5 right-6 sm:right-10 z-30 flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#09090B] text-white dark:bg-[#F1F3F8] dark:text-[#12151B] text-[10px] sm:text-[11px] font-mono shadow-md border border-white/10 dark:border-black/10"
       >
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
         <span className="opacity-70">BOT:</span>
@@ -38,8 +38,27 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
         </span>
       </motion.div>
 
-      {/* 2. Monospace Terminal Bio (Shifted far left and bottom, independent placement) */}
-      <div className="absolute left-2.5 sm:left-4 lg:left-6 bottom-3 sm:bottom-4 lg:bottom-5 z-20 max-w-[215px] sm:max-w-[230px] lg:max-w-[250px] select-none pointer-events-auto">
+      {/* 2. Photo Card + Steaming Coffee Setup matching yl0.me (Centered above Bio) */}
+      <div
+        className="absolute z-20 pointer-events-auto select-none"
+        style={{
+          left: 'clamp(145px, 17.5vw, 195px)',
+          top: 'clamp(95px, 18vh, 135px)',
+          transform: 'translate(-50%, -50%)'
+        }}
+      >
+        <PolaroidWithCoffee soundEnabled={soundEnabled} />
+      </div>
+
+      {/* 3. Monospace Terminal Bio matching yl0.me */}
+      <div
+        className="absolute z-20 pointer-events-auto select-none"
+        style={{
+          left: 'clamp(20px, 3vw, 40px)',
+          bottom: 'clamp(18px, 4vh, 38px)',
+          width: 'min(295px, calc(100vw - 40px))'
+        }}
+      >
         <TypewriterIntro
           onNavigate={onNavigate}
           soundEnabled={soundEnabled}
@@ -47,34 +66,36 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
         />
       </div>
 
-      {/* Centered Stage Cockpit HUD (Wider container shifted left, balanced layout) */}
-      <div className="relative w-full max-w-[1240px] xl:max-w-[1300px] h-full min-h-[560px] mx-auto flex items-center justify-center px-4 sm:px-6">
-        {/* Independent Polaroid & Steaming Coffee Setup (Fixed, visible at once, shifted up) */}
-        <div className="absolute left-[clamp(28px,6vw,96px)] top-[clamp(44px,7vh,76px)] z-20 select-none pointer-events-auto">
-          <PolaroidWithCoffee soundEnabled={soundEnabled} />
+      {/* 4. Center Assembly: Expressive Character Bot Face + Circular Tech Orbit (Strictly centered, lifted ~20px) */}
+      <div
+        className="absolute left-1/2 top-1/2 pointer-events-none z-10 flex items-center justify-center w-[350px] h-[350px]"
+        style={{
+          transform: 'translate(-50%, calc(-50% - clamp(14px, 3vh, 24px)))'
+        }}
+      >
+        {/* Floating Spatial Die-Cut Tech Tokens Orbit (True circle R = 146px) */}
+        <TechTokensOrbit soundEnabled={soundEnabled} />
+
+        {/* Interactive Bot Face (Blinking eyes tracking cursor) */}
+        <div className="relative z-10 pointer-events-auto">
+          <BotFace soundEnabled={soundEnabled} onStatusChange={setBotStatus} />
         </div>
-
-        {/* Center Assembly: Expressive Character Bot Face + Floating Die-Cut Tech Tokens Orbit (Enlarged prominent orbit) */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-[52%] sm:-translate-y-[54%] flex items-center justify-center w-[460px] sm:w-[500px] h-[360px] sm:h-[380px] pointer-events-none z-10">
-          {/* Floating Spatial Die-Cut Tech Tokens Orbit */}
-          <TechTokensOrbit soundEnabled={soundEnabled} />
-
-          {/* Interactive Bot Face (Blinking eyes tracking cursor) */}
-          <div className="relative z-10 pointer-events-auto">
-            <BotFace soundEnabled={soundEnabled} onStatusChange={setBotStatus} />
-          </div>
-        </div>
-
-        {/* Right Side Interactive Stacks (Experience Accordion, Projects Fan, Socials) */}
-        <RightSidebarStacks
-          onNavigate={onNavigate}
-          soundEnabled={soundEnabled}
-          className="absolute right-2 sm:right-4 lg:right-6 top-8 sm:top-10 bottom-4 sm:bottom-6 z-20"
-        />
       </div>
 
-      {/* 5. Animated Scroll Down Indicator matching yl0.me (Guaranteed horizontal center alignment) */}
-      <div className="absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20">
+      {/* 5. Right Side Interactive Stacks (Experience Accordion, Projects Fan, Socials) */}
+      <RightSidebarStacks
+        onNavigate={onNavigate}
+        soundEnabled={soundEnabled}
+        className="absolute z-20"
+        style={{
+          right: 'clamp(20px, 3.5vw, 56px)',
+          top: 'clamp(24px, 5vh, 44px)',
+          bottom: 'clamp(18px, 4vh, 38px)'
+        }}
+      />
+
+      {/* 6. Animated Scroll Down Indicator matching yl0.me (Guaranteed horizontal center alignment) */}
+      <div className="absolute bottom-2.5 sm:bottom-3.5 left-1/2 -translate-x-1/2 z-20">
         <motion.button
           onClick={handleScrollToProjects}
           animate={{ y: [0, 4, 0] }}

@@ -29,19 +29,20 @@ interface TechToken {
 }
 
 const TechTokensOrbit = ({ soundEnabled }: TechTokensOrbitProps) => {
-  // Elliptical ring surrounding the Bot Face (Enlarged prominent orbit)
+  // True circular ring surrounding the Bot Face matching yl0.me (--R: 146px)
+  const radius = 146
   const tokens: TechToken[] = [
-    { id: 'swift', label: 'Swift 6', spec: 'Strict Concurrency', Icon: SwiftIcon, angle: -90, radiusX: 190, radiusY: 145 },
-    { id: 'swiftui', label: 'SwiftUI', spec: 'Declarative iOS 18+', Icon: SwiftUIIcon, angle: -50, radiusX: 192, radiusY: 145 },
-    { id: 'apple', label: 'iOS Core', spec: 'StoreKit & CoreData', Icon: AppleIcon, angle: -15, radiusX: 195, radiusY: 145 },
-    { id: 'iitk', label: 'IIT Kanpur', spec: "B.Tech EE '19", Icon: IITKIcon, angle: 20, radiusX: 195, radiusY: 145 },
-    { id: 'python', label: 'Python', spec: 'Systems & ML', Icon: PythonIcon, angle: 55, radiusX: 192, radiusY: 145 },
-    { id: 'cpp', label: 'C++', spec: 'Low Latency DSA', Icon: CppIcon, angle: 90, radiusX: 190, radiusY: 145 },
-    { id: 'typescript', label: 'TypeScript', spec: 'Strict Types', Icon: TypeScriptIcon, angle: 125, radiusX: 192, radiusY: 145 },
-    { id: 'react', label: 'React Native', spec: 'Cross-Platform', Icon: ReactIcon, angle: 160, radiusX: 195, radiusY: 145 },
-    { id: 'graphql', label: 'GraphQL', spec: 'Apollo Client', Icon: GraphQLIcon, angle: 195, radiusX: 195, radiusY: 145 },
-    { id: 'docker', label: 'Docker', spec: 'CI/CD Pipelines', Icon: DockerIcon, angle: 230, radiusX: 192, radiusY: 145 },
-    { id: 'kotlin', label: 'Kotlin', spec: 'Android Interop', Icon: KotlinIcon, angle: 250, radiusX: 190, radiusY: 145 }
+    { id: 'swift', label: 'Swift 6', spec: 'Strict Concurrency', Icon: SwiftIcon, angle: -90, radiusX: radius, radiusY: radius },
+    { id: 'swiftui', label: 'SwiftUI', spec: 'Declarative iOS 18+', Icon: SwiftUIIcon, angle: -56, radiusX: radius, radiusY: radius },
+    { id: 'apple', label: 'iOS Core', spec: 'StoreKit & CoreData', Icon: AppleIcon, angle: -20, radiusX: radius, radiusY: radius },
+    { id: 'iitk', label: 'IIT Kanpur', spec: "B.Tech EE '19", Icon: IITKIcon, angle: 14, radiusX: radius, radiusY: radius },
+    { id: 'python', label: 'Python', spec: 'Systems & ML', Icon: PythonIcon, angle: 46, radiusX: radius, radiusY: radius },
+    { id: 'cpp', label: 'C++', spec: 'Low Latency DSA', Icon: CppIcon, angle: 78, radiusX: radius, radiusY: radius },
+    { id: 'typescript', label: 'TypeScript', spec: 'Strict Types', Icon: TypeScriptIcon, angle: 108, radiusX: radius, radiusY: radius },
+    { id: 'react', label: 'React Native', spec: 'Cross-Platform', Icon: ReactIcon, angle: 138, radiusX: radius, radiusY: radius },
+    { id: 'graphql', label: 'GraphQL', spec: 'Apollo Client', Icon: GraphQLIcon, angle: 168, radiusX: radius, radiusY: radius },
+    { id: 'docker', label: 'Docker', spec: 'CI/CD Pipelines', Icon: DockerIcon, angle: -160, radiusX: radius, radiusY: radius },
+    { id: 'kotlin', label: 'Kotlin', spec: 'Android Interop', Icon: KotlinIcon, angle: -125, radiusX: radius, radiusY: radius }
   ]
 
   return (
