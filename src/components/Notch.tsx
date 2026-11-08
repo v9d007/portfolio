@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sun, Moon, Menu } from 'lucide-react'
 import { playSound } from '../utils/audio'
@@ -16,6 +16,16 @@ interface NotchProps {
   setSoundEnabled: (val: boolean) => void
 }
 
+const TABS: readonly { id: NavTab; label: string }[] = [
+  { id: 'home', label: 'home' },
+  { id: 'projects', label: 'projects' },
+  { id: 'experience', label: 'experience' },
+  { id: 'skills', label: 'skills' },
+  { id: 'contact', label: 'contact' }
+]
+
+const SECTION_IDS: readonly NavTab[] = ['home', 'projects', 'experience', 'skills', 'contact']
+
 const Notch = ({
   activeTab,
   setActiveTab,
@@ -27,35 +37,35 @@ const Notch = ({
 }: NotchProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const tabs: { id: NavTab; label: string }[] = [
-    { id: 'home', label: 'home' },
-    { id: 'projects', label: 'projects' },
-    { id: 'experience', label: 'experience' },
-    { id: 'skills', label: 'skills' },
-    { id: 'contact', label: 'contact' }
-  ]
-
-  // ScrollSpy: update active tab based on scroll position
+  // ScrollSpy: update active tab based on scroll position (throttled with RAF)
   useEffect(() => {
-    const handleScroll = () => {
-      const sectionIds: NavTab[] = ['home', 'projects', 'experience', 'skills', 'contact']
-      const viewportHeight = window.innerHeight
+    let rafId: number | null = null
 
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const id = sectionIds[i]
-        const el = document.getElementById(id)
-        if (el) {
-          const rect = el.getBoundingClientRect()
-          if (rect.top <= viewportHeight * 0.4) {
-            setActiveTab(id)
-            break
+    const handleScroll = () => {
+      if (rafId) return
+      rafId = requestAnimationFrame(() => {
+        rafId = null
+        const viewportHeight = window.innerHeight
+
+        for (let i = SECTION_IDS.length - 1; i >= 0; i--) {
+          const id = SECTION_IDS[i]
+          const el = document.getElementById(id)
+          if (el) {
+            const rect = el.getBoundingClientRect()
+            if (rect.top <= viewportHeight * 0.4) {
+              setActiveTab(id)
+              break
+            }
           }
         }
-      }
+      })
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId)
+      window.removeEventListener('scroll', handleScroll)
+    }
   }, [setActiveTab])
 
   const handleTabClick = (tab: NavTab) => {
@@ -82,7 +92,9 @@ const Notch = ({
     document.documentElement.classList.toggle('dark', nextTheme === 'dark')
     try {
       localStorage.setItem('theme', nextTheme)
-    } catch (e) {}
+    } catch {
+      // Storage unavailable or quota exceeded
+    }
   }
 
   return (
@@ -109,7 +121,7 @@ const Notch = ({
 
         {/* Desktop Navigation Tabs */}
         <div className="hidden md:flex items-center gap-0.5">
-          {tabs.map((tab) => {
+          {TABS.map((tab) => {
             const isActive = activeTab === tab.id
             return (
               <button
@@ -220,7 +232,7 @@ const Notch = ({
             }`}
           >
             <div className="flex flex-col gap-0.5 px-2">
-              {tabs.map((tab) => (
+              {TABS.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => handleTabClick(tab.id)}
@@ -243,4 +255,4 @@ const Notch = ({
   )
 }
 
-export default Notch
+export default memo(Notch)

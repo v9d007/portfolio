@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { motion } from 'framer-motion'
 import { PostageStampBorder } from './PostageStampBorder'
 import { playSound } from '../utils/audio'
@@ -84,6 +84,44 @@ const experiences: ExperienceItem[] = [
   }
 ]
 
+// Render vibrant, full-bleed circular brand badges matching yl0.me
+const BrandBadge = memo(({ type }: { type: ExperienceItem['logoType'] }) => {
+  switch (type) {
+    case 'xoxoday':
+      return (
+        <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#FF512F] via-[#DD2476] to-[#7C3AED] p-0.5 flex items-center justify-center shadow-md">
+          <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#FF512F] to-[#DD2476] flex items-center justify-center text-white">
+            <span className="font-extrabold text-xl font-mono tracking-tighter">X</span>
+          </div>
+        </div>
+      )
+    case 'giift':
+      return (
+        <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#00F2FE] via-[#4FACFE] to-[#0072FF] p-0.5 flex items-center justify-center shadow-md">
+          <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#00F2FE] to-[#0072FF] flex items-center justify-center text-white">
+            <Smartphone size={22} className="text-white drop-shadow-sm" />
+          </div>
+        </div>
+      )
+    case 'compass':
+      return (
+        <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#667EEA] via-[#764BA2] to-[#4338CA] p-0.5 flex items-center justify-center shadow-md">
+          <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#667EEA] to-[#764BA2] flex items-center justify-center text-white">
+            <Layers size={22} className="text-white drop-shadow-sm" />
+          </div>
+        </div>
+      )
+    case 'iitk':
+      return (
+        <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#1E3A8A] via-[#2563EB] to-[#D97706] p-0.5 flex items-center justify-center shadow-md">
+          <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#1E3A8A] to-[#D97706] flex items-center justify-center text-white">
+            <GraduationCap size={24} className="text-white drop-shadow-sm" />
+          </div>
+        </div>
+      )
+  }
+})
+
 const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
   const [activeIndex, setActiveIndex] = useState(0)
   const activeExp = experiences[activeIndex]
@@ -91,44 +129,6 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
   const handleSelect = (idx: number) => {
     playSound('pop', soundEnabled)
     setActiveIndex(idx)
-  }
-
-  // Render vibrant, full-bleed circular brand badges matching yl0.me
-  const renderLogo = (type: ExperienceItem['logoType']) => {
-    switch (type) {
-      case 'xoxoday':
-        return (
-          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#FF512F] via-[#DD2476] to-[#7C3AED] p-0.5 flex items-center justify-center shadow-md">
-            <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#FF512F] to-[#DD2476] flex items-center justify-center text-white">
-              <span className="font-extrabold text-xl font-mono tracking-tighter">X</span>
-            </div>
-          </div>
-        )
-      case 'giift':
-        return (
-          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#00F2FE] via-[#4FACFE] to-[#0072FF] p-0.5 flex items-center justify-center shadow-md">
-            <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#00F2FE] to-[#0072FF] flex items-center justify-center text-white">
-              <Smartphone size={22} className="text-white drop-shadow-sm" />
-            </div>
-          </div>
-        )
-      case 'compass':
-        return (
-          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#667EEA] via-[#764BA2] to-[#4338CA] p-0.5 flex items-center justify-center shadow-md">
-            <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#667EEA] to-[#764BA2] flex items-center justify-center text-white">
-              <Layers size={22} className="text-white drop-shadow-sm" />
-            </div>
-          </div>
-        )
-      case 'iitk':
-        return (
-          <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#1E3A8A] via-[#2563EB] to-[#D97706] p-0.5 flex items-center justify-center shadow-md">
-            <div className="w-full h-full rounded-full bg-gradient-to-tr from-[#1E3A8A] to-[#D97706] flex items-center justify-center text-white">
-              <GraduationCap size={24} className="text-white drop-shadow-sm" />
-            </div>
-          </div>
-        )
-    }
   }
 
   return (
@@ -193,7 +193,7 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
                   <div className="relative z-10 w-full h-full flex flex-col items-center justify-center px-4 py-5 text-center">
                     {/* Brand Circular Logo Badge */}
                     <div className="mb-3">
-                      {renderLogo(exp.logoType)}
+                      <BrandBadge type={exp.logoType} />
                     </div>
 
                     {/* Company Name & Period */}
@@ -253,4 +253,4 @@ const ExperienceView = ({ soundEnabled }: ExperienceViewProps) => {
   )
 }
 
-export default ExperienceView
+export default memo(ExperienceView)

@@ -1,4 +1,6 @@
-export const CoffeeGuy = ({ className = '' }: { className?: string }) => {
+import { memo } from 'react'
+
+export const CoffeeGuy = memo(({ className = '' }: { className?: string }) => {
   return (
     <svg
       role="img"
@@ -10,4 +12,4 @@ export const CoffeeGuy = ({ className = '' }: { className?: string }) => {
       <path d="M89.4 69.4c-1.1 2.8 0 6.1 2.1 6.1 1.6 0 2-.7 2-3.5q0-3.6-1.8-3.8c-.9-.2-2 .3-2.3 1.2m25 1c-.8 3.5.2 5.8 2.3 5.4 2.5-.5 2.5-7.1.1-7.6q-1.7-.3-2.4 2.2M92 95.9c0 2.9 7.8 5.4 12 3.9 4-1.3 3.9-3.2-.1-2.4a13 13 0 0 1-6.6-.9c-4.1-1.7-5.3-1.9-5.3-.6"></path>
     </svg>
   )
-}
+})

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Mail } from 'lucide-react'
 import type { NavTab } from './Notch'
@@ -9,31 +9,87 @@ interface TypewriterIntroProps {
   className?: string
 }
 
-const TypewriterIntro = ({
-  onNavigate,
-  className = 'w-full select-none pointer-events-auto'
-}: TypewriterIntroProps) => {
-  const fullText = `Hey there, I'm Vinod Kumar Singh!
+const FULL_TEXT = `Hey there, I'm Vinod Kumar Singh!
 
 Senior Mobile & iOS Systems Architect • Alumnus of IIT Kanpur (EE '19). Passionate about crafting fluid 60 FPS mobile systems and zero data-race concurrency.
 
 Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). Focused on Swift 6 and distributed mobile resilience.`
 
+const HIGHLIGHT_REGEX = /(Vinod Kumar Singh|IIT Kanpur \(EE '19\)|Swift 6|60 FPS|Xoxoday \(Giift\)|zero data-race)/g
+
+const TypewriterIntro = ({
+  onNavigate,
+  className = 'w-full select-none pointer-events-auto'
+}: TypewriterIntroProps) => {
   const [displayedLength, setDisplayedLength] = useState(0)
 
-  // Fluid continuous typewriter progression
+  // Fluid 60 FPS continuous typewriter progression using a single interval
   useEffect(() => {
-    if (displayedLength < fullText.length) {
-      const timer = setTimeout(() => {
-        setDisplayedLength((prev) => prev + 1)
-      }, 10)
+    const interval = setInterval(() => {
+      setDisplayedLength((prev) => {
+        if (prev >= FULL_TEXT.length) {
+          clearInterval(interval)
+          return prev
+        }
+        return Math.min(prev + 2, FULL_TEXT.length)
+      })
+    }, 16)
 
-      return () => clearTimeout(timer)
+    return () => clearInterval(interval)
+  }, [])
+
+  const currentText = FULL_TEXT.slice(0, displayedLength)
+  const isComplete = displayedLength >= FULL_TEXT.length
+
+  const renderHighlightedPart = (part: string, idx: number) => {
+    switch (part) {
+      case 'Vinod Kumar Singh':
+        return (
+          <span
+            key={idx}
+            className="font-extrabold text-[#6D28D9] dark:text-[#A78BFA] transition-colors"
+          >
+            Vinod Kumar Singh
+          </span>
+        )
+      case "IIT Kanpur (EE '19)":
+        return (
+          <span key={idx} className="font-extrabold text-[#000000] dark:text-[#FFFFFF]">
+            IIT Kanpur (EE '19)
+          </span>
+        )
+      case 'Swift 6':
+        return (
+          <span key={idx} className="font-bold text-[#7C3AED] dark:text-[#A78BFA]">
+            Swift 6
+          </span>
+        )
+      case '60 FPS':
+        return (
+          <span key={idx} className="font-semibold text-emerald-600 dark:text-emerald-400">
+            60 FPS
+          </span>
+        )
+      case 'Xoxoday (Giift)':
+        return (
+          <button
+            key={idx}
+            onClick={() => onNavigate('experience')}
+            className="text-[#1D4ED8] dark:text-[#8AB0FF] font-semibold underline decoration-dashed underline-offset-4 hover:opacity-80 transition-opacity cursor-pointer"
+          >
+            Xoxoday (Giift)
+          </button>
+        )
+      case 'zero data-race':
+        return (
+          <span key={idx} className="font-semibold text-emerald-600 dark:text-emerald-400">
+            zero data-race
+          </span>
+        )
+      default:
+        return <span key={idx}>{part}</span>
     }
-  }, [displayedLength, fullText.length])
-
-  const currentText = fullText.slice(0, displayedLength)
-  const isComplete = displayedLength >= fullText.length
+  }
 
   return (
     <div className={className}>
@@ -41,9 +97,7 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
       <div className="text-[11px] sm:text-[11.5px] lg:text-[12px] leading-[1.75] sm:leading-[1.8] font-mono text-[#09090B] dark:text-[#E2E8F0]">
         <div className="whitespace-pre-wrap">
           {currentText.split('\n\n').map((para, pIdx) => {
-            const parts = para.split(
-              /(Vinod Kumar Singh|IIT Kanpur \(EE '19\)|Swift 6|60 FPS|Xoxoday \(Giift\)|zero data-race)/g
-            )
+            const parts = para.split(HIGHLIGHT_REGEX)
             const isFirst = pIdx === 0
             return (
               <div
@@ -52,60 +106,7 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
                   isFirst ? 'font-bold text-[12px] sm:text-[12.5px] lg:text-[13px] text-[#09090B] dark:text-[#F8FAFC]' : ''
                 }`}
               >
-                <p>
-                  {parts.map((part, idx) => {
-                    if (part === 'Vinod Kumar Singh') {
-                      return (
-                        <span
-                          key={idx}
-                          className="font-extrabold text-[#6D28D9] dark:text-[#A78BFA] transition-colors"
-                        >
-                          Vinod Kumar Singh
-                        </span>
-                      )
-                    }
-                    if (part === "IIT Kanpur (EE '19)") {
-                      return (
-                        <span key={idx} className="font-extrabold text-[#000000] dark:text-[#FFFFFF]">
-                          IIT Kanpur (EE '19)
-                        </span>
-                      )
-                    }
-                    if (part === 'Swift 6') {
-                      return (
-                        <span key={idx} className="font-bold text-[#7C3AED] dark:text-[#A78BFA]">
-                          Swift 6
-                        </span>
-                      )
-                    }
-                    if (part === '60 FPS') {
-                      return (
-                        <span key={idx} className="font-semibold text-emerald-600 dark:text-emerald-400">
-                          60 FPS
-                        </span>
-                      )
-                    }
-                    if (part === 'Xoxoday (Giift)') {
-                      return (
-                        <button
-                          key={idx}
-                          onClick={() => onNavigate('experience')}
-                          className="text-[#1D4ED8] dark:text-[#8AB0FF] font-semibold underline decoration-dashed underline-offset-4 hover:opacity-80 transition-opacity cursor-pointer"
-                        >
-                          Xoxoday (Giift)
-                        </button>
-                      )
-                    }
-                    if (part === 'zero data-race') {
-                      return (
-                        <span key={idx} className="font-semibold text-emerald-600 dark:text-emerald-400">
-                          zero data-race
-                        </span>
-                      )
-                    }
-                    return <span key={idx}>{part}</span>
-                  })}
-                </p>
+                <p>{parts.map(renderHighlightedPart)}</p>
               </div>
             )
           })}
@@ -139,4 +140,4 @@ Architected offline-first sync engines powering 10M+ events at Xoxoday (Giift). 
   )
 }
 
-export default TypewriterIntro
+export default memo(TypewriterIntro)

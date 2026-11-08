@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { motion } from 'framer-motion'
 import BotFace from './BotFace'
 import TechTokensOrbit from './TechTokensOrbit'
@@ -38,25 +38,26 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
         </span>
       </motion.div>
 
-      {/* 2. Photo Card + Steaming Coffee Setup matching yl0.me (Centered above Bio) */}
+      {/* 2. Photo Card + Steaming Coffee Setup (Shifted down 200px and right 160px per user instruction) */}
       <div
         className="absolute z-20 pointer-events-auto select-none"
         style={{
           left: 'clamp(145px, 17.5vw, 195px)',
           top: 'clamp(95px, 18vh, 135px)',
-          transform: 'translate(-50%, -50%)'
+          transform: 'translate(calc(-50% + 160px), calc(-50% + 200px))'
         }}
       >
         <PolaroidWithCoffee soundEnabled={soundEnabled} />
       </div>
 
-      {/* 3. Monospace Terminal Bio matching yl0.me */}
+      {/* 3. Monospace Terminal Bio (Shifted right 120px per user instruction) */}
       <div
         className="absolute z-20 pointer-events-auto select-none"
         style={{
           left: 'clamp(20px, 3vw, 40px)',
           bottom: 'clamp(18px, 4vh, 38px)',
-          width: 'min(295px, calc(100vw - 40px))'
+          width: 'min(295px, calc(100vw - 40px))',
+          transform: 'translateX(120px)'
         }}
       >
         <TypewriterIntro
@@ -66,20 +67,20 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
         />
       </div>
 
-      {/* 4. Center Assembly: Expressive Character Bot Face + Circular Tech Orbit (Strictly centered, lifted ~20px) */}
+      {/* 4. Center Assembly: Expressive Character Bot Face + Circular Tech Orbit (Strictly centered) */}
       <div
-        className="absolute left-1/2 top-1/2 pointer-events-none z-10 flex items-center justify-center w-[350px] h-[350px]"
+        className="absolute left-1/2 top-1/2 pointer-events-none z-10 flex items-center justify-center w-[460px] h-[460px]"
         style={{
-          transform: 'translate(-50%, calc(-50% - clamp(14px, 3vh, 24px)))'
+          transform: 'translate(-50%, -50%)'
         }}
       >
-        {/* Floating Spatial Die-Cut Tech Tokens Orbit (True circle R = 146px) */}
-        <TechTokensOrbit soundEnabled={soundEnabled} />
-
-        {/* Interactive Bot Face (Blinking eyes tracking cursor) */}
+        {/* Interactive Bot Face (Blinking eyes tracking cursor) - Base layer z-10 */}
         <div className="relative z-10 pointer-events-auto">
           <BotFace soundEnabled={soundEnabled} onStatusChange={setBotStatus} />
         </div>
+
+        {/* Floating Spatial Die-Cut Tech Tokens Orbit (True circle R = 200px) - Stacked above BotFace */}
+        <TechTokensOrbit soundEnabled={soundEnabled} />
       </div>
 
       {/* 5. Right Side Interactive Stacks (Experience Accordion, Projects Fan, Socials) */}
@@ -110,4 +111,4 @@ const HomeStage = ({ onNavigate, soundEnabled }: HomeStageProps) => {
   )
 }
 
-export default HomeStage
+export default memo(HomeStage)

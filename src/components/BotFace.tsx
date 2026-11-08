@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef, memo } from 'react'
+import { motion, AnimatePresence, useSpring } from 'framer-motion'
 import { playSound } from '../utils/audio'
 
 interface BotFaceProps {
@@ -8,90 +8,144 @@ interface BotFaceProps {
   className?: string
 }
 
+const DIALOGUES = [
+  'Hey there! 👋',
+  'Swift 6 & 60 FPS ⚡',
+  'Drag the stickers around! 🛸',
+  'Zero data races guaranteed 🛡️',
+  'IIT Kanpur EE \'19 🎓',
+  'Try the theme switch in the notch! 🌓'
+]
+
 const BotFace = ({ soundEnabled, onStatusChange, className = '' }: BotFaceProps) => {
-  const [pupilOffset, setPupilOffset] = useState({ x: 0, y: 0 })
+  const pupilX = useSpring(0, { damping: 25, stiffness: 260 })
+  const pupilY = useSpring(0, { damping: 25, stiffness: 260 })
   const [isBlinking, setIsBlinking] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
   const [dialogueIndex, setDialogueIndex] = useState(0)
   const [showSpeech, setShowSpeech] = useState(false)
+
   const faceRef = useRef<HTMLDivElement>(null)
+  const currentStatusRef = useRef<string>('idle')
+  const blinkTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const speechTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const dialogues = [
-    'Hey there! 👋',
-    'Swift 6 & 60 FPS ⚡',
-    'Drag the stickers around! 🛸',
-    'Zero data races guaranteed 🛡️',
-    'IIT Kanpur EE \'19 🎓',
-    'Try the theme switch in the notch! 🌓'
-  ]
-
-  // Track cursor position relative to the bot center
+  // Track cursor position relative to the bot center with RAF throttle & cached bounds
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!faceRef.current) return
-      const rect = faceRef.current.getBoundingClientRect()
-      const centerX = rect.left + rect.width / 2
-      const centerY = rect.top + rect.height / 2
-
-      const deltaX = e.clientX - centerX
-      const deltaY = e.clientY - centerY
-      const distance = Math.hypot(deltaX, deltaY)
-
-      const maxDistance = 9
-      const angle = Math.atan2(deltaY, deltaX)
-      const clampedDist = Math.min(distance / 25, maxDistance)
-
-      setPupilOffset({
-        x: Math.cos(angle) * clampedDist,
-        y: Math.sin(angle) * clampedDist
-      })
-
-      if (onStatusChange) {
-        if (distance < 140) {
-          onStatusChange('focused')
-        } else if (distance < 360) {
-          onStatusChange('observing')
-        } else {
-          onStatusChange('idle')
-        }
+    let cachedRect: DOMRect | null = null
+    const updateRect = () => {
+      if (faceRef.current) {
+        cachedRect = faceRef.current.getBoundingClientRect()
       }
     }
+    updateRect()
 
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [onStatusChange])
+    let rafId: number | null = null
+    const handleMouseMove = (e: MouseEvent) => {
+      if (rafId) return
+      rafId = requestAnimationFrame(() => {
+        rafId = null
+        if (!cachedRect && faceRef.current) {
+          cachedRect = faceRef.current.getBoundingClientRect()
+        }
+        if (!cachedRect) return
 
-  // Spontaneous natural blinking
+        const centerX = cachedRect.left + cachedRect.width / 2
+        const centerY = cachedRect.top + cachedRect.height / 2
+
+        const deltaX = e.clientX - centerX
+        const deltaY = e.clientY - centerY
+        const distance = Math.hypot(deltaX, deltaY)
+
+        const maxDistance = 9
+        const angle = Math.atan2(deltaY, deltaX)
+        const clampedDist = Math.min(distance / 25, maxDistance)
+
+        pupilX.set(Math.cos(angle) * clampedDist)
+        pupilY.set(Math.sin(angle) * clampedDist)
+
+        if (onStatusChange) {
+          let nextStatus = 'idle'
+          if (distance < 140) {
+            nextStatus = 'focused'
+          } else if (distance < 360) {
+            nextStatus = 'observing'
+          }
+          if (currentStatusRef.current !== nextStatus) {
+            currentStatusRef.current = nextStatus
+            onStatusChange(nextStatus)
+          }
+        }
+      })
+    }
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    window.addEventListener('resize', updateRect, { passive: true })
+    window.addEventListener('scroll', updateRect, { passive: true })
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId)
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('resize', updateRect)
+      window.removeEventListener('scroll', updateRect)
+    }
+  }, [onStatusChange, pupilX, pupilY])
+
+  // Spontaneous natural blinking with cleanup
   useEffect(() => {
     const interval = setInterval(() => {
       setIsBlinking(true)
-      setTimeout(() => setIsBlinking(false), 140)
+      blinkTimerRef.current = setTimeout(() => setIsBlinking(false), 140)
     }, 4200)
 
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+      if (blinkTimerRef.current) clearTimeout(blinkTimerRef.current)
+    }
+  }, [])
+
+  // Clean up speech timer on unmount
+  useEffect(() => {
+    return () => {
+      if (speechTimerRef.current) clearTimeout(speechTimerRef.current)
+    }
   }, [])
 
   const handleClick = () => {
     playSound('pop', soundEnabled)
-    setDialogueIndex((prev) => (prev + 1) % dialogues.length)
+    setDialogueIndex((prev) => (prev + 1) % DIALOGUES.length)
     setShowSpeech(true)
-    if (onStatusChange) onStatusChange('happy')
-    setTimeout(() => setShowSpeech(false), 2400)
+    if (onStatusChange && currentStatusRef.current !== 'happy') {
+      currentStatusRef.current = 'happy'
+      onStatusChange('happy')
+    }
+    if (speechTimerRef.current) clearTimeout(speechTimerRef.current)
+    speechTimerRef.current = setTimeout(() => setShowSpeech(false), 2400)
+  }
+
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+    playSound('hover', soundEnabled)
+    if (onStatusChange && currentStatusRef.current !== 'curious') {
+      currentStatusRef.current = 'curious'
+      onStatusChange('curious')
+    }
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+    if (onStatusChange && currentStatusRef.current !== 'idle') {
+      currentStatusRef.current = 'idle'
+      onStatusChange('idle')
+    }
   }
 
   return (
     <div
       ref={faceRef}
       onClick={handleClick}
-      onMouseEnter={() => {
-        setIsHovered(true)
-        playSound('hover', soundEnabled)
-        if (onStatusChange) onStatusChange('curious')
-      }}
-      onMouseLeave={() => {
-        setIsHovered(false)
-        if (onStatusChange) onStatusChange('idle')
-      }}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       className={`relative flex flex-col items-center justify-center cursor-pointer select-none py-4 px-6 group ${className}`}
     >
       {/* Speech Dialogue Bubble */}
@@ -103,7 +157,7 @@ const BotFace = ({ soundEnabled, onStatusChange, className = '' }: BotFaceProps)
             exit={{ opacity: 0, y: -38, scale: 0.9 }}
             className="absolute z-40 whitespace-nowrap px-3.5 py-1.5 rounded-full bg-[#09090B] text-white dark:bg-[#F1F3F8] dark:text-[#12151B] text-xs font-mono shadow-2xl pointer-events-none border border-white/10 dark:border-black/10"
           >
-            <span>{dialogues[dialogueIndex]}</span>
+            <span>{DIALOGUES[dialogueIndex]}</span>
             <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#09090B] dark:bg-[#F1F3F8] rotate-45" />
           </motion.div>
         )}
@@ -127,8 +181,7 @@ const BotFace = ({ soundEnabled, onStatusChange, className = '' }: BotFaceProps)
               /* Eyeball with tracked pupil */
               <motion.div
                 className="w-4.5 h-4.5 rounded-full bg-white dark:bg-[#12151B] shadow-inner relative"
-                animate={{ x: pupilOffset.x, y: pupilOffset.y }}
-                transition={{ type: 'spring', damping: 20, stiffness: 260 }}
+                style={{ x: pupilX, y: pupilY }}
               >
                 <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 rounded-full bg-[#151922] dark:bg-white" />
               </motion.div>
@@ -155,8 +208,7 @@ const BotFace = ({ soundEnabled, onStatusChange, className = '' }: BotFaceProps)
               /* Eyeball with tracked pupil */
               <motion.div
                 className="w-4.5 h-4.5 rounded-full bg-white dark:bg-[#12151B] shadow-inner relative"
-                animate={{ x: pupilOffset.x, y: pupilOffset.y }}
-                transition={{ type: 'spring', damping: 20, stiffness: 260 }}
+                style={{ x: pupilX, y: pupilY }}
               >
                 <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 rounded-full bg-[#151922] dark:bg-white" />
               </motion.div>
@@ -175,4 +227,4 @@ const BotFace = ({ soundEnabled, onStatusChange, className = '' }: BotFaceProps)
   )
 }
 
-export default BotFace
+export default memo(BotFace)

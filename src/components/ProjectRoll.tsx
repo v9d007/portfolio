@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   ExternalLink,
@@ -260,7 +260,8 @@ const projects: ProjectData[] = [
 ]
 
 // Vector illustrations inside each card (matching yl0.me Image 2 aesthetic)
-const ProjectMockupGraphic = ({ type, title }: { type: string; title: string }) => {
+const ProjectMockupGraphic = memo(({ type, title }: { type: string; title: string }) => {
+  const chartGradId = `chartGrad-${title.replace(/[^a-zA-Z0-9]/g, '-').toLowerCase()}`
   if (type === 'chart') {
     return (
       <div className="w-44 h-44 rounded-2xl bg-[#0f131d] border border-white/10 p-3.5 flex flex-col justify-between shadow-inner">
@@ -268,7 +269,7 @@ const ProjectMockupGraphic = ({ type, title }: { type: string; title: string }) 
         <div className="relative w-full h-20">
           <svg className="w-full h-full overflow-visible" viewBox="0 0 140 60">
             <defs>
-              <linearGradient id="chartGrad" x1="0" y1="0" x2="1" y2="0">
+              <linearGradient id={chartGradId} x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0%" stopColor="#38bdf8" />
                 <stop offset="100%" stopColor="#818cf8" />
               </linearGradient>
@@ -276,7 +277,7 @@ const ProjectMockupGraphic = ({ type, title }: { type: string; title: string }) 
             <path
               d="M 5,50 Q 30,55 50,35 T 90,25 T 135,8"
               fill="none"
-              stroke="url(#chartGrad)"
+              stroke={`url(#${chartGradId})`}
               strokeWidth="3.5"
               strokeLinecap="round"
             />
@@ -360,7 +361,7 @@ const ProjectMockupGraphic = ({ type, title }: { type: string; title: string }) 
       </p>
     </div>
   )
-}
+})
 
 const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
   const [activeModalProject, setActiveModalProject] = useState<ProjectData | null>(null)
@@ -443,12 +444,16 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
       {/* Architecture Deep-Dive Modal */}
       <AnimatePresence>
         {activeModalProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md cursor-pointer"
+            onClick={() => setActiveModalProject(null)}
+          >
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-2xl bg-[#0c0e18] border border-indigo-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-indigo-500/20 text-slate-100 max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-2xl bg-[#0c0e18] border border-indigo-500/40 rounded-2xl p-6 sm:p-8 shadow-2xl shadow-indigo-500/20 text-slate-100 max-h-[90vh] overflow-y-auto cursor-default"
             >
               <button
                 onClick={() => {
@@ -552,4 +557,4 @@ const ProjectRoll = ({ soundEnabled }: ProjectRollProps) => {
   )
 }
 
-export default ProjectRoll
+export default memo(ProjectRoll)

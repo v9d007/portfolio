@@ -1,5 +1,7 @@
+import { memo } from 'react'
+
 // Authentic washi tape component from yl0.me
-export const WashiTape = ({ className = '' }: { className?: string }) => {
+export const WashiTape = memo(({ className = '' }: { className?: string }) => {
   return (
     <svg
       viewBox="5.5 91 239 68"
@@ -12,4 +14,4 @@ export const WashiTape = ({ className = '' }: { className?: string }) => {
       </g>
     </svg>
   )
-}
+})

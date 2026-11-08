@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, memo } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Github, Linkedin, Copy, Check, Send, Sparkles } from 'lucide-react'
 import { playSound } from '../utils/audio'
@@ -11,14 +11,24 @@ const ContactView = ({ soundEnabled }: ContactViewProps) => {
   const [copied, setCopied] = useState(false)
   const [message, setMessage] = useState('')
   const [sentStatus, setSentStatus] = useState(false)
+  const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const sentTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const email = 'v9d200@gmail.com'
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current)
+      if (sentTimerRef.current) clearTimeout(sentTimerRef.current)
+    }
+  }, [])
 
   const handleCopyEmail = () => {
     playSound('pop', soundEnabled)
     navigator.clipboard.writeText(email)
     setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    if (copyTimerRef.current) clearTimeout(copyTimerRef.current)
+    copyTimerRef.current = setTimeout(() => setCopied(false), 2000)
   }
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -29,7 +39,8 @@ const ContactView = ({ soundEnabled }: ContactViewProps) => {
     window.location.href = `mailto:${email}?subject=Portfolio%20Inquiry%20from%20v9d.is-a.dev&body=${encodeURIComponent(
       message
     )}`
-    setTimeout(() => {
+    if (sentTimerRef.current) clearTimeout(sentTimerRef.current)
+    sentTimerRef.current = setTimeout(() => {
       setMessage('')
       setSentStatus(false)
     }, 3000)
@@ -168,4 +179,4 @@ const ContactView = ({ soundEnabled }: ContactViewProps) => {
   )
 }
 
-export default ContactView
+export default memo(ContactView)

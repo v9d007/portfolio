@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { WashiTape } from './WashiTape'
 import { CoffeeGuy } from './CoffeeGuy'
@@ -165,4 +165,4 @@ const PolaroidWithCoffee = ({ className = '' }: PolaroidWithCoffeeProps) => {
   )
 }
 
-export default PolaroidWithCoffee
+export default memo(PolaroidWithCoffee)

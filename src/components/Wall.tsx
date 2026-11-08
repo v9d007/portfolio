@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, memo } from 'react'
 import Notch, { type NavTab } from './Notch'
 import HomeStage from './HomeStage'
 import ProjectRoll from './ProjectRoll'
@@ -34,13 +34,13 @@ const Wall = ({
     }
   }, [])
 
-  const handleNavigate = (tab: NavTab) => {
+  const handleNavigate = useCallback((tab: NavTab) => {
     setActiveTab(tab)
     const el = document.getElementById(tab)
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' })
     }
-  }
+  }, [])
 
   return (
     <div
@@ -98,4 +98,4 @@ const Wall = ({
   )
 }
 
-export default Wall
+export default memo(Wall)

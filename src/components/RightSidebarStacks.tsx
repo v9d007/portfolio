@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, memo } from 'react'
 import { motion } from 'framer-motion'
 import { playSound } from '../utils/audio'
 import {
@@ -21,43 +21,61 @@ interface RightSidebarStacksProps {
   style?: React.CSSProperties
 }
 
-// 4 Career Milestone Stamps matching the reference accordion layout
+// 6 Career Milestone Stamps matching the authentic reference accordion layout
 const experienceStamps = [
   {
     id: 'xoxoday-partner',
     company: 'Xoxoday',
-    role: 'Lead Mobile',
-    period: "Jul'19 - Now",
+    period: '2023 - Now',
     icon: Briefcase,
-    gradient: 'from-purple-500 to-indigo-600',
-    iconColor: 'text-white'
+    gradient: 'from-[#FF512F] via-[#DD2476] to-[#7C3AED]',
+    yj: 0,
+    r: -1
   },
   {
     id: 'giift-compass',
-    company: 'Giift Compass',
-    role: 'Mobile Arch',
+    company: 'Giift',
     period: '2021 - 2024',
-    icon: Compass,
-    gradient: 'from-cyan-500 to-blue-600',
-    iconColor: 'text-white'
+    icon: Layers,
+    gradient: 'from-[#00C6FF] via-[#0072FF] to-[#4FACFE]',
+    yj: -1.5,
+    r: 1.6
   },
   {
     id: 'compass-native',
-    company: 'Compass iOS',
-    role: 'iOS Systems',
+    company: 'Compass',
     period: '2019 - 2021',
+    icon: Compass,
+    gradient: 'from-[#8E2DE2] to-[#4A00E0]',
+    yj: 0.5,
+    r: -0.8
+  },
+  {
+    id: 'cleartrip',
+    company: 'Cleartrip',
+    period: '2017 - 2019',
     icon: Zap,
-    gradient: 'from-blue-500 to-indigo-500',
-    iconColor: 'text-white'
+    gradient: 'from-[#F59E0B] via-[#EF4444] to-[#DC2626]',
+    yj: -1,
+    r: 2.4
+  },
+  {
+    id: 'housing',
+    company: 'Housing',
+    period: '2015 - 2017',
+    icon: Briefcase,
+    gradient: 'from-[#10B981] to-[#059669]',
+    yj: 1.5,
+    r: -3
   },
   {
     id: 'iitk',
     company: 'IIT Kanpur',
-    role: 'B.Tech EE',
     period: '2015 - 2019',
     icon: GraduationCap,
-    gradient: 'from-amber-500 to-orange-500',
-    iconColor: 'text-white'
+    gradient: 'from-[#6366F1] via-[#8B5CF6] to-[#A855F7]',
+    yj: -0.5,
+    r: 1.2
   }
 ]
 
@@ -97,8 +115,10 @@ const RightSidebarStacks = ({
     >
       {/* ========================================================================= */}
       {/* 1. EXPERIENCE POSTAGE STAMP ACCORDION STACK (Top Right)                  */}
+      {/* Shifted left 120px and down 100px per user instruction                   */}
       {/* ========================================================================= */}
       <div
+        style={{ transform: 'translate(-120px, 100px)' }}
         className="flex flex-col items-center sm:items-end cursor-pointer group"
         onMouseEnter={() => {
           setIsExpHovered(true)
@@ -111,18 +131,19 @@ const RightSidebarStacks = ({
         onClick={handleNavigateExp}
       >
         {/* Accordion Stage */}
-        <div className="relative h-[116px] sm:h-[122px] w-[176px] sm:w-[190px] flex items-center justify-start">
+        <div className="relative h-[134px] sm:h-[138px] w-[275px] flex items-center justify-start">
           {experienceStamps.map((stamp, idx) => {
             const IconComponent = stamp.icon
             const isSingleHovered = hoveredStampIdx === idx
 
-            // Horizontal accordion spreading offsets
-            const targetX = isExpHovered ? idx * 28 : idx * 5.5
-            const targetY = isSingleHovered ? -8 : 0
-            const targetRotate = isExpHovered ? (idx - 1.5) * 1.5 : idx * 1.2
-            const targetScale = isSingleHovered ? 1.06 : 1.0
+            // Horizontal accordion spreading offsets matching yl0.me
+            const targetX = isExpHovered ? idx * 34 : idx * 8
+            const targetY = stamp.yj + (isSingleHovered ? -8 : 0)
+            const targetRotate = isExpHovered ? stamp.r : stamp.r * 0.8
+            const targetScale = isSingleHovered ? 1.05 : 1.0
 
-            const zIndex = isSingleHovered ? 50 : 40 - idx
+            // Stamp 0 is in front (highest z-index), subsequent stamps behind
+            const zIndex = isSingleHovered ? 50 : 20 - idx
 
             return (
               <motion.div
@@ -135,7 +156,7 @@ const RightSidebarStacks = ({
                 }}
                 transition={{
                   type: 'spring',
-                  stiffness: 350,
+                  stiffness: 340,
                   damping: 24,
                   mass: 0.8
                 }}
@@ -149,57 +170,54 @@ const RightSidebarStacks = ({
                   setHoveredStampIdx(null)
                 }}
                 style={{ zIndex }}
-                className="absolute left-0 top-0 w-[84px] sm:w-[88px] h-[110px] sm:h-[116px] text-[#FDFDFB] drop-shadow-[0_4px_12px_rgba(0,0,0,0.18)] dark:drop-shadow-[0_6px_16px_rgba(0,0,0,0.5)] cursor-pointer"
+                className="absolute left-0 top-0 w-[98px] sm:w-[102px] h-[128px] sm:h-[133px] text-[#FDFDFB] cursor-pointer drop-shadow-[0_2px_4px_rgba(21,25,34,0.16)] dark:drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
               >
                 {/* Authentic Postage Stamp Scalloped Edge (Paper white in both modes!) */}
                 <PostageStampBorder isActive={isSingleHovered} />
 
                 {/* Inner Dashed Border matching philatelic stamp design */}
-                <div className="absolute inset-1.5 border border-dashed border-slate-300 rounded pointer-events-none" />
+                <div className="absolute inset-2 border border-dashed border-[#D1D5DB] rounded pointer-events-none" />
 
-                {/* Stamp Contents */}
-                <div className="relative z-10 w-full h-full p-2 flex flex-col items-center justify-between text-center text-[#151922]">
-                  {/* Stamp Circular Icon Badge */}
+                {/* Stamp Contents matching yl0.me reference */}
+                <div className="relative z-10 w-full h-full pt-3 pb-2 px-1.5 flex flex-col items-center justify-between text-center select-none">
+                  {/* Large Circular Brand Emblem */}
                   <div
-                    className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-tr ${stamp.gradient} p-1.5 flex items-center justify-center text-white shadow-sm mt-0.5`}
+                    className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr ${stamp.gradient} p-0.5 flex items-center justify-center text-white shadow-sm mt-0.5`}
                   >
-                    <IconComponent size={14} className={stamp.iconColor} />
+                    <IconComponent size={20} className="text-white drop-shadow-sm" />
                   </div>
 
-                  {/* Company Name & Role */}
-                  <div className="w-full px-0.5 my-auto">
-                    <p className="text-[10px] sm:text-[10.5px] font-bold text-[#151922] leading-tight truncate">
+                  {/* Company Name & Period */}
+                  <div className="w-full px-1 my-auto">
+                    <b className="block max-w-full font-bold text-[11.5px] sm:text-[12px] text-[#151922] font-mono tracking-tight leading-tight truncate">
                       {stamp.company}
-                    </p>
-                    <p className="text-[8px] sm:text-[8.5px] font-mono text-[#7C3AED] font-semibold truncate">
-                      {stamp.role}
-                    </p>
+                    </b>
+                    <span className="block text-[9.5px] sm:text-[10px] text-[#6B7280] font-mono tracking-tight mt-0.5 truncate">
+                      {stamp.period}
+                    </span>
                   </div>
-
-                  {/* Date Pill at bottom of stamp */}
-                  <span className="text-[7.5px] sm:text-[8px] font-mono px-1 py-0.2 rounded bg-slate-100 text-slate-600 font-medium">
-                    {stamp.period}
-                  </span>
                 </div>
               </motion.div>
             )
           })}
         </div>
 
-        {/* Caption below stamps: Experiences [04] */}
-        <div className="mt-2 w-full flex items-center justify-center sm:justify-start gap-1.5 font-mono text-[11px] text-[#4B5160] dark:text-[#AEB5C4] px-1">
-          <span>Experiences</span>
-          <span className="px-1.5 py-0.2 rounded-full bg-purple-50 dark:bg-white/10 text-[10px] font-bold text-[#7C3AED] dark:text-[#A78BFA] border border-purple-200 dark:border-white/10">
-            04
+        {/* Caption below stamps: Experiences 06 (Aligned with the stack) */}
+        <div className="mt-3.5 w-full flex items-center justify-start gap-2 font-mono text-[12px] text-[#4B5160] dark:text-[#AEB5C4] px-1 pointer-events-none">
+          <span className="font-medium">Experiences</span>
+          <span className="px-2 py-0.5 rounded-full bg-[#F0F0F3] dark:bg-white/10 text-[10.5px] font-mono text-[#6B7280] dark:text-[#AEB5C4]">
+            06
           </span>
         </div>
       </div>
 
       {/* ========================================================================= */}
-      {/* 2. PROJECTS FANNED RADIAL SPREAD STACK (Middle Right) - Shifted right     */}
+      {/* 2. PROJECTS FANNED RADIAL SPREAD STACK (Middle Right)                     */}
+      {/* Shifted left 70px per user instruction                                    */}
       {/* ========================================================================= */}
       <div
-        className="flex flex-col items-center sm:items-end cursor-pointer group my-auto translate-x-4 sm:translate-x-6 lg:translate-x-8"
+        style={{ transform: 'translateX(-70px)' }}
+        className="flex flex-col items-center sm:items-end cursor-pointer group my-auto"
         onMouseEnter={() => {
           setIsProjHovered(true)
           playSound('hover', soundEnabled)
@@ -329,8 +347,8 @@ const RightSidebarStacks = ({
       {/* ========================================================================= */}
       {/* 3. "FIND ME VIA" SOCIALS (Bottom Right)                                   */}
       {/* ========================================================================= */}
-      <div className="flex flex-col items-center sm:items-end">
-        <p className="text-[11px] font-mono text-[#4B5160] dark:text-[#AEB5C4] mb-2 font-medium">
+      <div className="flex flex-col items-start sm:items-start">
+        <p className="text-[11px] font-mono text-[#4B5160] dark:text-[#AEB5C4] mb-2 font-medium self-start text-left">
           Find me via
         </p>
         <div className="flex items-center gap-2.5">
@@ -372,4 +390,4 @@ const RightSidebarStacks = ({
   )
 }
 
-export default RightSidebarStacks
+export default memo(RightSidebarStacks)

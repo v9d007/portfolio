@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { Crosshair } from 'lucide-react'
 
 interface BlueprintOverlayProps {
@@ -11,12 +11,20 @@ const BlueprintOverlay = ({ isBlueprint }: BlueprintOverlayProps) => {
   useEffect(() => {
     if (!isBlueprint) return
 
+    let rafId: number | null = null
     const handleMouseMove = (e: MouseEvent) => {
-      setCoords({ x: e.clientX, y: e.clientY })
+      if (rafId) return
+      rafId = requestAnimationFrame(() => {
+        rafId = null
+        setCoords({ x: e.clientX, y: e.clientY })
+      })
     }
 
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
+    window.addEventListener('mousemove', handleMouseMove, { passive: true })
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId)
+      window.removeEventListener('mousemove', handleMouseMove)
+    }
   }, [isBlueprint])
 
   if (!isBlueprint) return null
@@ -88,4 +96,4 @@ const BlueprintOverlay = ({ isBlueprint }: BlueprintOverlayProps) => {
   )
 }
 
-export default BlueprintOverlay
+export default memo(BlueprintOverlay)

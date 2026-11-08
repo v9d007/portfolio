@@ -22,22 +22,24 @@ function App() {
     // Set data-theme and class on html element
     document.documentElement.setAttribute('data-theme', theme)
     document.documentElement.classList.toggle('dark', theme === 'dark')
+  }, [theme])
 
+  useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false)
       const scrollY = new URLSearchParams(window.location.search).get('scrollY')
       if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY, 10))
+        window.scrollTo({ top: parseInt(scrollY, 10), behavior: 'instant' as ScrollBehavior })
       } else {
         const scroll = new URLSearchParams(window.location.search).get('scroll')
         if (scroll) {
-          document.getElementById(scroll)?.scrollIntoView()
+          document.getElementById(scroll)?.scrollIntoView({ behavior: 'instant' as ScrollBehavior })
         }
       }
     }, 100)
 
     return () => clearTimeout(timer)
-  }, [theme])
+  }, [])
 
   return (
     <div className="w-full h-full min-h-screen">

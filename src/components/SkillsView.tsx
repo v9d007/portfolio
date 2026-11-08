@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { motion } from 'framer-motion'
 import { Smartphone, Layers, Cpu, Code2 } from 'lucide-react'
 import { playSound } from '../utils/audio'
@@ -161,4 +162,4 @@ const SkillsView = ({ soundEnabled }: SkillsViewProps) => {
   )
 }
 
-export default SkillsView
+export default memo(SkillsView)
